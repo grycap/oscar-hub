@@ -1,0 +1,29 @@
+name: Validate RO-Crate
+
+on:
+  push:
+    paths:
+      - '**/ro-crate-metadata.json'
+  pull_request:
+    paths:
+      - '**/ro-crate-metadata.json'
+
+jobs:
+  validate:
+    name: Validate RO-Crate metadata
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install rocrate
+        run: pip install rocrate
+
+      - name: Run RO-Crate validation
+        run: rocrate-validator validate -p ro-crate-1.1 ./
