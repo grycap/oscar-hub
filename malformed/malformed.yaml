@@ -1,0 +1,16 @@
+functions:
+  oscar:
+  - oscar-cluster:
+     name: test-malformed
+     memory: 4Gi
+     cpu: '2.0'
+     image: none/none:latest
+     script: script.sh     
+     allowed_users: []
+     log_level: CRITICAL		
+     input:
+     - storage_provider: minio.default
+       path: test/input
+     output:
+     - storage_provider: minio.default
+       path: test/output
