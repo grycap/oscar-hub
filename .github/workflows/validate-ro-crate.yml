@@ -1,9 +1,6 @@
 name: Validate RO-Crate
 
 on:
-  push:
-    paths:
-      - '**/ro-crate-metadata.json'
   pull_request:
     paths:
       - '**/ro-crate-metadata.json'
