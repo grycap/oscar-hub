@@ -1,4 +1,4 @@
-name: Validate RO-Crate
+name: Validate all RO-Crates
 
 on:
   pull_request:
@@ -22,5 +22,17 @@ jobs:
       - name: Install roc-validator
         run: pip install roc-validator
 
-      - name: Run RO-Crate validation
-        run: rocrate-validator validate -p ro-crate-1.1 ./
+      - name: Validate all RO-Crates in subdirectories
+        run: |
+                for d in */ ; do
+                  if [ -f "$d/ro-crate-metadata.json" ]; then
+                    echo "Validating $d"
+                    rocrate-validator validate -p ro-crate-1.1 --verbose --no-paging "$d"
+                    if [ $? -ne 0 ]; then
+                      echo "Validation failed in $d"
+                      exit 1
+                    fi
+                  else
+                    echo "Skipping $d (no ro-crate-metadata.json found)"
+                  fi
+                done
