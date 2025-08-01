@@ -18,8 +18,8 @@
         "@id": "https://www.gnu.org/licenses/agpl-3.0.html"
       },
       "applicationCategory": "OSCAR Service",    
-      "memoryRequirements": "4 Gi",
-      "processorRequirements": "2",
+      "memoryRequirements": "4 GiB",
+      "processorRequirements": ["2 vCPU", "0 GPU"],
       "serviceType": "asynchronous",
       "softwareRequirements": [
         {

@@ -18,8 +18,8 @@
         "@id": "https://www.gnu.org/licenses/agpl-3.0.html"
       },
       "applicationCategory": "OSCAR Service",    
-      "memoryRequirements": "512 Mi",
-      "processorRequirements": "1",
+      "memoryRequirements": "512 MiB",
+      "processorRequirements": ["1 vCPU", "0 GPU"],
       "serviceType": "synchronous",
       "author": {
         "@id": "https://grycap.upv.es"
