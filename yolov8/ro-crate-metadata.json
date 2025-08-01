@@ -11,6 +11,7 @@
       "@id": "./",
       "@type": "Dataset",
       "datePublished": "2025-05-25",     
+      "URL": "https://github.com/grycap/oscar-hub/tree/main/yolov8",
       "name": "OSCAR YOLOv8 Service (by AI4OS)",
       "description": "OSCAR Service definition for deploying the YOLOv8 image recognition model.",      
       "license": {
