@@ -10,33 +10,28 @@
     {
       "@id": "./",
       "@type": "Dataset",
-      "datePublished": "2025-05-25",     
-      "URL": "https://github.com/grycap/oscar-hub/tree/main/yolov8",
-      "name": "OSCAR YOLOv8 Service (by AI4OS)",
-      "description": "OSCAR Service definition for deploying the YOLOv8 image recognition model.",      
+      "datePublished": "2025-08-01",
+      "name": "OSCAR Cowsay Service",
+      "description": "OSCAR Service definition for deploying the talking cow service that can display messages in a speech bubble.",      
+      "URL": "https://github.com/grycap/oscar-hub/tree/main/cowsay",
       "license": {
         "@id": "https://www.gnu.org/licenses/agpl-3.0.html"
       },
       "applicationCategory": "OSCAR Service",    
-      "memoryRequirements": "4 Gi",
-      "processorRequirements": "2",
-      "serviceType": "asynchronous",
-      "softwareRequirements": [
-        {
-        "@id": "https://dashboard.cloud.ai4eosc.eu/catalog/modules/ai4os-yolov8-torch"
-        }
-      ],
+      "memoryRequirements": "512 Mi",
+      "processorRequirements": "1",
+      "serviceType": "synchronous",
       "author": {
-        "@id": "https://orcid.org/0000-0002-8049-253X"
+        "@id": "https://grycap.upv.es"
       },
       "hasPart": [
-        { "@id": "yolov8.yaml" },
+        { "@id": "cowsay.yaml" },
         { "@id": "script.sh" },
         { "@id": "icon.png" }
       ]
     },
     {
-      "@id": "yolov8.yaml",
+      "@id": "cowsay.yaml",
       "@type": ["File", "service-fdl"],
       "encodingFormat": "text/yaml"
     },
@@ -45,28 +40,23 @@
       "@type": ["File", "service-script"],
       "encodingFormat": "text/x-shellscript"
     },
-     {
+    {
       "@id": "icon.png",
       "@type": ["File", "service-icon"],
       "encodingFormat": "image/png"
     },
     {
-      "@id": "https://orcid.org/0000-0002-8049-253X",
-      "@type": "Person",
+      "@id": "https://grycap.upv.es",
+      "@type": "Organization",
+      "url": "https://grycap.upv.es",
       "affiliation": "Universitat Politècnica de València",
-      "name": "Germán Moltó"
+      "name": "OSCAR Team"
     },
     {
       "@id": "https://www.gnu.org/licenses/agpl-3.0.html",
       "@type": "CreativeWork",
       "name": "GNU Affero General Public License v3.0",
       "identifier": "SPDX:AGPL-3.0"
-    },
-    {
-      "@id": "https://dashboard.cloud.ai4eosc.eu/catalog/modules/ai4os-yolov8-torch",
-      "@type": "SoftwareApplication",
-      "name": "AI4OS YOLOv8 Torch model",
-      "description": "Pretrained object detection model based on YOLOv8 using PyTorch."
     }
   ]
 }
