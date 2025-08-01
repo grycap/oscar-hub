@@ -38,7 +38,7 @@ Welcome to **OSCAR Hub**, a repository of ready-to-deploy services for the [OSCA
 To validate the services defined via RO-Crate:
 
 ```bash
-pip install rocrate-validator
+pip install roc-validator
 ```
 
 Then run:
