@@ -14,9 +14,7 @@
       "name": "OSCAR YOLOv8 Service (by AI4OS)",
       "description": "OSCAR Service definition for deploying the YOLOv8 image recognition model.",      
       "license": {
-        "@id": "https://www.gnu.org/licenses/agpl-3.0.html",
-        "name": "GNU Affero General Public License v3.0",
-        "identifier": "SPDX:AGPL-3.0"
+        "@id": "https://www.gnu.org/licenses/agpl-3.0.html"
       },
       "applicationCategory": "OSCAR Service",    
       "memoryRequirements": "4 Gi",
@@ -24,23 +22,20 @@
       "serviceType": "asynchronous",
       "softwareRequirements": [
         {
-        "@id": "https://dashboard.cloud.ai4eosc.eu/catalog/modules/ai4os-yolov8-torch",
-        "@type": "SoftwareApplication",
-        "name": "AI4OS YOLOv8 Torch model",
-        "description": "Pretrained object detection model based on YOLOv8 using PyTorch."
+        "@id": "https://dashboard.cloud.ai4eosc.eu/catalog/modules/ai4os-yolov8-torch"
         }
       ],
       "author": {
         "@id": "https://orcid.org/0000-0002-8049-253X"
       },
       "hasPart": [
-        { "@id": "yolo8.yaml" },
+        { "@id": "yolov8.yaml" },
         { "@id": "script.sh" },
         { "@id": "icon.png" }
       ]
     },
     {
-      "@id": "yolo8.yaml",
+      "@id": "yolov8.yaml",
       "@type": ["File", "service-fdl"],
       "encodingFormat": "text/yaml"
     },
@@ -59,6 +54,18 @@
       "@type": "Person",
       "affiliation": "Universitat Politècnica de València",
       "name": "Germán Moltó"
+    },
+    {
+      "@id": "https://www.gnu.org/licenses/agpl-3.0.html",
+      "@type": "CreativeWork",
+      "name": "GNU Affero General Public License v3.0",
+      "identifier": "SPDX:AGPL-3.0"
+    },
+    {
+      "@id": "https://dashboard.cloud.ai4eosc.eu/catalog/modules/ai4os-yolov8-torch",
+      "@type": "SoftwareApplication",
+      "name": "AI4OS YOLOv8 Torch model",
+      "description": "Pretrained object detection model based on YOLOv8 using PyTorch."
     }
   ]
 }
