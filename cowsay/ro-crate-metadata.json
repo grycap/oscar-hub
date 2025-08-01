@@ -1,0 +1,62 @@
+{
+  "@context": "https://w3id.org/ro/crate/1.1/context",
+  "@graph": [
+    {
+      "@type": "CreativeWork",
+      "@id": "ro-crate-metadata.json",
+      "conformsTo": {"@id": "https://w3id.org/ro/crate/1.1"},     
+      "about": { "@id": "./" }
+    },
+    {
+      "@id": "./",
+      "@type": "Dataset",
+      "datePublished": "2025-08-01",
+      "name": "OSCAR Cowsay Service",
+      "description": "OSCAR Service definition for deploying the talking cow service that can display messages in a speech bubble.",      
+      "URL": "https://github.com/grycap/oscar-hub/tree/main/cowsay",
+      "license": {
+        "@id": "https://www.gnu.org/licenses/agpl-3.0.html"
+      },
+      "applicationCategory": "OSCAR Service",    
+      "memoryRequirements": "512 Mi",
+      "processorRequirements": "1",
+      "serviceType": "synchronous",
+      "author": {
+        "@id": "https://grycap.upv.es"
+      },
+      "hasPart": [
+        { "@id": "cowsay.yaml" },
+        { "@id": "script.sh" },
+        { "@id": "icon.png" }
+      ]
+    },
+    {
+      "@id": "cowsay.yaml",
+      "@type": ["File", "service-fdl"],
+      "encodingFormat": "text/yaml"
+    },
+    {
+      "@id": "script.sh",
+      "@type": ["File", "service-script"],
+      "encodingFormat": "text/x-shellscript"
+    },
+    {
+      "@id": "icon.png",
+      "@type": ["File", "service-icon"],
+      "encodingFormat": "image/png"
+    },
+    {
+      "@id": "https://grycap.upv.es",
+      "@type": "Organization",
+      "url": "https://grycap.upv.es",
+      "affiliation": "Universitat Politècnica de València",
+      "name": "OSCAR Team"
+    },
+    {
+      "@id": "https://www.gnu.org/licenses/agpl-3.0.html",
+      "@type": "CreativeWork",
+      "name": "GNU Affero General Public License v3.0",
+      "identifier": "SPDX:AGPL-3.0"
+    }
+  ]
+}
