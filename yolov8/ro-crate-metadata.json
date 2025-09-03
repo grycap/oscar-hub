@@ -38,16 +38,22 @@
     {
       "@id": "yolov8.yaml",
       "@type": ["File", "service-fdl"],
+      "name": "OSCAR YOLOv8 Service Definition",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/yolov8/yolov8.yaml",
       "encodingFormat": "text/yaml"
     },
     {
       "@id": "script.sh",
       "@type": ["File", "service-script"],
+      "name": "OSCAR YOLOv8 Service Script",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/yolov8/script.sh",
       "encodingFormat": "text/x-shellscript"
     },
      {
       "@id": "icon.png",
       "@type": ["File", "service-icon"],
+      "name": "OSCAR YOLOv8 Service Icon",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/yolov8/icon.png",
       "encodingFormat": "image/png"
     },
     {

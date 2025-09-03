@@ -33,16 +33,22 @@
     {
       "@id": "cowsay.yaml",
       "@type": ["File", "service-fdl"],
+      "name": "OSCAR Cowsay Service Definition",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/cowsay/cowsay.yaml",
       "encodingFormat": "text/yaml"
     },
     {
       "@id": "script.sh",
       "@type": ["File", "service-script"],
+      "name": "OSCAR Cowsay Service Script",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/cowsay/script.sh",
       "encodingFormat": "text/x-shellscript"
     },
     {
       "@id": "icon.png",
       "@type": ["File", "service-icon"],
+      "name": "OSCAR Cowsay Service Icon",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/cowsay/icon.png",
       "encodingFormat": "image/png"
     },
     {
