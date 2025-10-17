@@ -1,0 +1,49 @@
+[
+  {
+    "slug": "cowsay",
+    "repoPath": "crates/cowsay",
+    "name": "OSCAR Cowsay Service",
+    "description": "OSCAR Service definition for deploying the talking cow service that can display messages in a speech bubble.",
+    "fullDescription": "OSCAR Service definition for deploying the talking cow service that can display messages in a speech bubble.",
+    "serviceType": "synchronous",
+    "url": "https://github.com/grycap/oscar-hub/tree/main/crates/cowsay",
+    "license": "GNU Affero General Public License v3.0",
+    "licenseUrl": "https://www.gnu.org/licenses/agpl-3.0.html",
+    "author": "OSCAR Team",
+    "authorUrl": "https://grycap.upv.es",
+    "memory": "512 MiB",
+    "processors": [
+      "1 vCPU",
+      "0 GPU"
+    ],
+    "software": [],
+    "datePublished": "2025-08-01",
+    "icon": "crates/cowsay/icon.png"
+  },
+  {
+    "slug": "yolov8",
+    "repoPath": "crates/yolov8",
+    "name": "OSCAR YOLOv8 Service (by AI4OS)",
+    "description": "OSCAR Service definition for deploying the YOLOv8 image recognition model.",
+    "fullDescription": "OSCAR Service definition for deploying the YOLOv8 image recognition model.",
+    "serviceType": "asynchronous",
+    "url": "https://github.com/grycap/oscar-hub/tree/main/crates/yolov8",
+    "license": "GNU Affero General Public License v3.0",
+    "licenseUrl": "https://www.gnu.org/licenses/agpl-3.0.html",
+    "author": "Germán Moltó",
+    "authorUrl": "https://orcid.org/0000-0002-8049-253X",
+    "memory": "4 GiB",
+    "processors": [
+      "2 vCPU",
+      "0 GPU"
+    ],
+    "software": [
+      {
+        "name": "AI4OS YOLOv8 Torch model",
+        "url": "https://dashboard.cloud.ai4eosc.eu/catalog/modules/ai4os-yolov8-torch"
+      }
+    ],
+    "datePublished": "2025-05-25",
+    "icon": "crates/yolov8/icon.png"
+  }
+]

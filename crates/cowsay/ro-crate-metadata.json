@@ -13,7 +13,7 @@
       "datePublished": "2025-08-01",
       "name": "OSCAR Cowsay Service",
       "description": "OSCAR Service definition for deploying the talking cow service that can display messages in a speech bubble.",      
-      "URL": "https://github.com/grycap/oscar-hub/tree/main/cowsay",
+      "URL": "https://github.com/grycap/oscar-hub/tree/main/crates/cowsay",
       "license": {
         "@id": "https://www.gnu.org/licenses/agpl-3.0.html"
       },
@@ -34,21 +34,21 @@
       "@id": "cowsay.yaml",
       "@type": ["File", "service-fdl"],
       "name": "OSCAR Cowsay Service Definition",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/cowsay/cowsay.yaml",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/cowsay/cowsay.yaml",
       "encodingFormat": "text/yaml"
     },
     {
       "@id": "script.sh",
       "@type": ["File", "service-script"],
       "name": "OSCAR Cowsay Service Script",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/cowsay/script.sh",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/cowsay/script.sh",
       "encodingFormat": "text/x-shellscript"
     },
     {
       "@id": "icon.png",
       "@type": ["File", "service-icon"],
       "name": "OSCAR Cowsay Service Icon",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/cowsay/icon.png",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/cowsay/icon.png",
       "encodingFormat": "image/png"
     },
     {
