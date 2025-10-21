@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "node scripts/build.mjs",
-    "dev": "node scripts/dev.mjs"
+    "build": "node src/build.mjs",
+    "dev": "node src/dev.mjs"
   }
 }

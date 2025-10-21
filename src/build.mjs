@@ -6,27 +6,25 @@ import { fileURLToPath, pathToFileURL } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const repoRoot = path.resolve(__dirname, '..');
-const docsDir = path.join(repoRoot, 'docs');
-const assetsDir = path.join(docsDir, 'assets');
-const staticDir = path.join(repoRoot, 'site', 'static');
+const outputDir = path.join(repoRoot, 'dist');
+const assetsDir = path.join(outputDir, 'assets');
+const iconsDir = path.join(assetsDir, 'icons');
+const staticDir = path.join(__dirname, 'static');
 const cratesDir = path.join(repoRoot, 'crates');
 
 export async function buildSite() {
   const services = await collectServices();
   await prepareOutput();
   await copyStaticAssets();
-  await Promise.all([
-    writeIndexHtml(services),
-    writeServicesJson(services),
-    writeNoJekyll()
-  ]);
+  await copyServiceIcons(services);
+  await Promise.all([writeIndexHtml(services), writeServicesJson(services), writeNoJekyll()]);
   console.log(`Generated landing page for ${services.length} services.`);
   return services;
 }
 
 async function prepareOutput() {
-  await fs.rm(docsDir, { recursive: true, force: true });
-  await fs.mkdir(docsDir, { recursive: true });
+  await fs.rm(outputDir, { recursive: true, force: true });
+  await fs.mkdir(outputDir, { recursive: true });
   await fs.mkdir(assetsDir, { recursive: true });
 }
 
@@ -41,23 +39,36 @@ async function copyStaticAssets() {
 
 async function writeIndexHtml(services) {
   const html = renderHtml(services);
-  await fs.writeFile(path.join(docsDir, 'index.html'), html, 'utf8');
+  await fs.writeFile(path.join(outputDir, 'index.html'), html, 'utf8');
 }
 
 async function writeServicesJson(services) {
   const payload = services.map(({ icon, ...rest }) => ({
     ...rest,
-    icon: icon?.repoRelative ?? null
+    icon: icon?.webRelative ?? null
   }));
   await fs.writeFile(
-    path.join(docsDir, 'services.json'),
+    path.join(outputDir, 'services.json'),
     JSON.stringify(payload, null, 2),
     'utf8'
   );
 }
 
 async function writeNoJekyll() {
-  await fs.writeFile(path.join(docsDir, '.nojekyll'), '', 'utf8');
+  await fs.writeFile(path.join(outputDir, '.nojekyll'), '', 'utf8');
+}
+
+async function copyServiceIcons(services) {
+  const iconsToCopy = services.filter((service) => service.icon?.sourcePath);
+  if (iconsToCopy.length === 0) return;
+  await fs.mkdir(iconsDir, { recursive: true });
+  await Promise.all(
+    iconsToCopy.map(async (service) => {
+      const destination = path.join(outputDir, service.icon.webRelative);
+      await fs.mkdir(path.dirname(destination), { recursive: true });
+      await fs.copyFile(service.icon.sourcePath, destination);
+    })
+  );
 }
 
 async function collectServices() {
@@ -112,21 +123,12 @@ async function parseService(cratePath, slug, repoPath) {
     .filter(Boolean);
   const datePublished = dataset.datePublished ?? null;
 
-  let iconInfo = resolveIcon(graph, dataset, cratePath);
+  let iconInfo = resolveIcon(graph, dataset, cratePath, slug);
   if (iconInfo?.sourcePath) {
     const exists = await fileExists(iconInfo.sourcePath);
     if (!exists) {
       console.warn(`Icon not found for ${slug} at ${iconInfo.sourcePath}`);
       iconInfo = null;
-    } else {
-      try {
-        const iconBuffer = await fs.readFile(iconInfo.sourcePath);
-        const mimeType = getMimeType(iconInfo.extension);
-        iconInfo.dataUri = `data:${mimeType};base64,${iconBuffer.toString('base64')}`;
-      } catch (error) {
-        console.warn(`Unable to embed icon for ${slug}: ${error.message}`);
-        iconInfo = null;
-      }
     }
   }
 
@@ -155,7 +157,7 @@ async function parseService(cratePath, slug, repoPath) {
   };
 }
 
-function resolveIcon(graph, dataset, cratePath) {
+function resolveIcon(graph, dataset, cratePath, slug) {
   const hasPart = Array.isArray(dataset.hasPart) ? dataset.hasPart : [];
   const iconRef = hasPart
     .map((entry) => (typeof entry === 'string' ? entry : entry?.['@id']))
@@ -173,10 +175,14 @@ function resolveIcon(graph, dataset, cratePath) {
     .split(path.sep)
     .join('/');
 
+  const slugSafe = slug.replace(/[^a-z0-9-_]/gi, '-').toLowerCase();
+  const distRelative = path.join('assets', 'icons', `${slugSafe}${ext}`).split(path.sep).join('/');
+
   return {
     sourcePath: iconPath,
     extension: ext,
-    repoRelative
+    repoRelative,
+    webRelative: distRelative
   };
 }
 
@@ -278,7 +284,7 @@ function renderHtml(services) {
 }
 
 function renderServiceCard(service) {
-  const iconSrc = service.icon?.dataUri ?? null;
+  const iconSrc = service.icon?.webRelative ?? null;
   const icon = iconSrc
     ? `<img src="${iconSrc}" alt="" class="service-card__icon" loading="lazy">`
     : `<div class="service-card__icon service-card__icon--fallback" aria-hidden="true">${initials(
@@ -407,14 +413,6 @@ function formatDate(value) {
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return value;
   return date.toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: 'numeric' });
-}
-
-function getMimeType(extension) {
-  const lower = extension.toLowerCase();
-  if (lower === '.svg') return 'image/svg+xml';
-  if (lower === '.jpg' || lower === '.jpeg') return 'image/jpeg';
-  if (lower === '.webp') return 'image/webp';
-  return 'image/png';
 }
 
 async function fileExists(filePath) {

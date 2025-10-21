@@ -8,7 +8,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const repoRoot = path.resolve(__dirname, '..');
-const docsDir = path.join(repoRoot, 'docs');
+const distDir = path.join(repoRoot, 'dist');
 const buildModuleUrl = new URL('./build.mjs', import.meta.url);
 
 const args = new Set(process.argv.slice(2));
@@ -91,7 +91,7 @@ function startServer() {
 function startWatchers() {
   const handleChange = (filename = '') => {
     if (!filename) return;
-    if (filename.startsWith('docs')) return;
+    if (filename.startsWith('dist')) return;
     if (filename.startsWith('node_modules')) return;
     if (filename.startsWith('.git')) return;
     scheduleBuild(filename);
@@ -114,7 +114,7 @@ function setupFallbackWatchers(callback) {
     .then((entries) => {
       for (const entry of entries) {
         if (!entry.isDirectory()) continue;
-        if (['docs', 'node_modules', '.git'].includes(entry.name)) continue;
+        if (['dist', 'node_modules', '.git'].includes(entry.name)) continue;
         const watcher = fs.watch(path.join(repoRoot, entry.name), { recursive: false }, (_event, filename) =>
           callback(entry.name + '/' + (filename?.toString() ?? ''))
         );
@@ -186,9 +186,9 @@ function getSafeFilePath(requestPath) {
   if (!relativePath || relativePath.endsWith('/')) {
     relativePath = path.join(relativePath, 'index.html');
   }
-  const candidate = path.join(docsDir, relativePath);
+  const candidate = path.join(distDir, relativePath);
   const normalised = path.normalize(candidate);
-  if (!normalised.startsWith(docsDir)) {
+  if (!normalised.startsWith(distDir)) {
     throw Object.assign(new Error('Forbidden path'), { code: 'EACCES' });
   }
   return normalised;

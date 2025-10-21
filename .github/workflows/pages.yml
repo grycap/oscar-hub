@@ -4,15 +4,20 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
-  build-and-commit:
-    if: github.ref == 'refs/heads/main'
+  build:
     runs-on: ubuntu-latest
-
-    permissions:
-      contents: write
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -31,21 +36,22 @@ jobs:
       - name: Build static site
         run: npm run build
 
-      - name: Restore custom domain
-        run: |
-          if [[ -f CNAME ]]; then
-            mkdir -p docs
-            cp CNAME docs/CNAME
-          fi
+      - name: Copy custom domain
+        if: ${{ hashFiles('CNAME') != '' }}
+        run: cp CNAME dist/CNAME
 
-      - name: Commit updated docs
-        run: |
-          if [[ -n "$(git status --short docs CNAME)" ]]; then
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add docs CNAME
-            git commit -m "chore(docs): update GitHub Pages artifacts"
-            git push
-          else
-            echo "No changes to commit"
-          fi
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
