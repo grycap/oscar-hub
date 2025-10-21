@@ -4,49 +4,75 @@
     {
       "@type": "CreativeWork",
       "@id": "ro-crate-metadata.json",
-      "conformsTo": {"@id": "https://w3id.org/ro/crate/1.1"},     
-      "about": { "@id": "./" }
+      "conformsTo": {
+        "@id": "https://w3id.org/ro/crate/1.1"
+      },
+      "about": {
+        "@id": "./"
+      }
     },
     {
       "@id": "./",
-      "@type": "Dataset",
+      "@type": [
+        "Dataset",
+        "Service",
+        "SoftwareApplication"
+      ],
       "datePublished": "2025-08-01",
-      "name": "OSCAR Cowsay Service",
-      "description": "OSCAR Service definition for deploying the talking cow service that can display messages in a speech bubble.",      
       "URL": "https://github.com/grycap/oscar-hub/tree/main/crates/cowsay",
+      "name": "OSCAR Cowsay Service",
+      "description": "OSCAR Service definition for deploying the talking cow service that can display messages in a speech bubble.",
       "license": {
         "@id": "https://www.gnu.org/licenses/agpl-3.0.html"
       },
-      "applicationCategory": "OSCAR Service",    
+      "applicationCategory": "OSCAR Service",
       "memoryRequirements": "512 MiB",
-      "processorRequirements": ["1 vCPU", "0 GPU"],
+      "processorRequirements": [
+        "1 vCPU",
+        "0 GPU"
+      ],
       "serviceType": "synchronous",
       "author": {
         "@id": "https://grycap.upv.es"
       },
       "hasPart": [
-        { "@id": "fdl.yaml" },
-        { "@id": "script.sh" },
-        { "@id": "icon.png" }
+        {
+          "@id": "fdl.yml"
+        },
+        {
+          "@id": "script.sh"
+        },
+        {
+          "@id": "icon.png"
+        }
       ]
     },
     {
-      "@id": "fdl.yaml",
-      "@type": ["File", "service-fdl"],
+      "@id": "fdl.yml",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
       "name": "OSCAR Cowsay Service Definition",
       "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/cowsay/fdl.yaml",
       "encodingFormat": "text/yaml"
     },
     {
       "@id": "script.sh",
-      "@type": ["File", "service-script"],
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
       "name": "OSCAR Cowsay Service Script",
       "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/cowsay/script.sh",
       "encodingFormat": "text/x-shellscript"
     },
     {
       "@id": "icon.png",
-      "@type": ["File", "service-icon"],
+      "@type": [
+        "File",
+        "ImageObject"
+      ],
       "name": "OSCAR Cowsay Service Icon",
       "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/cowsay/icon.png",
       "encodingFormat": "image/png"
@@ -54,9 +80,17 @@
     {
       "@id": "https://grycap.upv.es",
       "@type": "Organization",
+      "name": "GRyCAP",
       "url": "https://grycap.upv.es",
-      "affiliation": "Universitat Politècnica de València",
-      "name": "OSCAR Team"
+      "parentOrganization": {
+        "@id": "UPV"
+      }
+    },
+    {
+      "@id": "UPV",
+      "@type": "Organization",
+      "name": "Universitat Politècnica de València",
+      "url": "https://www.upv.es"
     },
     {
       "@id": "https://www.gnu.org/licenses/agpl-3.0.html",

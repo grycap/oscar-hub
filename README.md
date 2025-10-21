@@ -9,7 +9,7 @@ Welcome to **OSCAR Hub**, a repository of ready-to-deploy services for the [OSCA
 - 📂 Inside the `crates`folder, a collection of directories, each representing a deployable OSCAR service.
 - 📄 Inside each directory:
   - `ro-crate-metadata.json`: Service description using the RO-Crate format.
-  - `file.yml`: Service definition using the [Functions Definition Language (FDL)](https://docs.oscar.grycap.net/fdl/).
+  - `fdl.yml`: Service definition using the [Functions Definition Language (FDL)](https://docs.oscar.grycap.net/fdl/).
   - `script.sh`: Script to be executed upon service invocation.
 ---
 
@@ -18,11 +18,12 @@ Welcome to **OSCAR Hub**, a repository of ready-to-deploy services for the [OSCA
 ## 📦 Adding a New Service
 
 1. Create a new directory named after your service.
-2. Add the following required files:
+2. Copy the contents of `crates/template` into the new directory and adjust the placeholders.
+3. Ensure the directory includes:
    - `ro-crate-metadata.json`
    - `fdl.yml`
    - `script.sh`
-3. Validate your RO-Crate before submitting a pull request.
+4. Validate your RO-Crate before submitting a pull request.
 ---
 
 
