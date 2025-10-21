@@ -31,6 +31,13 @@ jobs:
       - name: Build static site
         run: npm run build
 
+      - name: Restore custom domain
+        run: |
+          if [[ -f CNAME ]]; then
+            mkdir -p docs
+            cp CNAME docs/CNAME
+          fi
+
       - name: Commit updated docs
         run: |
           if [[ -n "$(git status --short docs CNAME)" ]]; then
