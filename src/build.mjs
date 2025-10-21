@@ -242,7 +242,7 @@ function renderHtml(services) {
   <header class="hero">
     <div class="hero__content">
       <img class="hero__logo" src="assets/oscar3-logo-trans.png" alt="OSCAR logo" width="220" height="72" loading="lazy">
-      <h1 class="hero__title">Curated catalog of services</h1>
+      <h1 class="hero__title">Services Catalog</h1>
       <p class="hero__subtitle">Ready to be deployed on <a href="https://oscar.grycap.net">OSCAR</a>.</p>
       <div class="hero__actions">
         <a class="btn btn--primary" href="https://github.com/grycap/oscar-hub" target="_blank" rel="noreferrer">GitHub Repository</a>
