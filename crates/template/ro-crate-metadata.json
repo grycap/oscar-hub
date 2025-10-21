@@ -1,0 +1,112 @@
+{
+  "@context": "https://w3id.org/ro/crate/1.1/context",
+  "@graph": [
+    {
+      "@type": "CreativeWork",
+      "@id": "ro-crate-metadata.json",
+      "conformsTo": {
+        "@id": "https://w3id.org/ro/crate/1.1"
+      },
+      "about": {
+        "@id": "./"
+      }
+    },
+    {
+      "@id": "./",
+      "@type": [
+        "Dataset",
+        "Service",
+        "SoftwareApplication"
+      ],
+      "datePublished": "2024-01-01",
+      "URL": "https://github.com/grycap/oscar-hub/tree/main/crates/template",
+      "name": "YOUR Service Name",
+      "description": "Briefly describe what your OSCAR service does and how it should be used.",
+      "license": {
+        "@id": "https://www.gnu.org/licenses/agpl-3.0.html"
+      },
+      "applicationCategory": "OSCAR Service",
+      "memoryRequirements": "2 GiB",
+      "processorRequirements": [
+        "1 vCPU",
+        "0 GPU"
+      ],
+      "serviceType": "synchronous",
+      "isBasedOn": [
+        {
+          "@id": "https://example.com/your-upstream-project"
+        }
+      ],
+      "author": {
+        "@id": "https://orcid.org/0000-0000-0000-0000"
+      },
+      "hasPart": [
+        {
+          "@id": "fdl.yml"
+        },
+        {
+          "@id": "script.sh"
+        },
+        {
+          "@id": "icon.png"
+        }
+      ]
+    },
+    {
+      "@id": "fdl.yml",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "OSCAR Service Definition",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/template/fdl.yaml",
+      "encodingFormat": "text/yaml"
+    },
+    {
+      "@id": "script.sh",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "OSCAR Service Script",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/template/script.sh",
+      "encodingFormat": "text/x-shellscript"
+    },
+    {
+      "@id": "icon.png",
+      "@type": [
+        "File",
+        "ImageObject"
+      ],
+      "name": "OSCAR Service Icon",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/template/icon.png",
+      "encodingFormat": "image/png"
+    },
+    {
+      "@id": "https://orcid.org/0000-0000-0000-0000",
+      "@type": "Person",
+      "name": "Your Name",
+      "affiliation": {
+        "@id": "https://example.com/your-organisation"
+      }
+    },
+    {
+      "@id": "https://example.com/your-organisation",
+      "@type": "Organization",
+      "name": "Your Organisation",
+      "url": "https://example.com"
+    },
+    {
+      "@id": "https://www.gnu.org/licenses/agpl-3.0.html",
+      "@type": "CreativeWork",
+      "name": "GNU Affero General Public License v3.0",
+      "identifier": "SPDX:AGPL-3.0"
+    },
+    {
+      "@id": "https://example.com/your-upstream-project",
+      "@type": "SoftwareApplication",
+      "name": "Upstream Project",
+      "description": "Reference to the software, dataset, or workflow your service builds upon."
+    }
+  ]
+}

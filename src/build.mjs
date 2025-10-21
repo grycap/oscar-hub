@@ -83,6 +83,7 @@ async function collectServices() {
 
   for (const entry of entries) {
     if (!entry.isDirectory()) continue;
+    if (entry.name === 'template') continue;
     const serviceDir = path.join(cratesDir, entry.name);
     const cratePath = path.join(serviceDir, 'ro-crate-metadata.json');
     const exists = await fileExists(cratePath);
