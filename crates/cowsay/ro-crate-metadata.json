@@ -25,16 +25,16 @@
         "@id": "https://grycap.upv.es"
       },
       "hasPart": [
-        { "@id": "cowsay.yaml" },
+        { "@id": "fdl.yaml" },
         { "@id": "script.sh" },
         { "@id": "icon.png" }
       ]
     },
     {
-      "@id": "cowsay.yaml",
+      "@id": "fdl.yaml",
       "@type": ["File", "service-fdl"],
       "name": "OSCAR Cowsay Service Definition",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/cowsay/cowsay.yaml",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/cowsay/fdl.yaml",
       "encodingFormat": "text/yaml"
     },
     {

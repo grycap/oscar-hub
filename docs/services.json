@@ -21,6 +21,32 @@
     "icon": "crates/cowsay/icon.png"
   },
   {
+    "slug": "plants-classification",
+    "repoPath": "crates/plants-classification",
+    "name": "OSCAR Plants Classification Service (by AI4OS)",
+    "description": "OSCAR service for deploying the Plants Specifies Classifier.",
+    "fullDescription": "OSCAR service for deploying the Plants Specifies Classifier.",
+    "serviceType": "asynchronous",
+    "url": "https://github.com/grycap/oscar-hub/tree/main/crates/plants-classification",
+    "license": "GNU Affero General Public License v3.0",
+    "licenseUrl": "https://www.gnu.org/licenses/agpl-3.0.html",
+    "author": "Germán Moltó",
+    "authorUrl": "https://orcid.org/0000-0002-8049-253X",
+    "memory": "4 GiB",
+    "processors": [
+      "2 vCPU",
+      "0 GPU"
+    ],
+    "software": [
+      {
+        "name": "AI4EOSC Plants Classification Torch model",
+        "url": "https://dashboard.cloud.ai4eosc.eu/catalog/modules/plants-classification"
+      }
+    ],
+    "datePublished": "2025-05-25",
+    "icon": "crates/plants-classification/icon.png"
+  },
+  {
     "slug": "yolov8",
     "repoPath": "crates/yolov8",
     "name": "OSCAR YOLOv8 Service (by AI4OS)",

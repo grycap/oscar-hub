@@ -11,9 +11,9 @@
       "@id": "./",
       "@type": "Dataset",
       "datePublished": "2025-05-25",     
-      "URL": "https://github.com/grycap/oscar-hub/tree/main/crates/yolov8",
-      "name": "OSCAR YOLOv8 Service (by AI4OS)",
-      "description": "OSCAR Service definition for deploying the YOLOv8 image recognition model.",      
+      "URL": "https://github.com/grycap/oscar-hub/tree/main/crates/plants-classification",
+      "name": "OSCAR Plants Classification Service (by AI4OS)",
+      "description": "OSCAR service for deploying the Plants Specifies Classifier.",      
       "license": {
         "@id": "https://www.gnu.org/licenses/agpl-3.0.html"
       },
@@ -23,7 +23,7 @@
       "serviceType": "asynchronous",
       "softwareRequirements": [
         {
-        "@id": "https://dashboard.cloud.ai4eosc.eu/catalog/modules/ai4os-yolov8-torch"
+        "@id": "https://dashboard.cloud.ai4eosc.eu/catalog/modules/plants-classification"
         }
       ],
       "author": {
@@ -38,22 +38,22 @@
     {
       "@id": "fdl.yaml",
       "@type": ["File", "service-fdl"],
-      "name": "OSCAR service definition",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/yolov8/fdl.yaml",
+      "name": "OSCAR Service Definition",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/plants-classification/fdl.yaml",
       "encodingFormat": "text/yaml"
     },
     {
       "@id": "script.sh",
       "@type": ["File", "service-script"],
-      "name": "OSCAR service script",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/yolov8/script.sh",
+      "name": "OSCAR Service Script",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/plants-classification/script.sh",
       "encodingFormat": "text/x-shellscript"
     },
      {
       "@id": "icon.png",
       "@type": ["File", "service-icon"],
-      "name": "OSCAR service icon",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/yolov8/icon.png",
+      "name": "OSCAR Service Icon",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/plants-classification/icon.png",
       "encodingFormat": "image/png"
     },
     {
@@ -69,10 +69,10 @@
       "identifier": "SPDX:AGPL-3.0"
     },
     {
-      "@id": "https://dashboard.cloud.ai4eosc.eu/catalog/modules/ai4os-yolov8-torch",
+      "@id": "https://dashboard.cloud.ai4eosc.eu/catalog/modules/plants-classification",
       "@type": "SoftwareApplication",
-      "name": "AI4OS YOLOv8 Torch model",
-      "description": "Pretrained object detection model based on YOLOv8 using PyTorch."
+      "name": "AI4EOSC Plants Classification Torch model",
+      "description": "Pretrained object detection model for plants species classification."
     }
   ]
 }
