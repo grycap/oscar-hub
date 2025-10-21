@@ -54,7 +54,7 @@
         "SoftwareSourceCode"
       ],
       "name": "OSCAR Cowsay Service Definition",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/cowsay/fdl.yaml",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/cowsay/fdl.yml",
       "encodingFormat": "text/yaml"
     },
     {
