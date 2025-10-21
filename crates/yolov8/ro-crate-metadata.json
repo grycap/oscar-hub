@@ -34,7 +34,7 @@
         "@id": "https://orcid.org/0000-0002-8049-253X"
       },
       "hasPart": [
-        { "@id": "fdl.yaml" },
+        { "@id": "fdl.yml" },
         { "@id": "script.sh" },
         { "@id": "icon.png" }
       ]
@@ -43,7 +43,7 @@
       "@id": "fdl.yml",
       "@type": ["File", "SoftwareSourceCode"],
       "name": "OSCAR FDL file",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/yolov8/fdl.yaml",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/yolov8/fdl.yml",
       "encodingFormat": "text/yaml"
     },
     {

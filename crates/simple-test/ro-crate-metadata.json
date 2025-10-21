@@ -1,5 +1,5 @@
 {
-  "@context": "https://w3id.org/ro/crate/1.1/context",
+  "@context": "https://w3id.org/ro/crate/1.2/context",
   "@graph": [
     {
       "@type": "CreativeWork",
@@ -18,25 +18,20 @@
         "Service",
         "SoftwareApplication"
       ],
-      "datePublished": "2025-05-25",
-      "URL": "https://github.com/grycap/oscar-hub/tree/main/crates/plants-classification",
-      "name": "OSCAR Plants Classification Service (by AI4OS)",
-      "description": "OSCAR service for deploying the Plants Species Classifier.",
+      "datePublished": "2024-01-01",
+      "URL": "https://github.com/grycap/oscar-hub/tree/main/crates/simple-test",
+      "name": "OSCAR Simple Test Service",
+      "description": "Example OSCAR service that processes a text-based input to produce basic statistics for demonstration purposes.",
       "license": {
         "@id": "https://www.gnu.org/licenses/agpl-3.0.html"
       },
       "applicationCategory": "OSCAR Service",
-      "memoryRequirements": "4 GiB",
+      "memoryRequirements": "128 MiB",
       "processorRequirements": [
-        "2 vCPU",
+        "1 vCPU",
         "0 GPU"
       ],
-      "serviceType": "asynchronous",
-      "isBasedOn": [
-        {
-          "@id": "https://dashboard.cloud.ai4eosc.eu/catalog/modules/plants-classification"
-        }
-      ],
+      "serviceType": "",
       "author": {
         "@id": "https://orcid.org/0000-0002-8049-253X"
       },
@@ -48,7 +43,7 @@
           "@id": "script.sh"
         },
         {
-          "@id": "icon.png"
+          "@id": "input.txt"
         }
       ]
     },
@@ -58,8 +53,8 @@
         "File",
         "SoftwareSourceCode"
       ],
-      "name": "OSCAR Service Definition",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/plants-classification/fdl.yml",
+      "name": "OSCAR Simple Test Definition",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/simple-test/fdl.yml",
       "encodingFormat": "text/yaml"
     },
     {
@@ -68,39 +63,33 @@
         "File",
         "SoftwareSourceCode"
       ],
-      "name": "OSCAR Service Script",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/plants-classification/script.sh",
+      "name": "OSCAR Simple Test Script",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/simple-test/script.sh",
       "encodingFormat": "text/x-shellscript"
     },
     {
-      "@id": "icon.png",
+      "@id": "input.txt",
       "@type": [
         "File",
-        "ImageObject"
+        "TextDigitalDocument"
       ],
-      "name": "OSCAR Service Icon",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/plants-classification/icon.png",
-      "encodingFormat": "image/png"
+      "name": "Sample Input",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/simple-test/input.txt",
+      "encodingFormat": "text/plain"
     },
     {
       "@id": "https://orcid.org/0000-0002-8049-253X",
       "@type": "Person",
+      "name": "Germán Moltó",
       "affiliation": {
         "@id": "UPV"
-      },
-      "name": "Germán Moltó"
+      }
     },
     {
       "@id": "https://www.gnu.org/licenses/agpl-3.0.html",
       "@type": "CreativeWork",
       "name": "GNU Affero General Public License v3.0",
       "identifier": "SPDX:AGPL-3.0"
-    },
-    {
-      "@id": "https://dashboard.cloud.ai4eosc.eu/catalog/modules/plants-classification",
-      "@type": "SoftwareApplication",
-      "name": "AI4EOSC Plants Classification Torch model",
-      "description": "Pretrained object detection model for plants species classification."
     },
     {
       "@id": "UPV",
