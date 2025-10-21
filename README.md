@@ -6,20 +6,13 @@ Welcome to **OSCAR Hub**, a repository of ready-to-deploy services for the [OSCA
 
 ## 🚀 What's in this repository?
 
-- 📂 A collection of directories, each representing a deployable OSCAR service.
+- 📂 Inside the `crates`folder, a collection of directories, each representing a deployable OSCAR service.
 - 📄 Inside each directory:
   - `ro-crate-metadata.json`: Service description using the RO-Crate format.
   - `file.yml`: Service definition using the [Functions Definition Language (FDL)](https://docs.oscar.grycap.net/fdl/).
   - `script.sh`: Script to be executed upon service invocation.
 ---
 
-
-## 📋 Available Services
-
-| Service | Description | Min RAM | Min CPU |
-|---------|-------------|---------|---------|
-| `yolov8` | Image recognition service using YoloV8. | 4 GiB | 2 vCPU |
----
 
 
 ## 📦 Adding a New Service
@@ -47,6 +40,26 @@ Then run:
 rocrate-validator validate -p ro-crate-1.1 --verbose --no-paging ./<service>
 ```
 A GitHub action has been configured to automatically validate new entries submitted via PRs.
+
+---
+
+## 🏗️ Local development
+
+1. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+2. Start the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+   The script builds the site, serves the `dist` output, and watches for changes. By default it listens on [http://localhost:4173](http://localhost:4173); set the `PORT` environment variable to use a different port.
+
+To produce a static bundle without the dev server, run `npm run build` to regenerate `dist/`.
 
 ---
 
