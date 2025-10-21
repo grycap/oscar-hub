@@ -18,27 +18,27 @@
         "Service",
         "SoftwareApplication"
       ],
-      "datePublished": "2025-05-25",
-      "URL": "https://github.com/grycap/oscar-hub/tree/main/crates/plants-classification",
-      "name": "OSCAR Plants Classification Service (by AI4OS)",
-      "description": "OSCAR service for deploying the Plants Species Classifier.",
+      "datePublished": "2024-01-01",
+      "URL": "https://github.com/grycap/oscar-hub/tree/main/crates/template",
+      "name": "YOUR Service Name",
+      "description": "Briefly describe what your OSCAR service does and how it should be used.",
       "license": {
         "@id": "https://www.gnu.org/licenses/agpl-3.0.html"
       },
       "applicationCategory": "OSCAR Service",
-      "memoryRequirements": "4 GiB",
+      "memoryRequirements": "2 GiB",
       "processorRequirements": [
-        "2 vCPU",
+        "1 vCPU",
         "0 GPU"
       ],
-      "serviceType": "asynchronous",
+      "serviceType": "synchronous",
       "isBasedOn": [
         {
-          "@id": "https://dashboard.cloud.ai4eosc.eu/catalog/modules/plants-classification"
+          "@id": "https://example.com/your-upstream-project"
         }
       ],
       "author": {
-        "@id": "https://orcid.org/0000-0002-8049-253X"
+        "@id": "https://orcid.org/0000-0000-0000-0000"
       },
       "hasPart": [
         {
@@ -59,7 +59,7 @@
         "SoftwareSourceCode"
       ],
       "name": "OSCAR Service Definition",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/plants-classification/fdl.yml",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/template/fdl.yaml",
       "encodingFormat": "text/yaml"
     },
     {
@@ -69,7 +69,7 @@
         "SoftwareSourceCode"
       ],
       "name": "OSCAR Service Script",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/plants-classification/script.sh",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/template/script.sh",
       "encodingFormat": "text/x-shellscript"
     },
     {
@@ -79,16 +79,22 @@
         "ImageObject"
       ],
       "name": "OSCAR Service Icon",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/plants-classification/icon.png",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/template/icon.png",
       "encodingFormat": "image/png"
     },
     {
-      "@id": "https://orcid.org/0000-0002-8049-253X",
+      "@id": "https://orcid.org/0000-0000-0000-0000",
       "@type": "Person",
+      "name": "Your Name",
       "affiliation": {
-        "@id": "UPV"
-      },
-      "name": "Germán Moltó"
+        "@id": "https://example.com/your-organisation"
+      }
+    },
+    {
+      "@id": "https://example.com/your-organisation",
+      "@type": "Organization",
+      "name": "Your Organisation",
+      "url": "https://example.com"
     },
     {
       "@id": "https://www.gnu.org/licenses/agpl-3.0.html",
@@ -97,16 +103,10 @@
       "identifier": "SPDX:AGPL-3.0"
     },
     {
-      "@id": "https://dashboard.cloud.ai4eosc.eu/catalog/modules/plants-classification",
+      "@id": "https://example.com/your-upstream-project",
       "@type": "SoftwareApplication",
-      "name": "AI4EOSC Plants Classification Torch model",
-      "description": "Pretrained object detection model for plants species classification."
-    },
-    {
-      "@id": "UPV",
-      "@type": "Organization",
-      "name": "Universitat Politècnica de València",
-      "url": "https://www.upv.es"
+      "name": "Upstream Project",
+      "description": "Reference to the software, dataset, or workflow your service builds upon."
     }
   ]
 }

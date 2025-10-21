@@ -1,0 +1,18 @@
+functions:
+  oscar:
+  - oscar-service:
+      name: your-service-name
+      cpu: '1.0'
+      memory: 1Gi
+      image: your-container-image
+      script: script.sh
+      log_level: INFO
+      environment:
+        Variables:
+          EXAMPLE_ENV: example-value
+      input:
+      - storage_provider: your-storage-provider
+        path: your/input/path
+      output:
+      - storage_provider: your-storage-provider
+        path: your/output/path
