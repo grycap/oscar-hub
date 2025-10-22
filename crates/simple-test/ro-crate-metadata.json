@@ -1,5 +1,12 @@
 {
-  "@context": "https://w3id.org/ro/crate/1.2/context",
+  "@context": [
+    "https://w3id.org/ro/crate/1.2/context",
+    {
+      "oscar": "https://w3id.org/oscar#",
+      "command": "oscar:command",
+      "expectedSubstring": "oscar:expectedSubstring"
+    }
+  ],
   "@graph": [
     {
       "@type": "CreativeWork",
@@ -35,6 +42,11 @@
       "author": {
         "@id": "https://orcid.org/0000-0002-8049-253X"
       },
+      "subjectOf": [
+        {
+          "@id": "#acceptance-sync"
+        }
+      ],
       "hasPart": [
         {
           "@id": "fdl.yml"
@@ -90,6 +102,30 @@
       "@type": "CreativeWork",
       "name": "GNU Affero General Public License v3.0",
       "identifier": "SPDX:AGPL-3.0"
+    },
+    {
+      "@id": "#acceptance-sync",
+      "@type": [
+        "HowTo",
+        "CreativeWork"
+      ],
+      "name": "Synchronous CLI acceptance test",
+      "tool": {
+        "@id": "#oscar-cli"
+      },
+      "supply": [
+        {
+          "@id": "input.txt"
+        }
+      ],
+      "command": "oscar-cli service run simple-test -i input.txt",
+      "expectedSubstring": "Characters: 76"
+    },
+    {
+      "@id": "#oscar-cli",
+      "@type": "SoftwareApplication",
+      "name": "OSCAR CLI",
+      "url": "https://github.com/grycap/oscar-cli"
     },
     {
       "@id": "UPV",
