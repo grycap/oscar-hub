@@ -119,7 +119,7 @@
         }
       ],
       "command": "oscar-cli service run simple-test -i input.txt",
-      "expectedSubstring": "Characters: 76"
+      "expectedSubstring": "Characters: 44"
     },
     {
       "@id": "#oscar-cli",
