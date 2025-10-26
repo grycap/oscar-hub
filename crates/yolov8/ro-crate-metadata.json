@@ -59,6 +59,9 @@
         },
         {
           "@id": "input.png"
+        },
+        {
+          "@id": "#expected-image"
         }
       ]
     },
