@@ -123,60 +123,13 @@
       ],
       "step": [
         {
-          "@type": "HowToStep",
-          "position": 1,
-          "text": "Upload the sample detection image to the service storage.",
-          "potentialAction": {
-            "@type": "TransferAction",
-            "name": "service put-file",
-            "object": {
-              "@id": "input.png"
-            },
-            "target": {
-              "@type": "EntryPoint",
-              "actionApplication": {
-                "@id": "#oscar-cli"
-              }
-            },
-            "additionalProperty": [
-              {
-                "@type": "PropertyValue",
-                "propertyID": "commandTemplate",
-                "value": "oscar-cli service put-file yolov8 {source}"
-              }
-            ]
-          }
+          "@id": "#step-async-put"
         },
         {
-          "@type": "HowToStep",
-          "position": 2,
-          "text": "Wait for the remote inference to produce detection outputs.",
-          "timeRequired": "PT60S"
+          "@id": "#step-async-wait"
         },
         {
-          "@type": "HowToStep",
-          "position": 3,
-          "text": "Download the most recent output artifact and confirm it is the expected detection PNG.",
-          "potentialAction": {
-            "@type": "TransferAction",
-            "name": "service get-file",
-            "target": {
-              "@type": "EntryPoint",
-              "actionApplication": {
-                "@id": "#oscar-cli"
-              }
-            },
-            "result": {
-              "@id": "#expected-image"
-            },
-            "additionalProperty": [
-              {
-                "@type": "PropertyValue",
-                "propertyID": "commandTemplate",
-                "value": "oscar-cli service get-file yolov8 --download-latest-into {destination}"
-              }
-            ]
-          }
+          "@id": "#step-async-get"
         }
       ]
     },
@@ -205,6 +158,89 @@
       "name": "Expected detection output",
       "description": "PNG image produced by the service containing annotated detections.",
       "encodingFormat": "image/png"
+    },
+    {
+      "@id": "#step-async-put",
+      "@type": "HowToStep",
+      "position": 1,
+      "text": "Upload the sample detection image to the service storage.",
+      "potentialAction": {
+        "@id": "#action-async-put"
+      }
+    },
+    {
+      "@id": "#step-async-wait",
+      "@type": "HowToStep",
+      "position": 2,
+      "text": "Wait for the remote inference to produce detection outputs.",
+      "timeRequired": "PT60S"
+    },
+    {
+      "@id": "#step-async-get",
+      "@type": "HowToStep",
+      "position": 3,
+      "text": "Download the most recent output artifact and confirm it is the expected detection PNG.",
+      "potentialAction": {
+        "@id": "#action-async-get"
+      }
+    },
+    {
+      "@id": "#action-async-put",
+      "@type": "TransferAction",
+      "name": "service put-file",
+      "object": {
+        "@id": "input.png"
+      },
+      "target": {
+        "@id": "#entry-async-put"
+      },
+      "additionalProperty": [
+        {
+          "@id": "#command-template-async-put"
+        }
+      ]
+    },
+    {
+      "@id": "#entry-async-put",
+      "@type": "EntryPoint",
+      "actionApplication": {
+        "@id": "#oscar-cli"
+      }
+    },
+    {
+      "@id": "#command-template-async-put",
+      "@type": "PropertyValue",
+      "propertyID": "commandTemplate",
+      "value": "oscar-cli service put-file yolov8 {source}"
+    },
+    {
+      "@id": "#action-async-get",
+      "@type": "TransferAction",
+      "name": "service get-file",
+      "target": {
+        "@id": "#entry-async-get"
+      },
+      "result": {
+        "@id": "#expected-image"
+      },
+      "additionalProperty": [
+        {
+          "@id": "#command-template-async-get"
+        }
+      ]
+    },
+    {
+      "@id": "#entry-async-get",
+      "@type": "EntryPoint",
+      "actionApplication": {
+        "@id": "#oscar-cli"
+      }
+    },
+    {
+      "@id": "#command-template-async-get",
+      "@type": "PropertyValue",
+      "propertyID": "commandTemplate",
+      "value": "oscar-cli service get-file yolov8 --download-latest-into {destination}"
     },
     {
       "@id": "#oscar-cli",

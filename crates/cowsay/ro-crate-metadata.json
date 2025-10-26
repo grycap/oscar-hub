@@ -115,32 +115,7 @@
       ],
       "step": [
         {
-          "@type": "HowToStep",
-          "position": 1,
-          "text": "Run the cowsay service with the provided sample message.",
-          "potentialAction": {
-            "@type": "ConsumeAction",
-            "name": "service run",
-            "object": {
-              "@id": "input.txt"
-            },
-            "target": {
-              "@type": "EntryPoint",
-              "actionApplication": {
-                "@id": "#oscar-cli"
-              }
-            },
-            "result": {
-              "@id": "#expected-output-snippet"
-            },
-            "additionalProperty": [
-              {
-                "@type": "PropertyValue",
-                "propertyID": "commandTemplate",
-                "value": "oscar-cli service run cowsay -i {input}"
-              }
-            ]
-          }
+          "@id": "#step-sync-run"
         }
       ]
     },
@@ -165,6 +140,47 @@
       "@type": "PropertyValue",
       "name": "Expected cowsay output snippet",
       "value": "Mootastic"
+    },
+    {
+      "@id": "#step-sync-run",
+      "@type": "HowToStep",
+      "position": 1,
+      "text": "Run the cowsay service with the provided sample message.",
+      "potentialAction": {
+        "@id": "#action-sync-run"
+      }
+    },
+    {
+      "@id": "#action-sync-run",
+      "@type": "ConsumeAction",
+      "name": "service run",
+      "object": {
+        "@id": "input.txt"
+      },
+      "target": {
+        "@id": "#entry-sync-run"
+      },
+      "result": {
+        "@id": "#expected-output-snippet"
+      },
+      "additionalProperty": [
+        {
+          "@id": "#command-template-sync-run"
+        }
+      ]
+    },
+    {
+      "@id": "#entry-sync-run",
+      "@type": "EntryPoint",
+      "actionApplication": {
+        "@id": "#oscar-cli"
+      }
+    },
+    {
+      "@id": "#command-template-sync-run",
+      "@type": "PropertyValue",
+      "propertyID": "commandTemplate",
+      "value": "oscar-cli service run cowsay -i {input}"
     },
     {
       "@id": "https://grycap.upv.es",

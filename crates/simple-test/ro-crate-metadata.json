@@ -121,32 +121,7 @@
       ],
       "step": [
         {
-          "@type": "HowToStep",
-          "position": 1,
-          "text": "Run the service using the provided sample input.",
-          "potentialAction": {
-            "@type": "ConsumeAction",
-            "name": "run",
-            "object": {
-              "@id": "input.txt"
-            },
-            "target": {
-              "@type": "EntryPoint",
-              "actionApplication": {
-                "@id": "#oscar-cli"
-              }
-            },
-            "result": {
-              "@id": "#expected-output-characters"
-            },
-            "additionalProperty": [
-              {
-                "@type": "PropertyValue",
-                "propertyID": "commandTemplate",
-                "value": "oscar-cli service run simple-test -i {input}"
-              }
-            ]
-          }
+          "@id": "#step-sync-run"
         }
       ]
     },
@@ -167,60 +142,13 @@
       ],
       "step": [
         {
-          "@type": "HowToStep",
-          "position": 1,
-          "text": "Upload the sample input using the OSCAR CLI.",
-          "potentialAction": {
-            "@type": "TransferAction",
-            "name": "put-file",
-            "object": {
-              "@id": "input.txt"
-            },
-            "target": {
-              "@type": "EntryPoint",
-              "actionApplication": {
-                "@id": "#oscar-cli"
-              }
-            },
-            "additionalProperty": [
-              {
-                "@type": "PropertyValue",
-                "propertyID": "commandTemplate",
-                "value": "oscar-cli service put-file simple-test {source}"
-              }
-            ]
-          }
+          "@id": "#step-async-put"
         },
         {
-          "@type": "HowToStep",
-          "position": 2,
-          "text": "Wait for the remote execution to complete before retrieving the result.",
-          "timeRequired": "PT20S"
+          "@id": "#step-async-wait"
         },
         {
-          "@type": "HowToStep",
-          "position": 3,
-          "text": "Download the latest output and confirm it contains the expected substring.",
-          "potentialAction": {
-            "@type": "TransferAction",
-            "name": "get-file",
-            "target": {
-              "@type": "EntryPoint",
-              "actionApplication": {
-                "@id": "#oscar-cli"
-              }
-            },
-            "result": {
-              "@id": "#expected-output-characters"
-            },
-            "additionalProperty": [
-              {
-                "@type": "PropertyValue",
-                "propertyID": "commandTemplate",
-                "value": "oscar-cli service get-file simple-test --download-latest-into {destination}"
-              }
-            ]
-          }
+          "@id": "#step-async-get"
         }
       ]
     },
@@ -245,6 +173,130 @@
       "@type": "PropertyValue",
       "name": "expected output substring",
       "value": "Characters: 44"
+    },
+    {
+      "@id": "#step-sync-run",
+      "@type": "HowToStep",
+      "position": 1,
+      "text": "Run the service using the provided sample input.",
+      "potentialAction": {
+        "@id": "#action-sync-run"
+      }
+    },
+    {
+      "@id": "#step-async-put",
+      "@type": "HowToStep",
+      "position": 1,
+      "text": "Upload the sample input using the OSCAR CLI.",
+      "potentialAction": {
+        "@id": "#action-async-put"
+      }
+    },
+    {
+      "@id": "#step-async-wait",
+      "@type": "HowToStep",
+      "position": 2,
+      "text": "Wait for the remote execution to complete before retrieving the result.",
+      "timeRequired": "PT20S"
+    },
+    {
+      "@id": "#step-async-get",
+      "@type": "HowToStep",
+      "position": 3,
+      "text": "Download the latest output and confirm it contains the expected substring.",
+      "potentialAction": {
+        "@id": "#action-async-get"
+      }
+    },
+    {
+      "@id": "#action-sync-run",
+      "@type": "ConsumeAction",
+      "name": "Run service synchronously",
+      "object": {
+        "@id": "input.txt"
+      },
+      "target": {
+        "@id": "#entry-sync-run"
+      },
+      "result": {
+        "@id": "#expected-output-characters"
+      },
+      "additionalProperty": [
+        {
+          "@id": "#command-template-sync-run"
+        }
+      ]
+    },
+    {
+      "@id": "#entry-sync-run",
+      "@type": "EntryPoint",
+      "actionApplication": {
+        "@id": "#oscar-cli"
+      }
+    },
+    {
+      "@id": "#command-template-sync-run",
+      "@type": "PropertyValue",
+      "propertyID": "commandTemplate",
+      "value": "oscar-cli service run simple-test -i {input}"
+    },
+    {
+      "@id": "#action-async-put",
+      "@type": "TransferAction",
+      "name": "Upload sample input",
+      "object": {
+        "@id": "input.txt"
+      },
+      "target": {
+        "@id": "#entry-async-put"
+      },
+      "additionalProperty": [
+        {
+          "@id": "#command-template-async-put"
+        }
+      ]
+    },
+    {
+      "@id": "#entry-async-put",
+      "@type": "EntryPoint",
+      "actionApplication": {
+        "@id": "#oscar-cli"
+      }
+    },
+    {
+      "@id": "#command-template-async-put",
+      "@type": "PropertyValue",
+      "propertyID": "commandTemplate",
+      "value": "oscar-cli service put-file simple-test {source}"
+    },
+    {
+      "@id": "#action-async-get",
+      "@type": "TransferAction",
+      "name": "Download latest output",
+      "target": {
+        "@id": "#entry-async-get"
+      },
+      "result": {
+        "@id": "#expected-output-characters"
+      },
+      "additionalProperty": [
+        {
+          "@id": "#command-template-async-get"
+        }
+      ]
+    },
+    {
+      "@id": "#entry-async-get",
+      "@type": "EntryPoint",
+      "actionApplication": {
+        "@id": "#oscar-cli"
+      }
+    },
+    {
+      "@id": "#command-template-async-get",
+      "@type": "PropertyValue",
+      "propertyID": "commandTemplate",
+      "value": "oscar-cli service get-file simple-test --download-latest-into {destination}"
     },
     {
       "@id": "#oscar-cli",
