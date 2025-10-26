@@ -1,11 +1,6 @@
 {
   "@context": [
-    "https://w3id.org/ro/crate/1.2/context",
-    {
-      "oscar": "https://w3id.org/oscar#",
-      "command": "oscar:command",
-      "expectedSubstring": "oscar:expectedSubstring"
-    }
+    "https://w3id.org/ro/crate/1.1/context"    
   ],
   "@graph": [
     {
@@ -30,7 +25,7 @@
       "name": "OSCAR Simple Test Service",
       "description": "Example OSCAR service that processes a text-based input to produce basic statistics for demonstration purposes.",
       "license": {
-        "@id": "https://www.gnu.org/licenses/agpl-3.0.html"
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
       "applicationCategory": "OSCAR Service",
       "memoryRequirements": "128 MiB",
@@ -38,13 +33,19 @@
         "1 vCPU",
         "0 GPU"
       ],
-      "serviceType": "",
+      "serviceType": [
+        "asynchronous",
+        "synchronous"
+],
       "author": {
         "@id": "https://orcid.org/0000-0002-8049-253X"
       },
       "subjectOf": [
         {
-          "@id": "#acceptance-sync"
+          "@id": "#acceptance-test-sync"
+        },
+        {
+          "@id": "#acceptance-test-async"
         }
       ],
       "hasPart": [
@@ -98,28 +99,152 @@
       }
     },
     {
-      "@id": "https://www.gnu.org/licenses/agpl-3.0.html",
+      "@id": "https://www.apache.org/licenses/LICENSE-2.0",
       "@type": "CreativeWork",
-      "name": "GNU Affero General Public License v3.0",
-      "identifier": "SPDX:AGPL-3.0"
+      "name": "Apache License 2.0",
+      "identifier": "SPDX:Apache-2.0"
     },
     {
-      "@id": "#acceptance-sync",
-      "@type": [
-        "HowTo",
-        "CreativeWork"
-      ],
+      "@id": "#acceptance-test-sync",
+      "@type": "HowTo",
       "name": "Synchronous CLI acceptance test",
-      "tool": {
-        "@id": "#oscar-cli"
-      },
-      "supply": [
+      "description": "Execute the service locally with the sample input and validate the output string.",
+      "tool": [
         {
-          "@id": "input.txt"
+          "@id": "#tool-oscar-cli"
         }
       ],
-      "command": "oscar-cli service run simple-test -i input.txt",
-      "expectedSubstring": "Characters: 44"
+      "supply": [
+        {
+          "@id": "#supply-input-txt"
+        }
+      ],
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "text": "Run the service using the provided sample input.",
+          "potentialAction": {
+            "@type": "ConsumeAction",
+            "name": "run",
+            "object": {
+              "@id": "input.txt"
+            },
+            "target": {
+              "@type": "EntryPoint",
+              "actionApplication": {
+                "@id": "#oscar-cli"
+              }
+            },
+            "result": {
+              "@id": "#expected-output-characters"
+            },
+            "additionalProperty": [
+              {
+                "@type": "PropertyValue",
+                "propertyID": "commandTemplate",
+                "value": "oscar-cli service run simple-test -i {input}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "@id": "#acceptance-test-async",
+      "@type": "HowTo",
+      "name": "Asynchronous CLI acceptance test",
+      "description": "Upload the sample input to the service storage and then download the most recent output to verify its contents.",
+      "tool": [
+        {
+          "@id": "#tool-oscar-cli"
+        }
+      ],
+      "supply": [
+        {
+          "@id": "#supply-input-txt"
+        }
+      ],
+      "step": [
+        {
+          "@type": "HowToStep",
+          "position": 1,
+          "text": "Upload the sample input using the OSCAR CLI.",
+          "potentialAction": {
+            "@type": "TransferAction",
+            "name": "put-file",
+            "object": {
+              "@id": "input.txt"
+            },
+            "target": {
+              "@type": "EntryPoint",
+              "actionApplication": {
+                "@id": "#oscar-cli"
+              }
+            },
+            "additionalProperty": [
+              {
+                "@type": "PropertyValue",
+                "propertyID": "commandTemplate",
+                "value": "oscar-cli service put-file simple-test {source}"
+              }
+            ]
+          }
+        },
+        {
+          "@type": "HowToStep",
+          "position": 2,
+          "text": "Wait for the remote execution to complete before retrieving the result.",
+          "timeRequired": "PT20S"
+        },
+        {
+          "@type": "HowToStep",
+          "position": 3,
+          "text": "Download the latest output and confirm it contains the expected substring.",
+          "potentialAction": {
+            "@type": "TransferAction",
+            "name": "get-file",
+            "target": {
+              "@type": "EntryPoint",
+              "actionApplication": {
+                "@id": "#oscar-cli"
+              }
+            },
+            "result": {
+              "@id": "#expected-output-characters"
+            },
+            "additionalProperty": [
+              {
+                "@type": "PropertyValue",
+                "propertyID": "commandTemplate",
+                "value": "oscar-cli service get-file simple-test --download-latest-into {destination}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "@id": "#tool-oscar-cli",
+      "@type": "HowToTool",
+      "name": "OSCAR CLI",
+      "item": {
+        "@id": "#oscar-cli"
+      }
+    },
+    {
+      "@id": "#supply-input-txt",
+      "@type": "HowToSupply",
+      "name": "Sample input file",
+      "item": {
+        "@id": "input.txt"
+      }
+    },
+    {
+      "@id": "#expected-output-characters",
+      "@type": "PropertyValue",
+      "name": "expected output substring",
+      "value": "Characters: 44"
     },
     {
       "@id": "#oscar-cli",

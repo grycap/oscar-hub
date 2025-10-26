@@ -12,6 +12,8 @@ OUTPUT_FILE="$TMP_OUTPUT_DIR/$FILE_NAME-out.txt"
 
 cat "$INPUT_FILE_PATH" > "$OUTPUT_FILE"
 
+echo "This is debug message"
+
 # Basic text analysis
 WORD_COUNT=$(wc -w < "$INPUT_FILE_PATH")
 CHAR_COUNT=$(wc -m < "$INPUT_FILE_PATH")
