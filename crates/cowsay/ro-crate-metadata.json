@@ -1,5 +1,7 @@
 {
-  "@context": "https://w3id.org/ro/crate/1.1/context",
+  "@context": [
+    "https://w3id.org/ro/crate/1.1/context"
+  ],
   "@graph": [
     {
       "@type": "CreativeWork",
@@ -21,9 +23,9 @@
       "datePublished": "2025-08-01",
       "URL": "https://github.com/grycap/oscar-hub/tree/main/crates/cowsay",
       "name": "OSCAR Cowsay Service",
-      "description": "OSCAR Service definition for deploying the talking cow service that can display messages in a speech bubble.",
+      "description": "OSCAR service that renders a user-provided message inside the classic cowsay ASCII bubble.",
       "license": {
-        "@id": "https://www.gnu.org/licenses/agpl-3.0.html"
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
       "applicationCategory": "OSCAR Service",
       "memoryRequirements": "512 MiB",
@@ -35,6 +37,11 @@
       "author": {
         "@id": "https://grycap.upv.es"
       },
+      "subjectOf": [
+        {
+          "@id": "#acceptance-test-sync"
+        }
+      ],
       "hasPart": [
         {
           "@id": "fdl.yml"
@@ -44,6 +51,9 @@
         },
         {
           "@id": "icon.png"
+        },
+        {
+          "@id": "input.txt"
         }
       ]
     },
@@ -78,6 +88,101 @@
       "encodingFormat": "image/png"
     },
     {
+      "@id": "input.txt",
+      "@type": [
+        "File",
+        "TextDigitalDocument"
+      ],
+      "name": "Sample Cowsay Input",
+      "description": "Example phrase rendered by cowsay; replace or extend with service-specific fixtures.",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/cowsay/input.txt",
+      "encodingFormat": "text/plain"
+    },
+    {
+      "@id": "#acceptance-test-sync",
+      "@type": "HowTo",
+      "name": "Synchronous cowsay acceptance test",
+      "description": "Invoke the cowsay service with a sample message and verify the ASCII bubble output locally.",
+      "tool": [
+        {
+          "@id": "#tool-oscar-cli"
+        }
+      ],
+      "supply": [
+        {
+          "@id": "#supply-sample-message"
+        }
+      ],
+      "step": [
+        {
+          "@id": "#step-sync-run"
+        }
+      ]
+    },
+    {
+      "@id": "#tool-oscar-cli",
+      "@type": "HowToTool",
+      "name": "OSCAR CLI",
+      "item": {
+        "@id": "#oscar-cli"
+      }
+    },
+    {
+      "@id": "#supply-sample-message",
+      "@type": "HowToSupply",
+      "name": "Sample message input",
+      "item": {
+        "@id": "input.txt"
+      }
+    },
+    {
+      "@id": "#expected-output-snippet",
+      "@type": "PropertyValue",
+      "name": "Expected cowsay output snippet",
+      "value": "Mootastic"
+    },
+    {
+      "@id": "#step-sync-run",
+      "@type": "HowToStep",
+      "position": 1,
+      "text": "Run the cowsay service with the provided sample message.",
+      "potentialAction": {
+        "@id": "#action-sync-run"
+      }
+    },
+    {
+      "@id": "#action-sync-run",
+      "@type": "ConsumeAction",
+      "name": "service run",
+      "object": {
+        "@id": "input.txt"
+      },
+      "target": {
+        "@id": "#entry-sync-run"
+      },
+      "result": {
+        "@id": "#expected-output-snippet"
+      },
+      "additionalProperty": [
+        {
+          "@id": "#command-template-sync-run"
+        }
+      ]
+    },
+    {
+      "@id": "#entry-sync-run",
+      "@type": "EntryPoint",
+      "actionApplication": {
+        "@id": "#oscar-cli"
+      }
+    },
+    {
+      "@id": "#command-template-sync-run",
+      "@type": "PropertyValue",
+      "propertyID": "commandTemplate",
+      "value": "oscar-cli service run cowsay -i {input}"
+    },
+    {
       "@id": "https://grycap.upv.es",
       "@type": "Organization",
       "name": "GRyCAP",
@@ -93,10 +198,16 @@
       "url": "https://www.upv.es"
     },
     {
-      "@id": "https://www.gnu.org/licenses/agpl-3.0.html",
+      "@id": "https://www.apache.org/licenses/LICENSE-2.0",
       "@type": "CreativeWork",
-      "name": "GNU Affero General Public License v3.0",
-      "identifier": "SPDX:AGPL-3.0"
+      "name": "Apache License 2.0",
+      "identifier": "SPDX:Apache-2.0"
+    },
+    {
+      "@id": "#oscar-cli",
+      "@type": "SoftwareApplication",
+      "name": "OSCAR CLI",
+      "url": "https://github.com/grycap/oscar-cli"
     }
   ]
 }

@@ -1,11 +1,17 @@
 {
-  "@context": "https://w3id.org/ro/crate/1.1/context",
+  "@context": [
+    "https://w3id.org/ro/crate/1.1/context"
+  ],
   "@graph": [
     {
       "@type": "CreativeWork",
       "@id": "ro-crate-metadata.json",
-      "conformsTo": {"@id": "https://w3id.org/ro/crate/1.1"},     
-      "about": { "@id": "./" }
+      "conformsTo": {
+        "@id": "https://w3id.org/ro/crate/1.1"
+      },
+      "about": {
+        "@id": "./"
+      }
     },
     {
       "@id": "./",
@@ -14,17 +20,20 @@
         "Service",
         "SoftwareApplication"
       ],
-      "datePublished": "2025-05-25",     
+      "datePublished": "2025-05-25",
       "URL": "https://github.com/grycap/oscar-hub/tree/main/crates/yolov8",
       "name": "YOLOv8 Service (by AI4EOSC)",
-      "description": "YOLOv8 Service (by AI4EOSC)",      
+      "description": "OSCAR service that deploys the YOLOv8 object detection workflow from AI4EOSC.",
       "license": {
-        "@id": "https://www.gnu.org/licenses/agpl-3.0.html"
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
-      "applicationCategory": "OSCAR Service",    
+      "applicationCategory": "OSCAR Service",
       "memoryRequirements": "4 GiB",
-      "processorRequirements": ["2 vCPU", "0 GPU"],
-      "serviceType": "asynchronous",      
+      "processorRequirements": [
+        "2 vCPU",
+        "0 GPU"
+      ],
+      "serviceType": "asynchronous",
       "isBasedOn": [
         {
           "@id": "https://dashboard.cloud.ai4eosc.eu/catalog/modules/ai4os-yolo-torch"
@@ -33,32 +42,211 @@
       "author": {
         "@id": "https://orcid.org/0000-0002-8049-253X"
       },
+      "subjectOf": [
+        {
+          "@id": "#acceptance-test-async"
+        }
+      ],
       "hasPart": [
-        { "@id": "fdl.yml" },
-        { "@id": "script.sh" },
-        { "@id": "icon.png" }
+        {
+          "@id": "fdl.yml"
+        },
+        {
+          "@id": "script.sh"
+        },
+        {
+          "@id": "icon.png"
+        },
+        {
+          "@id": "input.png"
+        },
+        {
+          "@id": "#expected-image"
+        }
       ]
     },
     {
       "@id": "fdl.yml",
-      "@type": ["File", "SoftwareSourceCode"],
-      "name": "OSCAR FDL file",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "OSCAR Service Definition",
       "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/yolov8/fdl.yml",
       "encodingFormat": "text/yaml"
     },
     {
       "@id": "script.sh",
-      "@type": ["File", "SoftwareSourceCode"],
-      "name": "OSCAR service script",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "OSCAR Service Script",
       "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/yolov8/script.sh",
       "encodingFormat": "text/x-shellscript"
     },
     {
       "@id": "icon.png",
-      "@type": ["File", "ImageObject"],
-      "name": "OSCAR service icon",
+      "@type": [
+        "File",
+        "ImageObject"
+      ],
+      "name": "OSCAR Service Icon",
       "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/yolov8/icon.png",
       "encodingFormat": "image/png"
+    },
+    {
+      "@id": "input.png",
+      "@type": [
+        "File",
+        "ImageObject"
+      ],
+      "name": "Sample detection image",
+      "description": "Replace with a representative image for running the YOLOv8 detector.",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/yolov8/input.png",
+      "encodingFormat": "image/png"
+    },
+    {
+      "@id": "#acceptance-test-async",
+      "@type": "HowTo",
+      "name": "Asynchronous YOLOv8 acceptance test",
+      "description": "Upload a sample image, wait for detection to complete remotely, then download the prediction artifact and check the expected confirmation text.",
+      "tool": [
+        {
+          "@id": "#tool-oscar-cli"
+        }
+      ],
+      "supply": [
+        {
+          "@id": "#supply-sample-image"
+        }
+      ],
+      "step": [
+        {
+          "@id": "#step-async-put"
+        },
+        {
+          "@id": "#step-async-wait"
+        },
+        {
+          "@id": "#step-async-get"
+        }
+      ]
+    },
+    {
+      "@id": "#tool-oscar-cli",
+      "@type": "HowToTool",
+      "name": "OSCAR CLI",
+      "item": {
+        "@id": "#oscar-cli"
+      }
+    },
+    {
+      "@id": "#supply-sample-image",
+      "@type": "HowToSupply",
+      "name": "Sample detection image",
+      "item": {
+        "@id": "input.png"
+      }
+    },
+    {
+      "@id": "#expected-image",
+      "@type": [
+        "File",
+        "ImageObject"
+      ],
+      "name": "Expected detection output",
+      "description": "PNG image produced by the service containing annotated detections.",
+      "encodingFormat": "image/png"
+    },
+    {
+      "@id": "#step-async-put",
+      "@type": "HowToStep",
+      "position": 1,
+      "text": "Upload the sample detection image to the service storage.",
+      "potentialAction": {
+        "@id": "#action-async-put"
+      }
+    },
+    {
+      "@id": "#step-async-wait",
+      "@type": "HowToStep",
+      "position": 2,
+      "text": "Wait for the remote inference to produce detection outputs.",
+      "timeRequired": "PT60S"
+    },
+    {
+      "@id": "#step-async-get",
+      "@type": "HowToStep",
+      "position": 3,
+      "text": "Download the most recent output artifact and confirm it is the expected detection PNG.",
+      "potentialAction": {
+        "@id": "#action-async-get"
+      }
+    },
+    {
+      "@id": "#action-async-put",
+      "@type": "TransferAction",
+      "name": "service put-file",
+      "object": {
+        "@id": "input.png"
+      },
+      "target": {
+        "@id": "#entry-async-put"
+      },
+      "additionalProperty": [
+        {
+          "@id": "#command-template-async-put"
+        }
+      ]
+    },
+    {
+      "@id": "#entry-async-put",
+      "@type": "EntryPoint",
+      "actionApplication": {
+        "@id": "#oscar-cli"
+      }
+    },
+    {
+      "@id": "#command-template-async-put",
+      "@type": "PropertyValue",
+      "propertyID": "commandTemplate",
+      "value": "oscar-cli service put-file yolov8 {source}"
+    },
+    {
+      "@id": "#action-async-get",
+      "@type": "TransferAction",
+      "name": "service get-file",
+      "target": {
+        "@id": "#entry-async-get"
+      },
+      "result": {
+        "@id": "#expected-image"
+      },
+      "additionalProperty": [
+        {
+          "@id": "#command-template-async-get"
+        }
+      ]
+    },
+    {
+      "@id": "#entry-async-get",
+      "@type": "EntryPoint",
+      "actionApplication": {
+        "@id": "#oscar-cli"
+      }
+    },
+    {
+      "@id": "#command-template-async-get",
+      "@type": "PropertyValue",
+      "propertyID": "commandTemplate",
+      "value": "oscar-cli service get-file yolov8 --download-latest-into {destination}"
+    },
+    {
+      "@id": "#oscar-cli",
+      "@type": "SoftwareApplication",
+      "name": "OSCAR CLI",
+      "url": "https://github.com/grycap/oscar-cli"
     },
     {
       "@id": "https://orcid.org/0000-0002-8049-253X",
@@ -69,10 +257,10 @@
       "name": "Germán Moltó"
     },
     {
-      "@id": "https://www.gnu.org/licenses/agpl-3.0.html",
+      "@id": "https://www.apache.org/licenses/LICENSE-2.0",
       "@type": "CreativeWork",
-      "name": "GNU Affero General Public License v3.0",
-      "identifier": "SPDX:AGPL-3.0"
+      "name": "Apache License 2.0",
+      "identifier": "SPDX:Apache-2.0"
     },
     {
       "@id": "https://dashboard.cloud.ai4eosc.eu/catalog/modules/ai4os-yolo-torch",
@@ -83,7 +271,7 @@
     {
       "@id": "UPV",
       "@type": "Organization",
-      "name": "UPV",
+      "name": "Universitat Politècnica de València",
       "url": "https://www.upv.es"
     }
   ]
