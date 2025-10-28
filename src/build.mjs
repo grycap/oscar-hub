@@ -395,7 +395,9 @@ function escapeAttribute(value) {
 }
 
 function capitalize(value) {
-  if (!value) return '';
+  if (typeof value !== 'string') {
+    return '';
+  }
   return value.charAt(0).toUpperCase() + value.slice(1);
 }
 
