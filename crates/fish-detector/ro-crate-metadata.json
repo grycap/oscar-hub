@@ -156,8 +156,8 @@
         "ImageObject"
       ],
       "name": "Expected detection output",
-      "description": "JPG image produced by the service containing annotated detections and JSON file containing the detection results.",
-      "encodingFormat": "image/jpg"
+      "description": "JPEG image produced by the service containing annotated detections and JSON file containing the detection results.",
+      "encodingFormat": "image/jpeg"
     },
     {
       "@id": "#step-async-put",
@@ -173,7 +173,7 @@
       "@type": "HowToStep",
       "position": 2,
       "text": "Wait for the remote inference to produce detection outputs.",
-      "timeRequired": "PT60S"
+      "timeRequired": "PT300S"
     },
     {
       "@id": "#step-async-get",
@@ -240,7 +240,7 @@
       "@id": "#command-template-async-get",
       "@type": "PropertyValue",
       "propertyID": "commandTemplate",
-      "value": "oscar-cli service get-file fish-detector --download-latest-into {destination}"
+      "value": "oscar-cli service get-file fish-detector --download-latest-into {destination}/input.jpg/"
     },
     {
       "@id": "#oscar-cli",
