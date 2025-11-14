@@ -14,11 +14,11 @@ In order to invoke the function, first you have to create a service, either by t
 
 
 ``` sh
-oscar-cli apply yolov8.yaml
+oscar-cli apply fdl.yaml
 ```
 
 Once the service is created you can make the invocation with the following
 command, which will store the output on a minio bucket.
 
 ``` sh
-oscar-cli service put-file yolov8.yaml minio img/cat.jpg yolov8/input/cat.jpg
+oscar-cli service put-file fdl.yaml minio img/cat.jpg yolov8/input/cat.jpg
