@@ -11,8 +11,4 @@ Here is an example of a prediction output:
 ![Prediction output](img/output-image.png)
 ![Prediction output](img/output-json.png)
 
-## FDL
 
-The _**fish-detector.yaml**_ creates a service from a Docker image that processes only one .jpg file.
-
-The _**fish-detector-zip.yaml**_ creates a service from a Docker image that processes a zip file containing multiple .jpeg images.
