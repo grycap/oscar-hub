@@ -278,7 +278,7 @@
       "@id": "#command-template-async-put",
       "@type": "PropertyValue",
       "propertyID": "commandTemplate",
-      "value": "oscar-cli service put-file plants-classification {source}.json"
+      "value": "oscar-cli service put-file plants-classification {source}"
     },
     {
       "@id": "#action-async-get",
