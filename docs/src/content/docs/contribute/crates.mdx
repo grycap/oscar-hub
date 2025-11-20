@@ -1,0 +1,52 @@
+---
+title: Adding & Maintaining Crates
+description: Step-by-step checklist for adding a new service crate or updating an existing one.
+---
+
+## Create a new crate
+
+1. Duplicate the `template/` directory and rename it to your slug (lowercase letters, numbers, hyphens).
+2. Update the copied `ro-crate-metadata.json` with your service-specific data. Keep only the fields you intend to populate.
+3. Keep the files referenced in `hasPart` (`fdl.yml`, `script.sh`, `icon.png`, optional `sample-input.txt`) in sync with reality—either provide the files or remove the references.
+4. Include any deployment notes (`README.md`, sample payloads) that users might need to exercise the service.
+
+## Required metadata
+
+The `./` dataset node must include:
+
+- `name`: Human-friendly service name.
+- `description`: Two or three sentences describing what the service does and how OSCAR users benefit.
+- `serviceType`: `synchronous` or `asynchronous`.
+- `license`: Link or inline object describing the license.
+- `author`: Person or organization responsible for the service.
+- `URL`: Target application endpoint, repository, or landing page.
+- `datePublished`: `YYYY-MM-DD` format.
+
+Include optional-but-valuable fields when available: `memoryRequirements`, `processorRequirements`, `softwareRequirements`, `keywords`, and `version`.
+
+## Testing metadata
+
+Run the build locally to ensure the crate is parsed correctly:
+
+```bash
+npm run build && rocrate-validator validate -p ro-crate-1.1 --no-paging ./crates/<service>
+```
+
+- The build will warn if an icon is missing or if the dataset node cannot be found.
+- [`rocrate-validator`](https://pypi.org/project/rocrate-validator/) (Python) or any JSON-LD validator confirms structural correctness whenever you tweak schema-heavy sections.
+
+## Keeping crates up to date
+
+- **Version updates:** Increment `datePublished`, and describe the change in the pull request.
+- **Deprecations:** Mention alternatives in the dataset `description` and note the status in the pull request if a service is being retired.
+- **Icon refresh:** Replace the PNG and ensure the aspect ratio stays square so cards render uniformly.
+
+## Troubleshooting
+
+| Symptom | Fix |
+| --- | --- |
+| Crate missing from the catalog | Check for JSON syntax errors or missing `./` dataset node. Run `npm run dev` and inspect the console warnings. |
+| Icon placeholder shows initials | Confirm the dataset `logo` reference points to `icon.png` and that the file exists. |
+| Filters misbehave | Ensure `serviceType` uses lowercase values that match the `<select>` options in `src/build.mjs`. |
+
+Once your crate passes these checks, open a pull request referencing the relevant issue.

@@ -52,6 +52,8 @@ A GitHub action has been configured to automatically validate new entries submit
    npm install
    ```
 
+   If you plan to work on the documentation site, also run `npm install` inside `docs/`.
+
 2. Start the development server:
 
    ```bash
@@ -60,7 +62,26 @@ A GitHub action has been configured to automatically validate new entries submit
 
    The script builds the site, serves the `dist` output, and watches for changes. By default it listens on [http://localhost:4173](http://localhost:4173); set the `PORT` environment variable to use a different port.
 
-To produce a static bundle without the dev server, run `npm run build` to regenerate `dist/`.
+3. Edit the contributor & RO-Crate documentation under `docs/` with:
+
+   ```bash
+   npm run docs:dev
+   ```
+
+   The documentation is built with [Astro Starlight](https://starlight.astro.build) and published under [`/guide`](https://hub.oscar.grycap.net/guide/).
+
+To produce a static bundle without the dev server, run `npm run build` to regenerate `dist/`. This command now builds both the catalog landing page and the `/guide` documentation bundle.
+
+---
+
+## 📚 Guide
+
+The canonical reference for onboarding, workflow expectations, and field-by-field RO-Crate documentation now lives inside this repository at [`docs/`](docs/). It is published together with the catalog at `https://hub.oscar.grycap.net/guide/` and includes:
+
+- Contributor prerequisites and local setup instructions.
+- Branching and review workflow checklists.
+- Detailed explanations for each RO-Crate section we rely on, with examples pulled from the in-repo services.
+- Validation tips, troubleshooting tables, and templates.
 
 ---
 

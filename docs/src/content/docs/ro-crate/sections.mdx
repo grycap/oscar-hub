@@ -1,0 +1,71 @@
+---
+title: Dataset & Metadata Sections
+description: Detailed description of each section in an OSCAR Hub RO-Crate file.
+---
+
+## Dataset node (`./`)
+
+| Field | Required | Notes |
+| --- | --- | --- |
+| `name` | ✅ | Appears as the card title. Keep it short and action-oriented. |
+| `description` | ✅ | Full markdown-free text. The first 240 characters are shown on the card, the rest lives in the detail modal/JSON. |
+| `serviceType` | ✅ | `synchronous` or `asynchronous`. Values outside this set will hide filter options. |
+| `URL` | ✅ | Destination for users (repository, API explorer, documentation). |
+| `license` | ✅ | Either a single `@id` to a remote resource or an inline object with `name` + `url`. |
+| `author` | ✅ | Person or organisation. Provide `name` and `url` for attribution. |
+| `datePublished` | ✅ | ISO-8601 date. Update whenever you make a significant change. |
+| `memoryRequirements` | ⚙️ | Free-form string describing CPU/GPU requirements. |
+| `processorRequirements` | ⚙️ | Array of CPU/GPU strings when multiple SKUs are supported. |
+| `softwareRequirements` | ⚙️ | Array of references (objects or `@id`s) pointing to nodes that describe dependencies. |
+| `logo` | ⚙️ | Reference to `icon.png` (or similar). Must exist on disk. |
+
+## License node
+Define once inside `@graph` when you need extra fields:
+
+```json
+{
+  "@id": "https://opensource.org/licenses/MIT",
+  "@type": "CreativeWork",
+  "name": "MIT License"
+}
+```
+
+## Author node
+You can describe a person or organisation. Both can include contact URLs.
+
+```json
+{
+  "@id": "#maintainer",
+  "@type": "Organization",
+  "name": "GRyCAP",
+  "url": "https://www.grycap.upv.es"
+}
+```
+
+## Software requirements
+
+Represent each dependency with its own node:
+
+```json
+{
+  "@id": "#torch",
+  "@type": "SoftwareApplication",
+  "name": "PyTorch",
+  "version": "2.1",
+  "url": "https://pytorch.org"
+}
+```
+
+Mention the node inside the dataset `softwareRequirements` array:
+
+```json
+"softwareRequirements": [{ "@id": "#torch" }, { "@id": "#ultralytics" }]
+```
+
+## Icon assets
+
+- Store the PNG alongside the metadata file.
+- Reference it via `logo: { "@id": "icon.png" }`.
+- Optional dark/light variants can use different filenames, but make sure they exist or the parser logs a warning.
+
+Later sections walk through validation commands and checklists so your crate is accepted on the first review.

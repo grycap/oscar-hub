@@ -1,0 +1,42 @@
+---
+title: Workflow & Reviews
+description: Branching model, code reviews, and deployment pipeline for OSCAR Hub.
+---
+
+## Branching strategy
+
+- Base all work on `main`. Use short-lived feature branches such as `feature/yolov8-docs`.
+- Keep each branch focused on a single concern (new crate, metadata update, documentation addition).
+- Rebase or merge from `main` frequently to avoid conflicts in shared assets like `dist/` output or shared styles.
+
+## Issue tracking
+
+1. Open an issue describing the proposed service or improvement. Include acceptance criteria and a link to upstream assets or research outputs.
+2. Reference the issue number in your branch name and pull request description.
+
+## Pull request checklist
+
+- [ ] `npm run build` succeeds locally (generates catalog + documentation bundle).
+- [ ] Screenshots or GIFs show new UI affordances when relevant.
+- [ ] Every crate includes a valid `ro-crate-metadata.json`, icon asset, and optional README if it needs extra operational notes.
+- [ ] Documentation is updated whenever new concepts or metadata fields are introduced.
+
+## Code review expectations
+
+- **Small diff sets:** Aim for ≤400 lines per PR. Split metadata uploads and docs updates if needed.
+- **Actionable feedback:** Ask for clarification using threaded comments. Suggest edits through GitHub suggestions when the fix is trivial.
+- **Approvals:** At least one maintainer review is required. Metadata changes that affect compliance (e.g., new mandatory fields) require two approvals.
+
+## Deployment pipeline
+
+1. GitHub Actions will run `npm run build` and publish the artifacts to the `dist/` folder.
+2. The static assets (catalog) deploy to the `hub.oscar.grycap.net` site root.
+3. The documentation bundle generated from `docs/dist` is copied under `/guide`, giving every release an up-to-date guide.
+
+## Post-merge duties
+
+- Monitor the deployment status for failures.
+- Open follow-up issues for known gaps or TODOs that did not block the merge.
+- Announce new services or documentation updates in the OSCAR communication channels (mailing list, Slack, etc.).
+
+Head to [Adding & Maintaining Crates](./crates/) for a hands-on checklist when shipping services.

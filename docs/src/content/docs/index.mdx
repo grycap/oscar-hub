@@ -1,0 +1,26 @@
+---
+title: OSCAR Hub Guide
+description: Build, document, and maintain the OSCAR Hub service catalog.
+---
+
+Welcome to the guide for the OSCAR Hub catalog. This space documents how the catalog is built, how to contribute new services, and how to curate the RO-Crate metadata that powers every card in the landing page.
+
+## How the catalog is structured
+
+- **`crates/`** holds one directory per service. The contents follow the [RO-Crate specification](https://www.researchobject.org/ro-crate/) and are parsed directly by `src/build.mjs`.
+- **`src/static/`** defines shared assets (styles, scripts, and the OSCAR logotype).
+- **`src/build.mjs`** is a Node script that scans every crate, renders the landing page, and exports JSON so downstream applications can reuse the same metadata.
+- **`docs/`** (this site) provides the governance guidelines and metadata reference so contributors can expand the catalog confidently.
+
+## What you'll find here
+
+### Contribution workflow
+Learn about the toolchain, local setup, branching model, code review expectations, and deployment process. These steps ensure the catalog and its metadata remain verifiable and reproducible.
+
+### RO-Crate reference
+See how we structure the dataset node, which fields are mandatory, how we model hardware/software requirements, and how to validate crates before opening a pull request. Examples are pulled from the in-repo crates to keep the documentation real-world.
+
+### Templates and troubleshooting
+Copy ready-to-use snippets and checklists for adding icons, maintaining version history, and dealing with metadata validation errors.
+
+Use the sidebar for high-level navigation and rely on the per-page table of contents to jump to specific sections. If anything is unclear, open a discussion or an issue in [`grycap/oscar-hub`](https://github.com/grycap/oscar-hub).
