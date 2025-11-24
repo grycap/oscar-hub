@@ -368,7 +368,7 @@ function renderServiceCard(service) {
       <div class="service-card__tags">
         ${serviceType}
       </div>
-      <div class="service-card__meta">
+      <div class="service-card__meta" style="margin-top: 10px; margin-bottom: 10px;">
         ${memory}
         ${processors}
         ${date}
