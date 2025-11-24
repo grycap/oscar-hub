@@ -45,20 +45,30 @@ The repository ships with a ready-to-edit blueprint under [`template/`](../../..
       "license": { "@id": "https://opensource.org/licenses/MIT" },
       "datePublished": "2024-05-16",
       "memoryRequirements": "8 GiB",
-      "softwareRequirements": [ { "@id": "#yolov8" } ],
-      "logo": { "@id": "icon.png" }
+      "hasPart": [
+        { "@id": "fdl.yml" },
+        { "@id": "script.sh" }
+      ]
     },
     { "@id": "#grycap", "@type": "Organization", "name": "GRyCAP" },
-    { "@id": "#yolov8", "@type": "SoftwareApplication", "name": "Ultralytics YOLOv8" },
     {
-      "@id": "icon.png",
-      "@type": [ "File", "ImageObject" ],
-      "name": "Service icon",
-      "encodingFormat": "image/png"
+      "@id": "fdl.yml",
+      "@type": [ "File", "SoftwareSourceCode" ],
+      "name": "Service Definition (FDL)",
+      "url": "https://server/fdl.yml",
+      "encodingFormat": "text/yaml"
+    },
+    {
+      "@id": "script.sh",
+      "@type": [ "File", "SoftwareSourceCode" ],
+      "name": "Service Execution Script",
+      "url": "https://server/script.sh",
+      "encodingFormat": "text/x-shellscript"
     }
   ]
 }
+
 ```
-> ℹ️ When you reference local files (like `icon.png`) in `logo` or `hasPart`, make sure the actual file is bundled alongside `ro-crate-metadata.json`. Validators will flag missing resources.
+> ℹ️ When you reference local files (like `fdl.yml` or `script.sh`) in `hasPart`, make sure the actual file is bundled alongside `ro-crate-metadata.json`. Validators will flag missing resources.
 
 Use this page as the conceptual overview, then continue to the dedicated sections for detailed field requirements and validation tips.
