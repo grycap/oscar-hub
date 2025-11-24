@@ -295,7 +295,11 @@ function renderServiceCard(service) {
       )}</div>`;
 
   const serviceType = service.serviceType
-    ? `<span class="tag">${escapeHtml(capitalize(service.serviceType))}</span>`
+    ? (
+        Array.isArray(service.serviceType) 
+        ? service.serviceType.map(type => `<span class="tag">${escapeHtml(capitalize(type))}</span>`).join('')
+        : `<span class="tag">${escapeHtml(capitalize(service.serviceType))}</span>`
+      )
     : '';
 
   const memory = service.memory ? `<span class="meta-item">${escapeHtml(service.memory)}</span>` : '';
@@ -367,7 +371,7 @@ function renderServiceCard(service) {
       <div class="service-card__tags">
         ${serviceType}
       </div>
-      <div class="service-card__meta">
+      <div class="service-card__meta" style="margin-top: 10px; margin-bottom: 10px;">
         ${memory}
         ${processors}
         ${date}
