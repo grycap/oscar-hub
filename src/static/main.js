@@ -10,7 +10,9 @@ function applyFilters() {
   let visibleCount = 0;
 
   cards.forEach((card) => {
-    const serviceType = (card.dataset.serviceType ?? '').toLowerCase();
+    let serviceType = (card.dataset.serviceType ?? '').toLowerCase();
+    if (serviceType.includes(',')) serviceType = serviceType.split(',');
+
     const name = (card.dataset.serviceName ?? '').toLowerCase();
     const description = card
       .querySelector('.service-card__description')
@@ -18,7 +20,10 @@ function applyFilters() {
     const haystack = `${name} ${description}`;
 
     const matchesQuery = !query || haystack.includes(query);
-    const matchesType = !type || serviceType === type;
+    const matchesType = !type || (serviceType === type || (
+                                                            Array.isArray(serviceType) && serviceType.some((t) => t === type)
+                                                          )
+                                  );
     const isVisible = matchesQuery && matchesType;
 
     card.style.display = isVisible ? '' : 'none';
