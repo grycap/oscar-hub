@@ -1,0 +1,74 @@
+---
+title: RO-Crate Overview
+description: Understand how OSCAR Hub relies on RO-Crate to describe every service.
+---
+
+RO-Crate is a lightweight way to package research objects with machine-readable metadata. In OSCAR Hub we treat each service as a dataset whose metadata lives in `ro-crate-metadata.json`. The build script parses this file and renders the landing page content from it.
+
+## Key concepts we rely on
+
+### `@graph`
+A list of all entities related to your service (dataset, software dependencies, authors, icons). Every node has an `@id` used for cross-references.
+
+### Dataset node (`@id: "./"`)
+This is the entry point for the catalog. The fields displayed on the landing page (name, description, service type, hardware/software requirements) all live here.
+
+### Linked entities
+Objects such as the license, authors, or software requirements can be defined once and referenced via `@id`. The catalog flattens them for display while preserving their structure internally.
+
+### Assets and icons
+Logos are referenced via the dataset `logo` property and stored next to the crate. The build process copies them into `dist/assets/icons/<slug>/` so the catalog can render service cards.
+
+### Starter template
+The repository ships with a ready-to-edit blueprint under [`template/`](../../../../template). It includes a fully linked RO-Crate (`ro-crate-metadata.json`), placeholder assets (`fdl.yml`, `script.sh`, `icon.png`, `sample-input.txt`), and acceptance test nodes. Copy it to bootstrap new services and then trim the sections you do not need.
+
+## Minimal example
+
+```json
+{
+  "@context": "https://w3id.org/ro/crate/1.1/context",
+  "@graph": [
+    {
+      "@id": "ro-crate-metadata.json",
+      "@type": "CreativeWork",
+      "conformsTo": { "@id": "https://w3id.org/ro/crate/1.1" },
+      "about": { "@id": "./" }
+    },
+    {
+      "@id": "./",
+      "@type": "Dataset",
+      "name": "YOLOv8 Object Detection",
+      "description": "Perform GPU-accelerated YOLOv8 inference inside OSCAR.",
+      "serviceType": "synchronous",
+      "URL": "https://github.com/grycap/oscar-hub/tree/main/crates/yolov8",
+      "author": { "@id": "#grycap" },
+      "license": { "@id": "https://opensource.org/licenses/MIT" },
+      "datePublished": "2024-05-16",
+      "memoryRequirements": "8 GiB",
+      "hasPart": [
+        { "@id": "fdl.yml" },
+        { "@id": "script.sh" }
+      ]
+    },
+    { "@id": "#grycap", "@type": "Organization", "name": "GRyCAP" },
+    {
+      "@id": "fdl.yml",
+      "@type": [ "File", "SoftwareSourceCode" ],
+      "name": "Service Definition (FDL)",
+      "url": "https://server/fdl.yml",
+      "encodingFormat": "text/yaml"
+    },
+    {
+      "@id": "script.sh",
+      "@type": [ "File", "SoftwareSourceCode" ],
+      "name": "Service Execution Script",
+      "url": "https://server/script.sh",
+      "encodingFormat": "text/x-shellscript"
+    }
+  ]
+}
+
+```
+> ℹ️ When you reference local files (like `fdl.yml` or `script.sh`) in `hasPart`, make sure the actual file is bundled alongside `ro-crate-metadata.json`. Validators will flag missing resources.
+
+Use this page as the conceptual overview, then continue to the dedicated sections for detailed field requirements and validation tips.

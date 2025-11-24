@@ -75,7 +75,7 @@
         "SoftwareSourceCode"
       ],
       "name": "Service Definition (FDL)",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/template/fdl.yaml",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/template/fdl.yml",
       "encodingFormat": "text/yaml"
     },
     {

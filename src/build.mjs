@@ -11,13 +11,15 @@ const assetsDir = path.join(outputDir, 'assets');
 const iconsDir = path.join(assetsDir, 'icons');
 const staticDir = path.join(__dirname, 'static');
 const cratesDir = path.join(repoRoot, 'crates');
+const docsDir = path.join(repoRoot, 'docs');
+const docsDistDir = path.join(docsDir, 'dist');
 
 export async function buildSite() {
   const services = await collectServices();
   await prepareOutput();
   await copyStaticAssets();
   await copyServiceIcons(services);
-  await Promise.all([writeIndexHtml(services), writeServicesJson(services), writeNoJekyll()]);
+  await Promise.all([writeIndexHtml(services), writeNoJekyll(), copyDocsGuide()]);
   console.log(`Generated landing page for ${services.length} services.`);
   return services;
 }
@@ -37,21 +39,21 @@ async function copyStaticAssets() {
   await fs.cp(staticDir, assetsDir, { recursive: true });
 }
 
+async function copyDocsGuide() {
+  const targetDir = path.join(outputDir, 'guide');
+  const exists = await fileExists(docsDistDir);
+  if (!exists) {
+    console.warn('Documentation bundle not found. Run `npm run docs:build` to include /guide.');
+    return;
+  }
+  await fs.rm(targetDir, { recursive: true, force: true });
+  await fs.mkdir(path.dirname(targetDir), { recursive: true });
+  await fs.cp(docsDistDir, targetDir, { recursive: true });
+}
+
 async function writeIndexHtml(services) {
   const html = renderHtml(services);
   await fs.writeFile(path.join(outputDir, 'index.html'), html, 'utf8');
-}
-
-async function writeServicesJson(services) {
-  const payload = services.map(({ icon, ...rest }) => ({
-    ...rest,
-    icon: icon?.webRelative ?? null
-  }));
-  await fs.writeFile(
-    path.join(outputDir, 'services.json'),
-    JSON.stringify(payload, null, 2),
-    'utf8'
-  );
 }
 
 async function writeNoJekyll() {
@@ -246,6 +248,7 @@ function renderHtml(services) {
       <p class="hero__subtitle">Ready to be deployed on <a href="https://oscar.grycap.net">OSCAR</a>.</p>
       <div class="hero__actions">
         <a class="btn btn--primary" href="https://github.com/grycap/oscar-hub" target="_blank" rel="noreferrer">GitHub Repository</a>
+        <a class="btn btn--secondary" href="guide/" rel="noreferrer">Contribution Guide</a>
       </div>
     </div>
     <div class="hero__meta">

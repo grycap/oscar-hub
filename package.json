@@ -4,7 +4,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "node src/build.mjs",
-    "dev": "node src/dev.mjs"
+    "build": "npm run docs:build && node src/build.mjs",
+    "dev": "node src/dev.mjs",
+    "docs:dev": "npm --prefix docs run dev",
+    "docs:build": "npm --prefix docs run build",
+    "docs:preview": "npm --prefix docs run preview"
   }
 }

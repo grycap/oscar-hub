@@ -1,0 +1,55 @@
+---
+title: Prerequisites & Setup
+description: Prepare your workstation and understand the OSCAR Hub repository before contributing.
+---
+
+## Prerequisites
+
+- **Accounts:** GitHub account with access to the `grycap/oscar-hub` repository and OSCAR platform credentials if you intend to deploy test services.
+- **Tooling:** Node.js 20+, npm 10+, Git, and a container runtime (Docker/Podman) when crafting services that will eventually ship as containers.
+- **Context:** Read the latest issues and milestones so your contribution lines up with active priorities.
+
+## Local repository layout
+
+| Path | Purpose |
+| --- | --- |
+| `crates/<service>/ro-crate-metadata.json` | The canonical source for all catalog data. Parsed by `src/build.mjs` and served to users. |
+| `template/` | Starter assets when creating a brand-new service crate. |
+| `src/` | Static site generator (Node script + static assets). |
+| `docs/` | Astro + Starlight documentation project documented on this site. |
+
+## Initial setup
+
+1. Fork the repository or create a feature branch from `main`.
+2. Install dependencies at the root (`npm install`) for the catalog build script and inside `docs/` for the documentation tooling (`npm install`).
+3. Run `npm run dev` to boot the catalog dev server (watches `crates/`). Use `npm run docs:dev` to iterate on documentation changes.
+4. Copy the `template` directory when creating a new crate; rename it to match your service slug.
+
+## Coding and metadata standards
+
+- **Consistency:** Follow the indentation and key ordering used by existing crates (2 spaces, stable key names). Stick to lowercase, hyphenated directory names.
+- **Human-friendly copy:** Descriptions should be written for practitioners, include the value proposition, and avoid marketing fluff. Maximum 240 characters appear on cards, but the full text is exposed in the JSON payload.
+- **Service types:** Accepted values today are `synchronous` and `asynchronous`. Extend the UI before introducing a new value.
+- **Icons:** Supply `icon.png` (square, 512×512 preferred) and reference it from the dataset node. Keep files under version control.
+
+## Running the catalog locally
+
+Use the development server while editing crates to get instant feedback:
+
+```bash
+npm run dev
+```
+
+This serves `dist/` with live reload. Each save to `ro-crate-metadata.json` causes `src/dev.mjs` to regenerate the HTML and JSON. Check the console for skipped crates or schema warnings.
+
+## Updating documentation locally
+
+Documentation lives in the `docs/` workspace and is deployed under `/guide` when the main catalog is built. Run:
+
+```bash
+npm run docs:dev
+```
+
+This launches Starlight with hot reload and a sidebar-driven table of contents. Use MDX when you need callouts or reusable components.
+
+Proceed to [Workflow & Reviews](./workflow/) for the collaboration model once your environment is configured.
