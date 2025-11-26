@@ -1,0 +1,114 @@
+{
+  "@context": [
+    "https://w3id.org/ro/crate/1.1/context"
+  ],
+  "@graph": [
+    {
+      "@type": "CreativeWork",
+      "@id": "ro-crate-metadata.json",
+      "conformsTo": {
+        "@id": "https://w3id.org/ro/crate/1.1"
+      },
+      "about": {
+        "@id": "./"
+      }
+    },
+    {
+      "@id": "./",
+      "@type": [
+        "Dataset",
+        "Service",
+        "SoftwareApplication"
+      ],
+      "datePublished": "2025-11-26",
+      "URL": "https://github.com/grycap/oscar-hub/tree/main/crates/vllm-llama",
+      "name": "OSCAR vLLM Llama-3.2-1B-Instruct",
+      "description": "OSCAR service that deploys a vLLM-based LLaMA model for efficient large language model inference.",
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "applicationCategory": "OSCAR Service",
+      "memoryRequirements": "10 GiB",
+      "processorRequirements": [
+        "2 vCPU",
+        "1 GPU"
+      ],
+      "serviceType": "exposed",
+      "isBasedOn": [
+        {
+          "@id": "https://huggingface.co/unsloth/Llama-3.2-1B-Instruct"
+        }
+      ],
+      "author": {
+        "@id": "#author"
+      },
+      "hasPart": [
+        {
+          "@id": "fdl.yml"
+        },
+        {
+          "@id": "script.sh"
+        },
+        {
+          "@id": "icon.png"
+        }
+      ]
+    },
+    {
+      "@id": "fdl.yml",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "Service Definition (FDL)",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/vllm-llama/fdl.yml",
+      "encodingFormat": "text/yaml"
+    },
+    {
+      "@id": "script.sh",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "Service Execution Script",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/vllm-llama/script.sh",
+      "encodingFormat": "text/x-shellscript"
+    },
+    {
+      "@id": "icon.png",
+      "@type": [
+        "File",
+        "ImageObject"
+      ],
+      "name": "Service Icon",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/vllm-llama/icon.png",
+      "encodingFormat": "image/png"
+    },
+    {
+      "@id": "#author",
+      "@type": "Person",
+      "name": "Robert Kazaryan",
+      "affiliation": {
+        "@id": "https://example.com/your-organisation"
+      }
+    },
+    {
+      "@id": "https://example.com/your-organisation",
+      "@type": "Organization",
+      "name": "Your Organisation",
+      "url": "https://example.com"
+    },
+    {
+      "@id": "https://www.apache.org/licenses/LICENSE-2.0",
+      "@type": "CreativeWork",
+      "name": "Apache License 2.0",
+      "identifier": "SPDX:Apache-2.0"
+    },
+    {
+      "@id": "https://huggingface.co/unsloth/Llama-3.2-1B-Instruct",
+      "@type": "SoftwareApplication",
+      "name": "Llama-3.2-1B-Instruct",
+      "description": "LLaMA 3.2 1B parameter model fine-tuned for instruction following."
+    }
+  ]
+}
