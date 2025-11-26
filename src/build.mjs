@@ -266,7 +266,8 @@ function renderHtml(services) {
           <select id="serviceTypeFilter" aria-label="Filter by service type">
             <option value="">All types</option>
             <option value="synchronous">Synchronous</option>
-            <option value="asynchronous">Asynchronous</option>            
+            <option value="asynchronous">Asynchronous</option>
+            <option value="exposed">Exposed</option>
           </select>
         </div>
       </div>
