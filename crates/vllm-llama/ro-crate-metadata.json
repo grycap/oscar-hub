@@ -87,16 +87,16 @@
     {
       "@id": "#author",
       "@type": "Person",
-      "name": "Robert Kazaryan",
       "affiliation": {
-        "@id": "https://example.com/your-organisation"
-      }
+        "@id": "UPV"
+      },
+      "name": "Robert Kazaryan"
     },
     {
-      "@id": "https://example.com/your-organisation",
+      "@id": "UPV",
       "@type": "Organization",
-      "name": "Your Organisation",
-      "url": "https://example.com"
+      "name": "Universitat Politècnica de València",
+      "url": "https://www.upv.es"
     },
     {
       "@id": "https://www.apache.org/licenses/LICENSE-2.0",
