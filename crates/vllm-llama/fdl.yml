@@ -9,9 +9,10 @@ functions:
       environment:
         variables:
           OPENAI_BASE_URL: "/system/services/vllm-gpu-llama/exposed"
-          API_KEY: "secretkey"
           GPU_MEMORY_UTILIZATION: "0.5"
           MAX_MODEL_LEN: "1000"
+        secrets:
+          API_KEY: "secretkey"
       expose:
         min_scale: 1
         max_scale: 1
