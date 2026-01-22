@@ -13,7 +13,7 @@ functions:
          read_timeout: "300"
          write_timeout: "300"
          exec_timeout: "0"
-         stress_duration_seconds: "10"
+         STRESS_DURATION_SECONDS: "10"
      synchronous:
        min_scale: 1
      input:
