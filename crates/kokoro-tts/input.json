@@ -1,0 +1,10 @@
+{
+  "model": "bf_emma",
+  "language": "b",
+  "message": "This is an audio sample generated using the kokoro-tts service.",
+  "config": {
+    "speed": 1.0,
+    "volume": 3.1,
+    "output": "wav"
+     }
+}

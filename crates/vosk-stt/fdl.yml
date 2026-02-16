@@ -1,0 +1,15 @@
+functions:
+  oscar:
+  - oscar-cluster:
+      name: vosk-stt
+      image: ghcr.io/grycap/vosk-stt:v1.0
+      memory: 3Gi
+      cpu: '2.0'
+      script: script.sh
+      log_level: CRITICAL
+      input:
+        - storage_provider: minio.default
+          path: vosk-stt/input
+      output:
+        - storage_provider: minio.default
+          path: vosk-stt/output
