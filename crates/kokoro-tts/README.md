@@ -10,7 +10,8 @@ To run the service, a .json file must be used that contains both the message to 
 {
   "model": "af_bella",
   "language": "en",
-  "message": "This is an audio sample generated using the kokoro-tts service",
+  "message": "This is an audio sample generated using the kokoro-tts service.",
+  "config": {
     "speed": 1.0,
     "volume": 3.1,
     "output": "wav"
