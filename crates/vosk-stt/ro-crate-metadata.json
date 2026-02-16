@@ -40,7 +40,7 @@
         }
       ],
       "author": {
-        "@id": "#author"
+        "@id": "https://orcid.org/0000-0002-7335-3849"
       },
       "subjectOf": [
         {
