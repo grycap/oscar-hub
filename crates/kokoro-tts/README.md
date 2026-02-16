@@ -9,9 +9,8 @@ To run the service, a .json file must be used that contains both the message to 
 ```json
 {
   "model": "af_bella",
-  "language": "es",
-  "message": "Esto es una prueba de audio generado con el servicio kokoro-tts",
-  "config": {
+  "language": "en",
+  "message": "This is an audio sample generated using the kokoro-tts service.
     "speed": 1.0,
     "volume": 3.1,
     "output": "wav"
@@ -21,9 +20,9 @@ To run the service, a .json file must be used that contains both the message to 
 
 Description of the configuration parameters:
 
-model: Voice identifier (all available models in [voices](https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/tree/main/voices)).
-language: Language of the text to be processed ([lang_code](https://huggingface.co/hexgrad/Kokoro-82M/blob/main/VOICES.md)).
-speed: Speech speed (0.5 to 2).
-volume: Output audio volume level.
-output: Output audio file format (for example: "mp3","wav", "flac").
+* model: Voice identifier (all available models in [voices](https://huggingface.co/onnx-community/Kokoro-82M-v1.0-ONNX/tree/main/voices)).
+* language: Language of the text to be processed ([lang_code](https://huggingface.co/hexgrad/Kokoro-82M/blob/main/VOICES.md)).
+* speed: Speech speed (0.5 to 2).
+* volume: Output audio volume level.
+* output: Output audio file format (for example: "mp3","wav", "flac").
 
