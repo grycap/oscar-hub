@@ -100,7 +100,7 @@
       "@type": [
         "File"
       ],
-      "name": "Sample audio input,
+      "name": "Sample audio input",
       "description": "Replace with the audio file so that it can be processed by vosk-stt model.",
       "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/vosk-stt/input_en.wav",
       "encodingFormat": "audio/wav"
