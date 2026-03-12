@@ -1,0 +1,124 @@
+{
+  "@context": [
+    "https://w3id.org/ro/crate/1.1/context"
+  ],
+  "@graph": [
+    {
+      "@type": "CreativeWork",
+      "@id": "ro-crate-metadata.json",
+      "conformsTo": {
+        "@id": "https://w3id.org/ro/crate/1.1"
+      },
+      "about": {
+        "@id": "./"
+      }
+    },
+    {
+      "@id": "./",
+      "@type": [
+        "Dataset",
+        "Service",
+        "SoftwareApplication"
+      ],
+      "datePublished": "2026-03-12",
+      "name": "FileBrowser Quantum",
+      "description": "FileBrowser Quantum on the OpenClaw volume.",
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "applicationCategory": "OSCAR Service",
+      "memoryRequirements": "512 MiB",
+      "processorRequirements": [
+        "0.5 vCPU",
+        "0 GPU"
+      ],
+      "serviceType": "exposed",
+      "isBasedOn": [
+        {
+          "@id": "https://github.com/gtsteffaniak/filebrowser"
+        }
+      ],
+      "author": {
+        "@id": "https://grycap.upv.es"
+      },
+      "hasPart": [
+        {
+          "@id": "fdl.yml"
+        },
+        {
+          "@id": "script.sh"
+        },
+        {
+          "@id": "icon.svg"
+        },
+        {
+          "@id": "README.md"
+        }
+      ]
+    },
+    {
+      "@id": "fdl.yml",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "FileBrowser Quantum Service Definition",
+      "encodingFormat": "text/yaml"
+    },
+    {
+      "@id": "script.sh",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "FileBrowser Quantum Service Script",
+      "encodingFormat": "text/x-shellscript"
+    },
+    {
+      "@id": "icon.svg",
+      "@type": [
+        "File",
+        "ImageObject"
+      ],
+      "name": "FileBrowser Quantum Service Icon",
+      "encodingFormat": "image/svg+xml"
+    },
+    {
+      "@id": "README.md",
+      "@type": [
+        "File",
+        "CreativeWork"
+      ],
+      "name": "FileBrowser Quantum Deployment Notes",
+      "encodingFormat": "text/markdown"
+    },
+    {
+      "@id": "https://grycap.upv.es",
+      "@type": "Organization",
+      "name": "GRyCAP",
+      "url": "https://grycap.upv.es",
+      "parentOrganization": {
+        "@id": "UPV"
+      }
+    },
+    {
+      "@id": "UPV",
+      "@type": "Organization",
+      "name": "Universitat Politècnica de València",
+      "url": "https://www.upv.es"
+    },
+    {
+      "@id": "https://www.apache.org/licenses/LICENSE-2.0",
+      "@type": "CreativeWork",
+      "name": "Apache License 2.0",
+      "identifier": "SPDX:Apache-2.0"
+    },
+    {
+      "@id": "https://github.com/gtsteffaniak/filebrowser",
+      "@type": "SoftwareApplication",
+      "name": "FileBrowser Quantum",
+      "url": "https://github.com/gtsteffaniak/filebrowser",
+      "description": "Web-based file manager for simple deployment."
+    }
+  ]
+}
