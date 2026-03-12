@@ -1,0 +1,129 @@
+{
+  "@context": [
+    "https://w3id.org/ro/crate/1.1/context"
+  ],
+  "@graph": [
+    {
+      "@type": "CreativeWork",
+      "@id": "ro-crate-metadata.json",
+      "conformsTo": {
+        "@id": "https://w3id.org/ro/crate/1.1"
+      },
+      "about": {
+        "@id": "./"
+      }
+    },
+    {
+      "@id": "./",
+      "@type": [
+        "Dataset",
+        "Service",
+        "SoftwareApplication"
+      ],
+      "datePublished": "2026-03-12",
+      "URL": "https://github.com/grycap/oscar-hub/tree/main/crates/openclaw",
+      "name": "OpenClaw Gateway",
+      "description": "OSCAR exposed service that deploys the OpenClaw gateway with persistent state stored on an OSCAR-managed volume mounted at /data.",
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "applicationCategory": "OSCAR Service",
+      "memoryRequirements": "2 GiB",
+      "processorRequirements": [
+        "1 vCPU",
+        "0 GPU"
+      ],
+      "serviceType": "exposed",
+      "isBasedOn": [
+        {
+          "@id": "https://github.com/openclaw/openclaw"
+        }
+      ],
+      "author": {
+        "@id": "https://grycap.upv.es"
+      },
+      "hasPart": [
+        {
+          "@id": "fdl.yml"
+        },
+        {
+          "@id": "script.sh"
+        },
+        {
+          "@id": "icon.png"
+        },
+        {
+          "@id": "README.md"
+        }
+      ]
+    },
+    {
+      "@id": "fdl.yml",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "OpenClaw Service Definition",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/openclaw/fdl.yml",
+      "encodingFormat": "text/yaml"
+    },
+    {
+      "@id": "script.sh",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "OpenClaw Service Script",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/openclaw/script.sh",
+      "encodingFormat": "text/x-shellscript"
+    },
+    {
+      "@id": "icon.png",
+      "@type": [
+        "File",
+        "ImageObject"
+      ],
+      "name": "OpenClaw Service Icon",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/openclaw/icon.png",
+      "encodingFormat": "image/png"
+    },
+    {
+      "@id": "README.md",
+      "@type": [
+        "File",
+        "CreativeWork"
+      ],
+      "name": "OpenClaw Deployment Notes",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/openclaw/README.md",
+      "encodingFormat": "text/markdown"
+    },
+    {
+      "@id": "https://grycap.upv.es",
+      "@type": "Organization",
+      "name": "GRyCAP",
+      "url": "https://grycap.upv.es",
+      "parentOrganization": {
+        "@id": "UPV"
+      }
+    },
+    {
+      "@id": "UPV",
+      "@type": "Organization",
+      "name": "Universitat Politècnica de València",
+      "url": "https://www.upv.es"
+    },
+    {
+      "@id": "https://www.apache.org/licenses/LICENSE-2.0",
+      "@type": "CreativeWork",
+      "name": "Apache License 2.0",
+      "identifier": "SPDX:Apache-2.0"
+    },
+    {
+      "@id": "https://github.com/openclaw/openclaw",
+      "@type": "SoftwareApplication",
+      "name": "OpenClaw",
+      "url": "https://github.com/openclaw/openclaw",
+      "description": "OpenClaw gateway and control UI."
+    }
+  ]
+}
