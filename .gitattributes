@@ -1,0 +1,1 @@
+crates/kokoro-tts/docker/model/kokoro-v1.0.onnx filter=lfs diff=lfs merge=lfs -text
