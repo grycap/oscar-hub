@@ -4,7 +4,7 @@ functions:
      name: kokoro-tts
      memory: 3Gi
      cpu: '2.0'
-     image: ghcr.io/grycap/kokoro-tts:lastest
+     image: ghcr.io/grycap/kokoro-tts
      script: script.sh
      log_level: CRITICAL
      input:
