@@ -6,7 +6,7 @@ functions:
      cpu: '2.0'
      image: ghcr.io/grycap/kokoro-tts:lastest
      script: script.sh
-     -ttslog_level: CRITICAL
+     log_level: CRITICAL
      input:
      - storage_provider: minio.default
        path: kokoro-tts/input
