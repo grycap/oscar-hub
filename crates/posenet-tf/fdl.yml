@@ -1,0 +1,18 @@
+functions:
+  oscar:
+  - oscar-cluster:
+      name: posenet-tf
+      cpu: "2.0"
+      memory: 4Gi
+      image: ai4oshub/posenet-tf:latest
+      script: script.sh
+      log_level: INFO
+      expose:
+        min_scale: 1
+        max_scale: 1
+        api_port: 5000
+        cpu_threshold: 90
+        rewrite_target: false
+        default_command: true
+        set_auth: true
+        health_path: /v2

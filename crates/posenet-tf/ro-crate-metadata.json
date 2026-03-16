@@ -1,0 +1,293 @@
+{
+  "@context": [
+    "https://w3id.org/ro/crate/1.1/context"
+  ],
+  "@graph": [
+    {
+      "@type": "CreativeWork",
+      "@id": "ro-crate-metadata.json",
+      "conformsTo": {
+        "@id": "https://w3id.org/ro/crate/1.1"
+      },
+      "about": {
+        "@id": "./"
+      }
+    },
+    {
+      "@id": "./",
+      "@type": [
+        "Dataset",
+        "Service",
+        "SoftwareApplication"
+      ],
+      "datePublished": "2026-03-13",
+      "URL": "https://github.com/grycap/oscar-hub/tree/main/crates/posenet-tf",
+      "name": "PoseNet TF Body Pose Service (by AI4EOSC)",
+      "description": "OSCAR exposed service that runs the AI4EOSC PoseNet TensorFlow container and publishes its DEEPaaS API through OSCAR. Users can access the proxied OpenAPI UI and invoke body-pose inference methods directly from the browser or any HTTP client.",
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "applicationCategory": "OSCAR Service",
+      "memoryRequirements": "4 GiB",
+      "processorRequirements": [
+        "2 vCPU",
+        "0 GPU"
+      ],
+      "serviceType": "exposed",
+      "keywords": [
+        "body pose",
+        "computer vision",
+        "DEEPaaS",
+        "AI4EOSC",
+        "TensorFlow"
+      ],
+      "isBasedOn": [
+        {
+          "@id": "https://dashboard.cloud.ai4eosc.eu/catalog/modules/posenet-tf"
+        },
+        {
+          "@id": "https://github.com/ai4os-hub/posenet-tf"
+        },
+        {
+          "@id": "https://hub.docker.com/r/ai4oshub/posenet-tf"
+        }
+      ],
+      "softwareRequirements": [
+        {
+          "@id": "https://docs.ai4os.eu/en/latest/reference/api.html"
+        }
+      ],
+      "author": {
+        "@id": "#author"
+      },
+      "subjectOf": [
+        {
+          "@id": "#acceptance-test-exposed"
+        }
+      ],
+      "hasPart": [
+        {
+          "@id": "fdl.yml"
+        },
+        {
+          "@id": "script.sh"
+        },
+        {
+          "@id": "README.md"
+        },
+        {
+          "@id": "icon.png"
+        },
+        {
+          "@id": "001.jpg"
+        },
+        {
+          "@id": "#expected-zip"
+        }
+      ]
+    },
+    {
+      "@id": "fdl.yml",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "Service Definition (FDL)",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/posenet-tf/fdl.yml",
+      "encodingFormat": "text/yaml"
+    },
+    {
+      "@id": "script.sh",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "Service Execution Script",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/posenet-tf/script.sh",
+      "encodingFormat": "text/x-shellscript"
+    },
+    {
+      "@id": "README.md",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "Service Notes",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/posenet-tf/README.md",
+      "encodingFormat": "text/markdown"
+    },
+    {
+      "@id": "001.jpg",
+      "@type": [
+        "File",
+        "ImageObject"
+      ],
+      "name": "Sample body pose image",
+      "description": "JPEG image used to validate the exposed PoseNet prediction endpoint.",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/posenet-tf/001.jpg",
+      "encodingFormat": "image/jpeg"
+    },
+    {
+      "@id": "icon.png",
+      "@type": [
+        "File",
+        "ImageObject"
+      ],
+      "name": "Service Icon",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/posenet-tf/icon.png",
+      "encodingFormat": "image/png"
+    },
+    {
+      "@id": "#acceptance-test-exposed",
+      "@type": "HowTo",
+      "name": "Exposed PoseNet ZIP acceptance test",
+      "description": "Upload the sample image to the exposed DEEPaaS predict endpoint using service Basic Auth and verify that the response is a valid ZIP archive.",
+      "tool": [
+        {
+          "@id": "#tool-oscar-cli"
+        }
+      ],
+      "supply": [
+        {
+          "@id": "#supply-sample-image"
+        }
+      ],
+      "step": [
+        {
+          "@id": "#step-http-predict"
+        }
+      ]
+    },
+    {
+      "@id": "#tool-oscar-cli",
+      "@type": "HowToTool",
+      "name": "OSCAR CLI",
+      "item": {
+        "@id": "#oscar-cli"
+      }
+    },
+    {
+      "@id": "#supply-sample-image",
+      "@type": "HowToSupply",
+      "name": "Sample body pose image",
+      "item": {
+        "@id": "001.jpg"
+      }
+    },
+    {
+      "@id": "#expected-zip",
+      "@type": [
+        "File",
+        "MediaObject"
+      ],
+      "name": "Expected prediction ZIP",
+      "description": "ZIP archive returned by the PoseNet predict endpoint.",
+      "encodingFormat": "application/zip"
+    },
+    {
+      "@id": "#step-http-predict",
+      "@type": "HowToStep",
+      "position": 1,
+      "text": "Invoke the exposed PoseNet predict endpoint with the sample image and verify that the response is a ZIP archive.",
+      "potentialAction": {
+        "@id": "#action-http-predict"
+      }
+    },
+    {
+      "@id": "#action-http-predict",
+      "@type": "ConsumeAction",
+      "name": "http-request",
+      "object": {
+        "@id": "001.jpg"
+      },
+      "result": {
+        "@id": "#expected-zip"
+      },
+      "additionalProperty": [
+        {
+          "@id": "#http-method"
+        },
+        {
+          "@id": "#http-path"
+        },
+        {
+          "@id": "#http-accept"
+        },
+        {
+          "@id": "#http-form-field"
+        },
+        {
+          "@id": "#http-status"
+        }
+      ]
+    },
+    {
+      "@id": "#http-method",
+      "@type": "PropertyValue",
+      "propertyID": "method",
+      "value": "POST"
+    },
+    {
+      "@id": "#http-path",
+      "@type": "PropertyValue",
+      "propertyID": "path",
+      "value": "/v2/models/posenetclas/predict/"
+    },
+    {
+      "@id": "#http-accept",
+      "@type": "PropertyValue",
+      "propertyID": "accept",
+      "value": "application/zip"
+    },
+    {
+      "@id": "#http-form-field",
+      "@type": "PropertyValue",
+      "propertyID": "formField",
+      "value": "data"
+    },
+    {
+      "@id": "#http-status",
+      "@type": "PropertyValue",
+      "propertyID": "status",
+      "value": "200"
+    },
+    {
+      "@id": "#author",
+      "@type": "Organization",
+      "name": "AI4OS Hub",
+      "url": "https://github.com/ai4os-hub"
+    },
+    {
+      "@id": "https://www.apache.org/licenses/LICENSE-2.0",
+      "@type": "CreativeWork",
+      "name": "Apache License 2.0",
+      "identifier": "SPDX:Apache-2.0"
+    },
+    {
+      "@id": "https://dashboard.cloud.ai4eosc.eu/catalog/modules/posenet-tf",
+      "@type": "SoftwareApplication",
+      "name": "PoseNet TF module in the AI4EOSC catalog"
+    },
+    {
+      "@id": "https://github.com/ai4os-hub/posenet-tf",
+      "@type": "SoftwareSourceCode",
+      "name": "ai4os-hub/posenet-tf"
+    },
+    {
+      "@id": "https://hub.docker.com/r/ai4oshub/posenet-tf",
+      "@type": "SoftwareApplication",
+      "name": "ai4oshub/posenet-tf Docker image"
+    },
+    {
+      "@id": "https://docs.ai4os.eu/en/latest/reference/api.html",
+      "@type": "SoftwareApplication",
+      "name": "DEEPaaS API reference"
+    },
+    {
+      "@id": "#oscar-cli",
+      "@type": "SoftwareApplication",
+      "name": "OSCAR CLI",
+      "url": "https://github.com/grycap/oscar-cli"
+    }
+  ]
+}
