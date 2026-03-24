@@ -2,7 +2,7 @@
 
 This crate deploys an OSCAR exposed service that provides a browser-based terminal powered by `ghostty-web`. The terminal runs inside the service container and includes `oscar-cli`, `tmux`, and a standard Bash shell.
 
-The service is intended to be deployed per user. Authentication is delegated to OSCAR via the `expose.set_auth` option, so the web UI itself does not implement a second login layer.
+The service is intended to be deployed per user. Access is controlled by the application itself using a token passed in the URL, similar to the access pattern used by Jupyter notebooks.
 
 ## What the container provides
 
@@ -35,6 +35,8 @@ Base deployment:
 oscar-cli apply fdl.yml
 ```
 
+Before deploying, replace the placeholder `TERMINAL_TOKEN` secret in `fdl.yml` with a strong random value.
+
 Optional persistent workspace:
 
 1. Edit `fdl.yml`
@@ -47,13 +49,14 @@ Optional persistent workspace:
 After deployment, access the service through:
 
 ```text
-https://<OSCAR-ENDPOINT>/system/services/ghostty-web/exposed/
+https://<OSCAR-ENDPOINT>/system/services/<service-name>/exposed/?token=<your-token>
 ```
 
-OSCAR will protect the exposed endpoint using the service credentials because `set_auth: true` is enabled in the FDL.
+On first access, the server validates the token, issues an `HttpOnly` session cookie, and redirects the browser to the same URL without the `token` query parameter. The WebSocket terminal then reuses that cookie.
 
 ## Notes
 
 - This crate assumes one deployed instance per user.
 - The service is stateful from the user's point of view if a bucket is mounted, even though the exposed service itself runs as a single pod.
 - If your OSCAR cluster expects `port` instead of `api_port` in the `expose` block, replace that key accordingly.
+- If `TERMINAL_TOKEN` is empty, the application-side authentication is disabled and the terminal becomes publicly accessible.

@@ -13,6 +13,8 @@ functions:
           BASE_PATH: /system/services/ghostty-web/exposed
           PORT: "8080"
           WORKSPACE_DIR: /mnt
+        secrets:
+          TERMINAL_TOKEN: change-me
       # Uncomment this block to mount a MinIO bucket and persist the workspace
       # mount:
       #   storage_provider: minio.default
@@ -22,6 +24,6 @@ functions:
         max_scale: 1
         api_port: 8080
         cpu_threshold: 90
-        set_auth: true
+        set_auth: false
         rewrite_target: true
         health_path: /healthz

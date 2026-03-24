@@ -1,6 +1,7 @@
 import fs from "fs";
 import http from "http";
 import path from "path";
+import crypto from "crypto";
 import { homedir } from "os";
 import { createRequire } from "module";
 
@@ -12,6 +13,9 @@ const require = createRequire(import.meta.url);
 const HTTP_PORT = Number.parseInt(process.env.PORT || "8080", 10);
 const SHELL = process.env.SHELL || "/bin/bash";
 const SHELL_WORKDIR = process.env.SHELL_WORKDIR || homedir();
+const TERMINAL_TOKEN = process.env.TERMINAL_TOKEN || "";
+const SESSION_COOKIE_NAME = "ghostty_web_session";
+const SESSION_MAX_AGE_SECONDS = Number.parseInt(process.env.SESSION_MAX_AGE_SECONDS || "43200", 10);
 
 const MIME_TYPES = {
   ".css": "text/css",
@@ -32,13 +36,24 @@ const httpServer = http.createServer((req, res) => {
   const route = resolveRoute(url.pathname);
   const pathname = route.pathname;
 
-  if (pathname === "/" || pathname === "/index.html") {
-    sendResponse(res, 200, "text/html", buildHtmlTemplate(route.basePath));
+  if (pathname === "/healthz") {
+    sendResponse(res, 200, "text/plain", "ok");
     return;
   }
 
-  if (pathname === "/healthz") {
-    sendResponse(res, 200, "text/plain", "ok");
+  const auth = authenticateHttpRequest(req, url, route);
+  if (!auth.authorized) {
+    sendUnauthorizedPage(res, route.basePath);
+    return;
+  }
+
+  if (auth.shouldSetCookie) {
+    redirectWithSessionCookie(req, res, url, route.basePath);
+    return;
+  }
+
+  if (pathname === "/" || pathname === "/index.html") {
+    sendResponse(res, 200, "text/html", buildHtmlTemplate(route.basePath));
     return;
   }
 
@@ -64,6 +79,13 @@ httpServer.on("upgrade", (req, socket, head) => {
   const route = resolveRoute(url.pathname);
 
   if (route.pathname !== "/ws") {
+    socket.destroy();
+    return;
+  }
+
+  const auth = authenticateUpgradeRequest(req, url, route);
+  if (!auth) {
+    socket.write("HTTP/1.1 401 Unauthorized\r\nConnection: close\r\n\r\n");
     socket.destroy();
     return;
   }
@@ -146,6 +168,7 @@ httpServer.listen(HTTP_PORT, () => {
   console.log(`ghostty-web listening on http://0.0.0.0:${HTTP_PORT}`);
   console.log(`Shell: ${SHELL}`);
   console.log(`Workspace: ${SHELL_WORKDIR}`);
+  console.log(`Token auth: ${TERMINAL_TOKEN ? "enabled" : "disabled"}`);
 });
 
 function shutdown() {
@@ -411,6 +434,174 @@ function resolveRoute(pathname) {
     basePath: `/system/services/${match[1]}/exposed`,
     pathname: match[2] || "/"
   };
+}
+
+function authenticateHttpRequest(req, url, route) {
+  if (!isProtectedRoute(route.pathname)) {
+    return { authorized: true, shouldSetCookie: false };
+  }
+
+  if (!TERMINAL_TOKEN) {
+    return { authorized: true, shouldSetCookie: false };
+  }
+
+  const sessionCookie = readCookie(req, SESSION_COOKIE_NAME);
+  if (isValidSessionCookie(sessionCookie, route.basePath)) {
+    return { authorized: true, shouldSetCookie: false };
+  }
+
+  const token = url.searchParams.get("token");
+  if (isValidToken(token)) {
+    return { authorized: true, shouldSetCookie: true };
+  }
+
+  return { authorized: false, shouldSetCookie: false };
+}
+
+function authenticateUpgradeRequest(req, url, route) {
+  if (!TERMINAL_TOKEN) {
+    return true;
+  }
+
+  const sessionCookie = readCookie(req, SESSION_COOKIE_NAME);
+  if (isValidSessionCookie(sessionCookie, route.basePath)) {
+    return true;
+  }
+
+  return isValidToken(url.searchParams.get("token"));
+}
+
+function isProtectedRoute(pathname) {
+  return pathname === "/" || pathname === "/index.html" || pathname === "/ws";
+}
+
+function isValidToken(candidate) {
+  if (!TERMINAL_TOKEN || typeof candidate !== "string") {
+    return false;
+  }
+
+  const expected = Buffer.from(TERMINAL_TOKEN, "utf8");
+  const received = Buffer.from(candidate, "utf8");
+  if (expected.length !== received.length) {
+    return false;
+  }
+
+  return crypto.timingSafeEqual(expected, received);
+}
+
+function buildSessionCookieValue(basePath) {
+  return crypto
+    .createHmac("sha256", TERMINAL_TOKEN)
+    .update(`${SESSION_COOKIE_NAME}:${basePath}`)
+    .digest("base64url");
+}
+
+function isValidSessionCookie(candidate, basePath) {
+  if (!TERMINAL_TOKEN || typeof candidate !== "string") {
+    return false;
+  }
+
+  const expected = buildSessionCookieValue(basePath);
+  const expectedBuffer = Buffer.from(expected, "utf8");
+  const receivedBuffer = Buffer.from(candidate, "utf8");
+  if (expectedBuffer.length !== receivedBuffer.length) {
+    return false;
+  }
+
+  return crypto.timingSafeEqual(expectedBuffer, receivedBuffer);
+}
+
+function readCookie(req, name) {
+  const rawCookies = req.headers.cookie || "";
+  const cookies = rawCookies.split(";").map((entry) => entry.trim()).filter(Boolean);
+
+  for (const entry of cookies) {
+    const separator = entry.indexOf("=");
+    if (separator === -1) {
+      continue;
+    }
+
+    const key = entry.slice(0, separator);
+    const value = entry.slice(separator + 1);
+    if (key === name) {
+      return decodeURIComponent(value);
+    }
+  }
+
+  return null;
+}
+
+function redirectWithSessionCookie(req, res, url, basePath) {
+  const redirectUrl = new URL(url.pathname, `http://${req.headers.host}`);
+  const search = new URLSearchParams(url.searchParams);
+  search.delete("token");
+  if ([...search.keys()].length > 0) {
+    redirectUrl.search = search.toString();
+  }
+
+  const cookiePath = basePath === "/" ? "/" : `${basePath}/`;
+  const secureFlag = isSecureRequest(req) ? "; Secure" : "";
+  const cookieValue = encodeURIComponent(buildSessionCookieValue(basePath));
+  const setCookie = `${SESSION_COOKIE_NAME}=${cookieValue}; Path=${cookiePath}; HttpOnly; SameSite=Lax; Max-Age=${SESSION_MAX_AGE_SECONDS}${secureFlag}`;
+
+  res.writeHead(302, {
+    "Location": `${redirectUrl.pathname}${redirectUrl.search}`,
+    "Set-Cookie": setCookie
+  });
+  res.end();
+}
+
+function isSecureRequest(req) {
+  const forwardedProto = req.headers["x-forwarded-proto"];
+  if (typeof forwardedProto === "string") {
+    return forwardedProto.split(",")[0].trim() === "https";
+  }
+
+  return Boolean(req.socket.encrypted);
+}
+
+function sendUnauthorizedPage(res, basePath) {
+  const tokenHint = basePath === "/" ? "/?token=<token>" : `${basePath}/?token=<token>`;
+  const body = `<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ghostty Web Terminal</title>
+    <style>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+        background: #0d1117;
+        color: #e6edf3;
+        font-family: "Iosevka", "JetBrains Mono", monospace;
+      }
+
+      main {
+        max-width: 720px;
+        padding: 32px;
+        border: 1px solid #30363d;
+        border-radius: 16px;
+        background: #161b22;
+      }
+
+      code {
+        color: #7ee787;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Token required</h1>
+      <p>This terminal requires a valid access token in the URL.</p>
+      <p>Open <code>${escapeHtml(tokenHint)}</code> and the server will exchange the token for a session cookie.</p>
+    </main>
+  </body>
+</html>`;
+
+  sendResponse(res, 401, "text/html", body);
 }
 
 function sendResponse(res, statusCode, contentType, body) {
