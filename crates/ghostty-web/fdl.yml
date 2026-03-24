@@ -1,0 +1,27 @@
+functions:
+  oscar:
+  - oscar-cluster:
+      name: ghostty-web
+      cpu: "1.0"
+      memory: 1Gi
+      image: localhost:5001/ghostty-web:0.1.0
+      script: script.sh
+      log_level: INFO
+      environment:
+        variables:
+          SERVICE_NAME: ghostty-web
+          BASE_PATH: /system/services/ghostty-web/exposed
+          PORT: "8080"
+          WORKSPACE_DIR: /mnt
+      # Uncomment this block to mount a MinIO bucket and persist the workspace
+      # mount:
+      #   storage_provider: minio.default
+      #   path: /ghostty-web
+      expose:
+        min_scale: 1
+        max_scale: 1
+        api_port: 8080
+        cpu_threshold: 90
+        set_auth: true
+        rewrite_target: true
+        health_path: /healthz

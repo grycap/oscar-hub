@@ -1,0 +1,15 @@
+{
+  "name": "oscar-ghostty-web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Browser-based terminal service for OSCAR built on ghostty-web.",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@lydell/node-pty": "1.1.0",
+    "ghostty-web": "0.4.0",
+    "ws": "8.18.1"
+  }
+}

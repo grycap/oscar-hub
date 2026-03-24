@@ -9,7 +9,7 @@ description: Detailed description of each section in an OSCAR Hub RO-Crate file.
 | --- | --- | --- |
 | `name` | ✅ | Appears as the card title. Keep it short and action-oriented. |
 | `description` | ✅ | Full markdown-free text. The first 240 characters are shown on the card, the rest lives in the detail modal/JSON. |
-| `serviceType` | ✅ | `synchronous` or `asynchronous`. Values outside this set will hide filter options. |
+| `serviceType` | ✅ | `synchronous`, `asynchronous`, or `exposed`. Values outside this set require matching UI filter support. |
 | `URL` | ✅ | Destination for users (repository, API explorer, documentation). |
 | `license` | ✅ | Either a single `@id` to a remote resource or an inline object with `name` + `url`. |
 | `author` | ✅ | Person or organisation. Provide `name` and `url` for attribution. |

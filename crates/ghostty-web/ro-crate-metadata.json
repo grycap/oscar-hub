@@ -1,0 +1,197 @@
+{
+  "@context": [
+    "https://w3id.org/ro/crate/1.1/context"
+  ],
+  "@graph": [
+    {
+      "@type": "CreativeWork",
+      "@id": "ro-crate-metadata.json",
+      "conformsTo": {
+        "@id": "https://w3id.org/ro/crate/1.1"
+      },
+      "about": {
+        "@id": "./"
+      }
+    },
+    {
+      "@id": "./",
+      "@type": [
+        "Dataset",
+        "Service",
+        "SoftwareApplication"
+      ],
+      "datePublished": "2026-03-24",
+      "version": "0.1.0",
+      "URL": "https://github.com/grycap/oscar-hub/tree/main/crates/ghostty-web",
+      "name": "Ghostty Web Terminal with OSCAR CLI",
+      "description": "OSCAR exposed service that provides a browser-based terminal backed by ghostty-web and a real PTY session inside the container. The image includes OSCAR CLI, Bash, and tmux, and it can optionally persist the user workspace by mounting a MinIO bucket under /mnt.",
+      "license": {
+        "@id": "https://opensource.org/license/mit"
+      },
+      "applicationCategory": "OSCAR Service",
+      "memoryRequirements": "1 GiB",
+      "processorRequirements": [
+        "1 vCPU",
+        "0 GPU"
+      ],
+      "serviceType": "exposed",
+      "isBasedOn": [
+        {
+          "@id": "https://github.com/coder/ghostty-web"
+        },
+        {
+          "@id": "https://github.com/grycap/oscar-cli"
+        }
+      ],
+      "softwareRequirements": [
+        {
+          "@id": "#software-ghostty-web"
+        },
+        {
+          "@id": "#software-oscar-cli"
+        },
+        {
+          "@id": "#software-tmux"
+        }
+      ],
+      "author": {
+        "@id": "#author"
+      },
+      "hasPart": [
+        {
+          "@id": "fdl.yml"
+        },
+        {
+          "@id": "script.sh"
+        },
+        {
+          "@id": "README.md"
+        },
+        {
+          "@id": "docker/Dockerfile"
+        },
+        {
+          "@id": "docker/package.json"
+        },
+        {
+          "@id": "docker/server.js"
+        },
+        {
+          "@id": "icon.png"
+        }
+      ]
+    },
+    {
+      "@id": "fdl.yml",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "Service Definition (FDL)",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/ghostty-web/fdl.yml",
+      "encodingFormat": "text/yaml"
+    },
+    {
+      "@id": "script.sh",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "Service Launch Script",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/ghostty-web/script.sh",
+      "encodingFormat": "text/x-shellscript"
+    },
+    {
+      "@id": "README.md",
+      "@type": [
+        "File",
+        "TextDigitalDocument"
+      ],
+      "name": "Deployment Notes",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/ghostty-web/README.md",
+      "encodingFormat": "text/markdown"
+    },
+    {
+      "@id": "docker/Dockerfile",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "Container Image Definition",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/ghostty-web/docker/Dockerfile",
+      "encodingFormat": "text/plain"
+    },
+    {
+      "@id": "docker/package.json",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "Node.js Dependencies",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/ghostty-web/docker/package.json",
+      "encodingFormat": "application/json"
+    },
+    {
+      "@id": "docker/server.js",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "Ghostty Web HTTP and WebSocket Server",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/ghostty-web/docker/server.js",
+      "encodingFormat": "application/javascript"
+    },
+    {
+      "@id": "icon.png",
+      "@type": [
+        "File",
+        "ImageObject"
+      ],
+      "name": "Service Icon",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/ghostty-web/icon.png",
+      "encodingFormat": "image/png"
+    },
+    {
+      "@id": "#author",
+      "@type": "Organization",
+      "name": "GRyCAP",
+      "url": "https://www.grycap.upv.es/"
+    },
+    {
+      "@id": "https://opensource.org/license/mit",
+      "@type": "CreativeWork",
+      "name": "MIT License",
+      "identifier": "SPDX:MIT"
+    },
+    {
+      "@id": "https://github.com/coder/ghostty-web",
+      "@type": "SoftwareApplication",
+      "name": "ghostty-web",
+      "description": "Web terminal library that reuses Ghostty's VT100 parser via WebAssembly."
+    },
+    {
+      "@id": "https://github.com/grycap/oscar-cli",
+      "@type": "SoftwareApplication",
+      "name": "OSCAR CLI",
+      "description": "Command-line client used to manage OSCAR clusters and services."
+    },
+    {
+      "@id": "#software-ghostty-web",
+      "@type": "SoftwareApplication",
+      "name": "ghostty-web",
+      "url": "https://github.com/coder/ghostty-web"
+    },
+    {
+      "@id": "#software-oscar-cli",
+      "@type": "SoftwareApplication",
+      "name": "OSCAR CLI",
+      "url": "https://github.com/grycap/oscar-cli"
+    },
+    {
+      "@id": "#software-tmux",
+      "@type": "SoftwareApplication",
+      "name": "tmux",
+      "url": "https://github.com/tmux/tmux/wiki"
+    }
+  ]
+}
