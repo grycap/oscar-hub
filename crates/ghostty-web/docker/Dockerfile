@@ -8,6 +8,10 @@ FROM node:22-bookworm-slim
 
 WORKDIR /opt/ghostty-web
 
+LABEL org.opencontainers.image.source="https://github.com/grycap/oscar-hub"
+LABEL org.opencontainers.image.description="Ghostty Web terminal for OSCAR Hub with OSCAR CLI preinstalled"
+LABEL org.opencontainers.image.licenses="MIT"
+
 RUN apt-get update && apt-get install -y --no-install-recommends \
     bash \
     ca-certificates \

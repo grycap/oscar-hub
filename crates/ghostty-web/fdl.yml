@@ -4,7 +4,7 @@ functions:
       name: ghostty-web
       cpu: "1.0"
       memory: 1Gi
-      image: localhost:5001/ghostty-web:0.1.0
+      image: ghcr.io/grycap/ghostty-web:latest
       script: script.sh
       log_level: INFO
       environment:
