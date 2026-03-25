@@ -12,17 +12,16 @@ functions:
           SERVICE_NAME: ghostty-web
           BASE_PATH: /system/services/ghostty-web/exposed
           PORT: "8080"
-          WORKSPACE_DIR: /mnt
+          WORKSPACE_DIR: /mnt/ghostty-web
           OSCAR_CLUSTER_ID: local-cluster
           OSCAR_CLUSTER_ENDPOINT: http://oscar.oscar.svc.cluster.local:8080
           OSCAR_CLUSTER_SSL_VERIFY: "false"
         secrets:
           TERMINAL_TOKEN: change-me
           OSCAR_OIDC_REFRESH_TOKEN: change-me
-      # Uncomment this block to mount a MinIO bucket and persist the workspace
-      # mount:
-      #   storage_provider: minio.default
-      #   path: /ghostty-web
+      mount:
+        storage_provider: minio.default
+        path: /ghostty-web
       expose:
         min_scale: 1
         max_scale: 1

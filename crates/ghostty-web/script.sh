@@ -15,11 +15,11 @@ mkdir -p "${DEFAULT_WORKDIR}"
 
 if [[ -d "${WORKSPACE_DIR}" && -w "${WORKSPACE_DIR}" ]]; then
   RUNTIME_WORKDIR="${WORKSPACE_DIR}"
-  mkdir -p "${WORKSPACE_DIR}/.config" "${WORKSPACE_DIR}/.cache" "${WORKSPACE_DIR}/.local"
-  export HISTFILE="${WORKSPACE_DIR}/.bash_history"
-  export XDG_CONFIG_HOME="${WORKSPACE_DIR}/.config"
-  export XDG_CACHE_HOME="${WORKSPACE_DIR}/.cache"
-  export XDG_DATA_HOME="${WORKSPACE_DIR}/.local/share"
+  mkdir -p "${RUNTIME_WORKDIR}/.config" "${RUNTIME_WORKDIR}/.cache" "${RUNTIME_WORKDIR}/.local"
+  export HISTFILE="${RUNTIME_WORKDIR}/.bash_history"
+  export XDG_CONFIG_HOME="${RUNTIME_WORKDIR}/.config"
+  export XDG_CACHE_HOME="${RUNTIME_WORKDIR}/.cache"
+  export XDG_DATA_HOME="${RUNTIME_WORKDIR}/.local/share"
 else
   RUNTIME_WORKDIR="${DEFAULT_WORKDIR}"
 fi
@@ -34,8 +34,6 @@ export OSCAR_CLI_CONFIG_FILE="${OSCAR_CLI_CONFIG_FILE:-$HOME/.oscar-cli/config.y
 export PATH="/usr/local/bin:${PATH}"
 
 mkdir -p "$(dirname "${OSCAR_CLI_CONFIG_FILE}")"
-XDG_OSCAR_CONFIG_FILE="${XDG_CONFIG_HOME:-$HOME/.config}/oscar/config.yaml"
-mkdir -p "$(dirname "${XDG_OSCAR_CONFIG_FILE}")"
 
 if [[ -n "${OSCAR_OIDC_REFRESH_TOKEN}" ]]; then
   cat > "${OSCAR_CLI_CONFIG_FILE}" <<EOF
@@ -49,7 +47,6 @@ oscar:
 default: ${OSCAR_CLUSTER_ID}
 EOF
   chmod 600 "${OSCAR_CLI_CONFIG_FILE}"
-  ln -sf "${OSCAR_CLI_CONFIG_FILE}" "${XDG_OSCAR_CONFIG_FILE}"
 fi
 
 echo "Starting ghostty-web on port ${PORT}"

@@ -11,13 +11,13 @@ The container can also preconfigure `oscar-cli` against the in-cluster OSCAR API
 - `ghostty-web` frontend with a PTY-backed WebSocket session
 - `oscar-cli` preinstalled in the container image
 - `tmux` for optional session management inside the terminal
-- Optional persistent workspace when a MinIO bucket is mounted
+- Persistent workspace backed by a mounted MinIO bucket
 
 ## Workspace persistence
 
-If you deploy the service without a mounted bucket, the shell workspace is ephemeral.
+The example `fdl.yml` mounts the bucket path `/ghostty-web` from `minio.default` into `/mnt/ghostty-web` inside the container. The launcher script uses `WORKSPACE_DIR` directly as the working directory and also stores shell history plus `oscar-cli` user config there.
 
-If you uncomment the `mount` section in `fdl.yml`, OSCAR will mount the selected bucket inside `/mnt` in the container. The launcher script uses `/mnt` as the working directory and also stores shell history plus `oscar-cli` user config there.
+Keep `mount.path` and `WORKSPACE_DIR` aligned if you want to bind a different bucket or prefix for each user.
 
 ## Build the image
 
@@ -42,12 +42,11 @@ Before deploying, replace the placeholder secrets in `fdl.yml`:
 - `TERMINAL_TOKEN`: token used to access the terminal URL
 - `OSCAR_OIDC_REFRESH_TOKEN`: OIDC refresh token used by `oscar-cli`
 
-Optional persistent workspace:
+Persistent workspace:
 
 1. Edit `fdl.yml`
-2. Uncomment the `mount` block
-3. Set the bucket path you want to mount
-4. Apply the file again
+2. Set `mount.path` to the bucket or prefix you want to expose in `/mnt`
+3. Apply the file again
 
 ## Access the terminal
 
