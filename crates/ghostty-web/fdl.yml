@@ -1,0 +1,32 @@
+functions:
+  oscar:
+  - oscar-cluster:
+      name: ghostty-web
+      cpu: "1.0"
+      memory: 1Gi
+      image: ghcr.io/grycap/ghostty-web:latest
+      script: script.sh
+      log_level: INFO
+      environment:
+        variables:
+          SERVICE_NAME: ghostty-web
+          BASE_PATH: /system/services/ghostty-web/exposed
+          PORT: "8080"
+          WORKSPACE_DIR: /mnt/ghostty-web
+          OSCAR_CLUSTER_ID: local-cluster
+          OSCAR_CLUSTER_ENDPOINT: http://oscar.oscar.svc.cluster.local:8080
+          OSCAR_CLUSTER_SSL_VERIFY: "false"
+        secrets:
+          TERMINAL_TOKEN: change-me
+          OSCAR_OIDC_REFRESH_TOKEN: change-me
+      mount:
+        storage_provider: minio.default
+        path: /ghostty-web
+      expose:
+        min_scale: 1
+        max_scale: 1
+        api_port: 8080
+        cpu_threshold: 90
+        set_auth: false
+        rewrite_target: true
+        health_path: /healthz
