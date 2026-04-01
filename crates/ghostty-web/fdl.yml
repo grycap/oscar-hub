@@ -17,7 +17,6 @@ functions:
           OSCAR_CLUSTER_ENDPOINT: http://oscar.oscar.svc.cluster.local:8080
           OSCAR_CLUSTER_SSL_VERIFY: "false"
         secrets:
-          TERMINAL_TOKEN: change-me
           OSCAR_OIDC_REFRESH_TOKEN: change-me
       mount:
         storage_provider: minio.default
