@@ -595,7 +595,7 @@ function sendUnauthorizedPage(res, basePath) {
   <body>
     <main>
       <h1>Token required</h1>
-      <p>This terminal requires a valid access token in the URL.</p>
+      <p>This terminal requires the OSCAR service token in the URL.</p>
       <p>Open <code>${escapeHtml(tokenHint)}</code> and the server will exchange the token for a session cookie.</p>
     </main>
   </body>

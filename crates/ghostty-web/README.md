@@ -2,7 +2,7 @@
 
 This crate deploys an OSCAR exposed service that provides a browser-based terminal powered by `ghostty-web`. The terminal runs inside the service container and includes `oscar-cli`, `tmux`, and a standard Bash shell.
 
-The service is intended to be deployed per user. Access is controlled by the application itself using a token passed in the URL, similar to the access pattern used by Jupyter notebooks.
+The service is intended to be deployed per user. By default, the launcher reads the OSCAR service access token from the mounted service FDL and reuses it as the terminal access token, so the browser login token matches the service token managed by OSCAR.
 
 The container can also preconfigure `oscar-cli` against the in-cluster OSCAR API by injecting an OIDC refresh token as a secret.
 
@@ -39,7 +39,6 @@ oscar-cli apply fdl.yml
 
 Before deploying, replace the placeholder secrets in `fdl.yml`:
 
-- `TERMINAL_TOKEN`: token used to access the terminal URL
 - `OSCAR_OIDC_REFRESH_TOKEN`: OIDC refresh token used by `oscar-cli`
 
 Persistent workspace:
@@ -53,7 +52,7 @@ Persistent workspace:
 After deployment, access the service through:
 
 ```text
-https://<OSCAR-ENDPOINT>/system/services/<service-name>/exposed/?token=<your-token>
+https://<OSCAR-ENDPOINT>/system/services/<service-name>/exposed/?token=<service-token>
 ```
 
 On first access, the server validates the token, issues an `HttpOnly` session cookie, and redirects the browser to the same URL without the `token` query parameter. The WebSocket terminal then reuses that cookie.
@@ -74,6 +73,8 @@ default: local-cluster
 - This crate assumes one deployed instance per user.
 - The service is stateful from the user's point of view if a bucket is mounted, even though the exposed service itself runs as a single pod.
 - If your OSCAR cluster expects `port` instead of `api_port` in the `expose` block, replace that key accordingly.
-- If `TERMINAL_TOKEN` is empty, the application-side authentication is disabled and the terminal becomes publicly accessible.
+- The launcher reads the token from `/oscar/config/function_config.yaml` by default. You can override that path with `OSCAR_SERVICE_FDL_PATH`.
+- If the launcher cannot read a token from the OSCAR FDL, it falls back to `TERMINAL_TOKEN` if that environment variable is already present.
+- If neither the OSCAR service token nor `TERMINAL_TOKEN` is available, the application-side authentication is disabled and the terminal becomes publicly accessible.
 - The generated `oscar-cli` config is written to `~/.config/oscar/config.yaml` inside the container and uses mode `0600`.
 - If you mount `/mnt`, the workspace can persist independently from the in-container credentials. Review whether you want the generated CLI config to persist together with that workspace.
