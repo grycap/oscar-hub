@@ -1,0 +1,22 @@
+functions:
+  oscar:
+  - oscar-cluster:
+      name: llamacpp-qwen-small
+      cpu: "2.0"
+      memory: 3Gi
+      image: ghcr.io/grycap/llamacpp-qwen-small:0.1.0
+      script: script.sh
+      log_level: INFO
+      environment:
+        variables:
+          CONTEXT_SIZE: "2048"
+          N_PREDICT: "512"
+      expose:
+        min_scale: 1
+        max_scale: 1
+        api_port: 8080
+        cpu_threshold: 90
+        set_auth: false
+        rewrite_target: true
+        health_path: /health
+        probe_mode: direct

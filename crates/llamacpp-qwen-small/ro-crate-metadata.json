@@ -1,0 +1,170 @@
+{
+  "@context": [
+    "https://w3id.org/ro/crate/1.1/context"
+  ],
+  "@graph": [
+    {
+      "@type": "CreativeWork",
+      "@id": "ro-crate-metadata.json",
+      "conformsTo": {
+        "@id": "https://w3id.org/ro/crate/1.1"
+      },
+      "about": {
+        "@id": "./"
+      }
+    },
+    {
+      "@id": "./",
+      "@type": [
+        "Dataset",
+        "Service",
+        "SoftwareApplication"
+      ],
+      "datePublished": "2026-04-02",
+      "version": "0.1.0",
+      "URL": "https://github.com/grycap/oscar-hub/tree/main/crates/llamacpp-qwen-small",
+      "name": "OSCAR llama.cpp Qwen2.5-0.5B-Instruct",
+      "description": "OSCAR exposed service that serves a small Qwen2.5 instruction-tuned model through the OpenAI-compatible llama.cpp server. It is intended for CPU-only or low-memory clusters where a lightweight LLM is enough for integration tests with agent frameworks or client tooling.",
+      "license": {
+        "@id": "https://opensource.org/license/mit"
+      },
+      "applicationCategory": "OSCAR Service",
+      "memoryRequirements": "3 GiB",
+      "processorRequirements": [
+        "2 vCPU",
+        "0 GPU"
+      ],
+      "serviceType": "exposed",
+      "keywords": [
+        "llm",
+        "openai-compatible",
+        "llama.cpp",
+        "cpu",
+        "arm64",
+        "qwen"
+      ],
+      "isBasedOn": [
+        {
+          "@id": "https://github.com/ggml-org/llama.cpp"
+        },
+        {
+          "@id": "https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct-GGUF"
+        }
+      ],
+      "softwareRequirements": [
+        {
+          "@id": "#software-llama-cpp"
+        },
+        {
+          "@id": "#software-qwen-model"
+        }
+      ],
+      "author": {
+        "@id": "#author"
+      },
+      "hasPart": [
+        {
+          "@id": "fdl.yml"
+        },
+        {
+          "@id": "script.sh"
+        },
+        {
+          "@id": "README.md"
+        },
+        {
+          "@id": "docker/Dockerfile"
+        },
+        {
+          "@id": "icon.png"
+        }
+      ]
+    },
+    {
+      "@id": "fdl.yml",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "Service Definition (FDL)",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/llamacpp-qwen-small/fdl.yml",
+      "encodingFormat": "text/yaml"
+    },
+    {
+      "@id": "script.sh",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "Service Launch Script",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/llamacpp-qwen-small/script.sh",
+      "encodingFormat": "text/x-shellscript"
+    },
+    {
+      "@id": "README.md",
+      "@type": [
+        "File",
+        "TextDigitalDocument"
+      ],
+      "name": "Deployment Notes",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/llamacpp-qwen-small/README.md",
+      "encodingFormat": "text/markdown"
+    },
+    {
+      "@id": "docker/Dockerfile",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "Container Image Definition",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/llamacpp-qwen-small/docker/Dockerfile",
+      "encodingFormat": "text/plain"
+    },
+    {
+      "@id": "icon.png",
+      "@type": [
+        "File",
+        "ImageObject"
+      ],
+      "name": "Service Icon",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/llamacpp-qwen-small/icon.png",
+      "encodingFormat": "image/png"
+    },
+    {
+      "@id": "#author",
+      "@type": "Organization",
+      "name": "GRyCAP",
+      "url": "https://www.grycap.upv.es/"
+    },
+    {
+      "@id": "https://opensource.org/license/mit",
+      "@type": "CreativeWork",
+      "name": "MIT License",
+      "identifier": "SPDX:MIT"
+    },
+    {
+      "@id": "https://github.com/ggml-org/llama.cpp",
+      "@type": "SoftwareApplication",
+      "name": "llama.cpp",
+      "description": "C and C++ inference runtime and HTTP server for local LLM execution."
+    },
+    {
+      "@id": "https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct-GGUF",
+      "@type": "SoftwareApplication",
+      "name": "Qwen2.5-0.5B-Instruct-GGUF",
+      "description": "Quantized GGUF distribution of the Qwen2.5 0.5B instruction-tuned language model."
+    },
+    {
+      "@id": "#software-llama-cpp",
+      "@type": "SoftwareApplication",
+      "name": "llama.cpp",
+      "url": "https://github.com/ggml-org/llama.cpp"
+    },
+    {
+      "@id": "#software-qwen-model",
+      "@type": "SoftwareApplication",
+      "name": "Qwen2.5-0.5B-Instruct-GGUF",
+      "url": "https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct-GGUF"
+    }
+  ]
+}
