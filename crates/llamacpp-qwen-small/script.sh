@@ -1,3 +1,39 @@
+#!/bin/bash
+set -euo pipefail
+
+HOST=${HOST:-0.0.0.0}
+PORT=${PORT:-8080}
+BACKEND_HOST=${BACKEND_HOST:-127.0.0.1}
+BACKEND_PORT=${BACKEND_PORT:-8081}
+API_PREFIX=${API_PREFIX:-}
+OSCAR_SERVICE_NAME=${OSCAR_SERVICE_NAME:-}
+OSCAR_SERVICE_TOKEN=${OSCAR_SERVICE_TOKEN:-}
+OSCAR_SERVICE_BASE_PATH=${OSCAR_SERVICE_BASE_PATH:-}
+OSCAR_SERVICE_FDL_PATH=${OSCAR_SERVICE_FDL_PATH:-/oscar/config/function_config.yaml}
+MODEL_PATH=${MODEL_PATH:-/models/qwen2.5-0.5b-instruct-q4_k_m.gguf}
+MODEL_ALIAS=${MODEL_ALIAS:-Qwen2.5-0.5B-Instruct}
+CONTEXT_SIZE=${CONTEXT_SIZE:-2048}
+N_THREADS=${N_THREADS:-2}
+N_PARALLEL=${N_PARALLEL:-1}
+N_PREDICT=${N_PREDICT:-512}
+
+read_fdl_value() {
+  local fdl_path="$1"
+  local key="$2"
+
+  [[ -r "${fdl_path}" ]] || return 1
+
+  awk -v key="${key}" '
+    $0 ~ ("^" key ":[[:space:]]*") {
+      sub("^" key ":[[:space:]]*", "")
+      print
+      exit
+    }
+  ' "${fdl_path}"
+}
+
+if [ -z "$API_PREFIX" ]; then
+  if [ -n "$OSCAR_SERVICE_BASE_PATH" ]; then
     API_PREFIX="$OSCAR_SERVICE_BASE_PATH"
   elif [ -n "$OSCAR_SERVICE_NAME" ]; then
     API_PREFIX="/system/services/${OSCAR_SERVICE_NAME}/exposed"
