@@ -22,7 +22,7 @@
       ],
       "datePublished": "2026-04-02",
       "version": "0.1.0",
-      "URL": "https://github.com/grycap/oscar-hub/tree/main/crates/llamacpp-qwen-small",
+      "URL": "https://github.com/grycap/oscar-hub/tree/feat-llama-qwen25/crates/llamacpp-qwen-small",
       "name": "OSCAR llama.cpp Qwen2.5-0.5B-Instruct",
       "description": "OSCAR exposed service that serves a small Qwen2.5 instruction-tuned model through the OpenAI-compatible llama.cpp server. It is intended for CPU-only or low-memory clusters where a lightweight LLM is enough for integration tests with agent frameworks or client tooling.",
       "license": {
@@ -87,7 +87,7 @@
         "SoftwareSourceCode"
       ],
       "name": "Service Definition (FDL)",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/llamacpp-qwen-small/fdl.yml",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/feat-llama-qwen25/crates/llamacpp-qwen-small/fdl.yml",
       "encodingFormat": "text/yaml"
     },
     {
@@ -97,7 +97,7 @@
         "SoftwareSourceCode"
       ],
       "name": "Service Launch Script",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/llamacpp-qwen-small/script.sh",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/feat-llama-qwen25/crates/llamacpp-qwen-small/script.sh",
       "encodingFormat": "text/x-shellscript"
     },
     {
@@ -107,7 +107,7 @@
         "TextDigitalDocument"
       ],
       "name": "Deployment Notes",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/llamacpp-qwen-small/README.md",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/feat-llama-qwen25/crates/llamacpp-qwen-small/README.md",
       "encodingFormat": "text/markdown"
     },
     {
@@ -117,7 +117,7 @@
         "SoftwareSourceCode"
       ],
       "name": "Container Image Definition",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/llamacpp-qwen-small/docker/Dockerfile",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/feat-llama-qwen25/crates/llamacpp-qwen-small/docker/Dockerfile",
       "encodingFormat": "text/plain"
     },
     {
@@ -127,7 +127,7 @@
         "ImageObject"
       ],
       "name": "Service Icon",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/llamacpp-qwen-small/icon.png",
+      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/feat-llama-qwen25/crates/llamacpp-qwen-small/icon.png",
       "encodingFormat": "image/png"
     },
     {
