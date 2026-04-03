@@ -2,31 +2,38 @@
 
 This crate deploys FileBrowser Quantum as an exposed OSCAR service.
 
-Default deployment values match the provided working payload:
+Default deployment values match the generated OSCAR payload:
 
-- `name: filebrowser-for-openclaw`
+- `name: filebrowser-quantum`
 - `memory: 512Mi`
 - `cpu: 0.5`
 - `image: ghcr.io/gtsteffaniak/filebrowser:latest`
 
 ## Storage
 
-The service mounts the existing OpenClaw volume at `/data`:
+The service mounts the OSCAR volume selected by the user at `/data`:
 
-- `volume.name: openclaw-volume`
+- `volume.name: your-volume-name`
 - `volume.mount_path: /data`
 
 ## Access
 
-The script derives the service name from `function_config.yaml` and sets:
+The script uses OSCAR-managed metadata environment variables and sets:
 
 ```text
 /system/services/<service-name>/exposed/
 ```
 
+OSCAR injects:
+
+- `OSCAR_SERVICE_TOKEN`
+- `OSCAR_SERVICE_BASE_PATH`
+
 OSCAR authentication is disabled for this service:
 
 - `set_auth: false`
 
-Application access is intended to use the
-`FILEBROWSER_ADMIN_PASSWORD` secret.
+Application access uses:
+
+- user: `admin`
+- password: OSCAR service token

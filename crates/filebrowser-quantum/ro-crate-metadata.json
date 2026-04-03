@@ -20,9 +20,9 @@
         "Service",
         "SoftwareApplication"
       ],
-      "datePublished": "2026-03-12",
+      "datePublished": "2026-04-03",
       "name": "FileBrowser Quantum",
-      "description": "FileBrowser Quantum on the OpenClaw volume.",
+      "description": "Browse a selected OSCAR volume at /data.",
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },

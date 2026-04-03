@@ -1,17 +1,13 @@
 functions:
   oscar:
   - oscar-cluster:
-      name: filebrowser-for-openclaw
+      name: filebrowser-quantum
       memory: 512Mi
       cpu: "0.5"
       image: ghcr.io/gtsteffaniak/filebrowser:latest
       script: script.sh
-      environment:
-        variables: {}
-        secrets:
-          FILEBROWSER_ADMIN_PASSWORD: "YOUR_STRONG_PASSWORD"
       volume:
-        name: openclaw-volume
+        name: your-volume-name
         mount_path: /data
       expose:
         min_scale: 1

@@ -1,17 +1,18 @@
 #!/bin/sh
 set -eu
 
-: "${FILEBROWSER_ADMIN_PASSWORD:?FILEBROWSER_ADMIN_PASSWORD is required}"
+[ -n "${FILEBROWSER_ADMIN_PASSWORD:-}" ] || \
+  export FILEBROWSER_ADMIN_PASSWORD="${OSCAR_SERVICE_TOKEN:-}"
+
+: "${FILEBROWSER_ADMIN_PASSWORD:?OSCAR service token is required}"
+[ -n "${OSCAR_SERVICE_BASE_PATH:-}" ] || \
+  : "${OSCAR_SERVICE_BASE_PATH:?OSCAR service base path is required}"
 
 mkdir -p /data /home/filebrowser/data
 rm -f /home/filebrowser/data/database.db
 rm -f /home/filebrowser/data/database.db.bak
 
-SERVICE_NAME="$(
-  awk -F': ' '/^name:/ {print $2; exit}' \
-    /oscar/config/function_config.yaml
-)"
-BASE_URL="/system/services/${SERVICE_NAME}/exposed/"
+BASE_URL="${OSCAR_SERVICE_BASE_PATH%/}/"
 
 cat > /home/filebrowser/data/config.yaml <<EOF
 server:
