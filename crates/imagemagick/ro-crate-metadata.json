@@ -347,7 +347,7 @@
       "@id": "#command-template-async-get",
       "@type": "PropertyValue",
       "propertyID": "commandTemplate",
-      "value": "oscar-cli service get-file imagemagick"
+      "value": "oscar-cli service get-file imagemagick --download-latest-into {destination}"
     },
     {
       "@id": "#oscar-cli",

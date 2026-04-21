@@ -67,7 +67,7 @@ Example asynchronous execution flow:
 ```bash
 oscar-cli service put-file imagemagick crates/imagemagick/input.png
 sleep 20
-oscar-cli service get-file imagemagick
+oscar-cli service get-file imagemagick --download-latest-into ./output
 ```
 
 Example synchronous invocation:
