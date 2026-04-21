@@ -72,7 +72,6 @@
         "SoftwareSourceCode"
       ],
       "name": "OSCAR Service Definition",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/vosk-stt/fdl.yml",
       "encodingFormat": "text/yaml"
     },
     {
@@ -82,7 +81,6 @@
         "SoftwareSourceCode"
       ],
       "name": "OSCAR Service Script",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/vosk-stt/script.sh",
       "encodingFormat": "text/x-shellscript"
     },
     {
@@ -92,7 +90,6 @@
         "ImageObject"
       ],
       "name": "OSCAR Service Icon",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/vosk-stt/icon.png",
       "encodingFormat": "image/png"
     },
     {
@@ -102,7 +99,6 @@
       ],
       "name": "Sample audio input",
       "description": "Replace with the audio file so that it can be processed by vosk-stt model.",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/vosk-stt/input_en.wav",
       "encodingFormat": "audio/wav"
     },
     {

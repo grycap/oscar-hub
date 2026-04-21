@@ -88,7 +88,6 @@
         "SoftwareSourceCode"
       ],
       "name": "Service Definition (FDL)",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/ghostty-web/fdl.yml",
       "encodingFormat": "text/yaml"
     },
     {
@@ -98,7 +97,6 @@
         "SoftwareSourceCode"
       ],
       "name": "Service Launch Script",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/ghostty-web/script.sh",
       "encodingFormat": "text/x-shellscript"
     },
     {
@@ -108,7 +106,6 @@
         "TextDigitalDocument"
       ],
       "name": "Deployment Notes",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/ghostty-web/README.md",
       "encodingFormat": "text/markdown"
     },
     {
@@ -118,7 +115,6 @@
         "SoftwareSourceCode"
       ],
       "name": "Container Image Definition",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/ghostty-web/docker/Dockerfile",
       "encodingFormat": "text/plain"
     },
     {
@@ -128,7 +124,6 @@
         "SoftwareSourceCode"
       ],
       "name": "Node.js Dependencies",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/ghostty-web/docker/package.json",
       "encodingFormat": "application/json"
     },
     {
@@ -138,7 +133,6 @@
         "SoftwareSourceCode"
       ],
       "name": "Ghostty Web HTTP and WebSocket Server",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/ghostty-web/docker/server.js",
       "encodingFormat": "application/javascript"
     },
     {
@@ -148,7 +142,6 @@
         "ImageObject"
       ],
       "name": "Service Icon",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/ghostty-web/icon.png",
       "encodingFormat": "image/png"
     },
     {
