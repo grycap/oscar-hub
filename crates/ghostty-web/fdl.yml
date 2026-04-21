@@ -11,7 +11,7 @@ functions:
         variables:
           SERVICE_NAME: ghostty-web
           BASE_PATH: /system/services/ghostty-web/exposed
-          PORT: "8080"
+          GHOSTTY_PORT: "8080"
           WORKSPACE_DIR: /mnt/ghostty-web
           OSCAR_CLUSTER_ID: local-cluster
           OSCAR_CLUSTER_ENDPOINT: http://oscar.oscar.svc.cluster.local:8080
