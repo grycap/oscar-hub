@@ -1,6 +1,6 @@
 # ImageMagick Service for OSCAR
 
-This crate packages an OSCAR service built on top of an ImageMagick container. Each input image is processed with lightweight ImageMagick operations to generate derived artifacts that are useful for teaching, testing, and simple image-analysis workflows.
+This crate packages an OSCAR service built on top of an ImageMagick container. Each input image is processed with lightweight ImageMagick operations to generate derived artifacts that are useful for simple image-analysis workflows.
 
 For every uploaded PNG or JPG image, the service produces:
 
