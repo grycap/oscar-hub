@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-PORT="${PORT:-8080}"
+GHOSTTY_PORT="${GHOSTTY_PORT:-8080}"
 SERVICE_NAME="${SERVICE_NAME:-ghostty-web}"
 BASE_PATH="${BASE_PATH:-/}"
 WORKSPACE_DIR="${WORKSPACE_DIR:-/mnt}"
@@ -27,7 +27,7 @@ fi
 
 mkdir -p "${RUNTIME_WORKDIR}"
 
-export PORT
+export GHOSTTY_PORT
 export BASE_PATH
 export SHELL="${SHELL:-/bin/bash}"
 export SHELL_WORKDIR="${RUNTIME_WORKDIR}"
@@ -62,7 +62,7 @@ EOF
   chmod 600 "${OSCAR_CLI_CONFIG_FILE}"
 fi
 
-echo "Starting ghostty-web on port ${PORT}"
+echo "Starting ghostty-web on port ${GHOSTTY_PORT}"
 echo "Base path: ${BASE_PATH}"
 echo "Workspace: ${SHELL_WORKDIR}"
 echo "OSCAR endpoint: ${OSCAR_CLUSTER_ENDPOINT}"
