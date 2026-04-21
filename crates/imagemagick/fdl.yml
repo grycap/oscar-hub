@@ -1,0 +1,17 @@
+functions:
+  oscar:
+  - oscar-cluster:
+      name: imagemagick
+      memory: 512Mi
+      cpu: '0.5'
+      image: ghcr.io/grycap/imagemagick
+      script: script.sh
+      log_level: INFO
+      synchronous:
+        min_scale: 0
+      input:
+      - storage_provider: minio.default
+        path: imagemagick/input
+      output:
+      - storage_provider: minio.default
+        path: imagemagick/output

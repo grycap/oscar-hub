@@ -1,0 +1,389 @@
+{
+  "@context": [
+    "https://w3id.org/ro/crate/1.1/context"
+  ],
+  "@graph": [
+    {
+      "@type": "CreativeWork",
+      "@id": "ro-crate-metadata.json",
+      "conformsTo": {
+        "@id": "https://w3id.org/ro/crate/1.1"
+      },
+      "about": {
+        "@id": "./"
+      }
+    },
+    {
+      "@id": "./",
+      "@type": [
+        "Dataset",
+        "Service",
+        "SoftwareApplication"
+      ],
+      "datePublished": "2026-04-21",
+      "URL": "https://github.com/grycap/oscar-hub/tree/main/crates/imagemagick",
+      "name": "ImageMagick Service",
+      "description": "OSCAR service for lightweight image processing with ImageMagick. For every input image, it generates a grayscale PNG, an edge-enhanced PNG, and a JSON file with width, height, brightness, contrast, and edge-density metrics. It supports both asynchronous storage-driven execution and synchronous invocations.",
+      "license": {
+        "@id": "#license-apache-2.0"
+      },
+      "applicationCategory": "OSCAR Service",
+      "memoryRequirements": "512 MiB",
+      "processorRequirements": [
+        "0.5 vCPU",
+        "0 GPU"
+      ],
+      "serviceType": [
+        "asynchronous",
+        "synchronous"
+      ],
+      "isBasedOn": [
+        {
+          "@id": "https://imagemagick.org/"
+        }
+      ],
+      "author": {
+        "@id": "#author-grycap"
+      },
+      "softwareRequirements": [
+        {
+          "@id": "#software-imagemagick"
+        },
+        {
+          "@id": "#software-oscar-cli"
+        },
+        {
+          "@id": "#software-minio"
+        }
+      ],
+      "subjectOf": [
+        {
+          "@id": "#acceptance-test-sync"
+        },
+        {
+          "@id": "#acceptance-test-async"
+        }
+      ],
+      "hasPart": [
+        {
+          "@id": "fdl.yml"
+        },
+        {
+          "@id": "script.sh"
+        },
+        {
+          "@id": "README.md"
+        },
+        {
+          "@id": "docker/Dockerfile"
+        },
+        {
+          "@id": "icon.png"
+        },
+        {
+          "@id": "input.png"
+        },
+        {
+          "@id": "#expected-output-artifacts"
+        }
+      ]
+    },
+    {
+      "@id": "fdl.yml",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "OSCAR Service Definition",
+      "encodingFormat": "text/yaml"
+    },
+    {
+      "@id": "script.sh",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "OSCAR Service Script",
+      "encodingFormat": "text/x-shellscript"
+    },
+    {
+      "@id": "README.md",
+      "@type": [
+        "File",
+        "TextDigitalDocument"
+      ],
+      "name": "Usage Notes",
+      "encodingFormat": "text/markdown"
+    },
+    {
+      "@id": "docker/Dockerfile",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "Multi-arch container build recipe",
+      "encodingFormat": "text/x-dockerfile"
+    },
+    {
+      "@id": "icon.png",
+      "@type": [
+        "File",
+        "ImageObject"
+      ],
+      "name": "OSCAR Service Icon",
+      "encodingFormat": "image/png"
+    },
+    {
+      "@id": "input.png",
+      "@type": [
+        "File",
+        "ImageObject"
+      ],
+      "name": "Sample input image",
+      "description": "Example PNG image for testing the grayscale, edges, and metrics outputs.",
+      "encodingFormat": "image/png"
+    },
+    {
+      "@id": "#acceptance-test-sync",
+      "@type": "HowTo",
+      "name": "Synchronous ImageMagick acceptance test",
+      "description": "Run the service directly with the sample image and store the returned ZIP archive containing the generated outputs.",
+      "tool": [
+        {
+          "@id": "#tool-oscar-cli"
+        }
+      ],
+      "supply": [
+        {
+          "@id": "#supply-sample-image"
+        }
+      ],
+      "step": [
+        {
+          "@id": "#step-sync-run"
+        }
+      ]
+    },
+    {
+      "@id": "#acceptance-test-async",
+      "@type": "HowTo",
+      "name": "Asynchronous ImageMagick acceptance test",
+      "description": "Upload the sample input image, wait for OSCAR to process it, then download the generated artifacts and confirm that the grayscale PNG, edge PNG, and metrics JSON are present.",
+      "tool": [
+        {
+          "@id": "#tool-oscar-cli"
+        }
+      ],
+      "supply": [
+        {
+          "@id": "#supply-sample-image"
+        }
+      ],
+      "step": [
+        {
+          "@id": "#step-async-put"
+        },
+        {
+          "@id": "#step-async-wait"
+        },
+        {
+          "@id": "#step-async-get"
+        }
+      ]
+    },
+    {
+      "@id": "#tool-oscar-cli",
+      "@type": "HowToTool",
+      "name": "OSCAR CLI",
+      "item": {
+        "@id": "#oscar-cli"
+      }
+    },
+    {
+      "@id": "#supply-sample-image",
+      "@type": "HowToSupply",
+      "name": "Sample image",
+      "item": {
+        "@id": "input.png"
+      }
+    },
+    {
+      "@id": "#expected-output-zip",
+      "@type": [
+        "File",
+        "MediaObject"
+      ],
+      "name": "Generated ZIP archive",
+      "description": "ZIP file returned by synchronous invocation containing the grayscale image, edge image, and metrics JSON.",
+      "encodingFormat": "application/zip"
+    },
+    {
+      "@id": "#expected-output-artifacts",
+      "@type": [
+        "Dataset"
+      ],
+      "name": "Generated output artifacts",
+      "description": "Output directory containing <stem>_gray.png, <stem>_edges.png, and <stem>_metrics.json for the uploaded image."
+    },
+    {
+      "@id": "#step-sync-run",
+      "@type": "HowToStep",
+      "position": 1,
+      "text": "Run the service synchronously with the sample image and store the returned ZIP file.",
+      "potentialAction": {
+        "@id": "#action-sync-run"
+      }
+    },
+    {
+      "@id": "#step-async-put",
+      "@type": "HowToStep",
+      "position": 1,
+      "text": "Upload the sample input image to the service input path.",
+      "potentialAction": {
+        "@id": "#action-async-put"
+      }
+    },
+    {
+      "@id": "#step-async-wait",
+      "@type": "HowToStep",
+      "position": 2,
+      "text": "Wait for the remote execution to generate the derived image files and metrics JSON.",
+      "timeRequired": "PT20S"
+    },
+    {
+      "@id": "#step-async-get",
+      "@type": "HowToStep",
+      "position": 3,
+      "text": "Download the latest outputs and confirm that the expected files were generated.",
+      "potentialAction": {
+        "@id": "#action-async-get"
+      }
+    },
+    {
+      "@id": "#action-sync-run",
+      "@type": "ConsumeAction",
+      "name": "service run",
+      "object": {
+        "@id": "input.png"
+      },
+      "target": {
+        "@id": "#entry-sync-run"
+      },
+      "result": {
+        "@id": "#expected-output-zip"
+      },
+      "additionalProperty": [
+        {
+          "@id": "#command-template-sync-run"
+        }
+      ]
+    },
+    {
+      "@id": "#entry-sync-run",
+      "@type": "EntryPoint",
+      "actionApplication": {
+        "@id": "#oscar-cli"
+      }
+    },
+    {
+      "@id": "#command-template-sync-run",
+      "@type": "PropertyValue",
+      "propertyID": "commandTemplate",
+      "value": "oscar-cli service run imagemagick --input {input} --output {destination}"
+    },
+    {
+      "@id": "#action-async-put",
+      "@type": "TransferAction",
+      "name": "service put-file",
+      "object": {
+        "@id": "input.png"
+      },
+      "target": {
+        "@id": "#entry-async-put"
+      },
+      "additionalProperty": [
+        {
+          "@id": "#command-template-async-put"
+        }
+      ]
+    },
+    {
+      "@id": "#entry-async-put",
+      "@type": "EntryPoint",
+      "actionApplication": {
+        "@id": "#oscar-cli"
+      }
+    },
+    {
+      "@id": "#command-template-async-put",
+      "@type": "PropertyValue",
+      "propertyID": "commandTemplate",
+      "value": "oscar-cli service put-file imagemagick {source}"
+    },
+    {
+      "@id": "#action-async-get",
+      "@type": "TransferAction",
+      "name": "service get-file",
+      "target": {
+        "@id": "#entry-async-get"
+      },
+      "result": {
+        "@id": "#expected-output-artifacts"
+      },
+      "additionalProperty": [
+        {
+          "@id": "#command-template-async-get"
+        }
+      ]
+    },
+    {
+      "@id": "#entry-async-get",
+      "@type": "EntryPoint",
+      "actionApplication": {
+        "@id": "#oscar-cli"
+      }
+    },
+    {
+      "@id": "#command-template-async-get",
+      "@type": "PropertyValue",
+      "propertyID": "commandTemplate",
+      "value": "oscar-cli service get-file imagemagick --download-latest-into {destination}"
+    },
+    {
+      "@id": "#oscar-cli",
+      "@type": "SoftwareApplication",
+      "name": "OSCAR CLI",
+      "url": "https://docs.oscar.grycap.net/oscar-cli/"
+    },
+    {
+      "@id": "#software-imagemagick",
+      "@type": "SoftwareApplication",
+      "name": "ImageMagick",
+      "url": "https://imagemagick.org/"
+    },
+    {
+      "@id": "#software-oscar-cli",
+      "@type": "SoftwareApplication",
+      "name": "OSCAR CLI",
+      "url": "https://docs.oscar.grycap.net/oscar-cli/"
+    },
+    {
+      "@id": "#software-minio",
+      "@type": "SoftwareApplication",
+      "name": "MinIO",
+      "url": "https://min.io/"
+    },
+    {
+      "@id": "#author-grycap",
+      "@type": "Organization",
+      "name": "GRyCAP - Universitat Politècnica de València",
+      "url": "https://www.grycap.upv.es/"
+    },
+    {
+      "@id": "#license-apache-2.0",
+      "@type": "CreativeWork",
+      "name": "Apache License 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0"
+    }
+  ]
+}
