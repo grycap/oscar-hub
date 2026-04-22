@@ -3,6 +3,7 @@ functions:
   - oscar-cluster:
       name: vllm-gpu-llama
       cpu: '2.0'
+      enable_gpu: true
       memory: 10Gi
       image: ghcr.io/grycap/vllm-llama
       script: script.sh
