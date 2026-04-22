@@ -20,10 +20,10 @@
         "Service",
         "SoftwareApplication"
       ],
-      "datePublished": "2026-04-21",
+      "datePublished": "2026-04-22",
       "URL": "https://github.com/grycap/oscar-hub/tree/main/crates/imagemagick",
       "name": "ImageMagick Service",
-      "description": "OSCAR service for lightweight image processing with ImageMagick. For every input image, it generates a grayscale PNG, an edge-enhanced PNG, and a JSON file with width, height, brightness, contrast, and edge-density metrics. It supports both asynchronous storage-driven execution and synchronous invocations.",
+      "description": "OSCAR service for lightweight image processing with ImageMagick. For every input image, it generates a grayscale PNG, an edge-enhanced PNG, and a JSON file with width, height, brightness, contrast, and edge-density metrics. It supports both asynchronous storage-driven execution and synchronous invocations, and it bundles a didactic Jupyter notebook plus sample images for teaching and self-guided experimentation.",
       "license": {
         "@id": "#license-apache-2.0"
       },
@@ -54,6 +54,9 @@
         },
         {
           "@id": "#software-minio"
+        },
+        {
+          "@id": "#software-jupyter"
         }
       ],
       "subjectOf": [
@@ -75,6 +78,9 @@
           "@id": "README.md"
         },
         {
+          "@id": "oscar-image-processing-notebook.ipynb"
+        },
+        {
           "@id": "docker/Dockerfile"
         },
         {
@@ -82,6 +88,9 @@
         },
         {
           "@id": "input.png"
+        },
+        {
+          "@id": "sample-images/"
         },
         {
           "@id": "#expected-output-artifacts"
@@ -116,6 +125,17 @@
       "encodingFormat": "text/markdown"
     },
     {
+      "@id": "oscar-image-processing-notebook.ipynb",
+      "@type": [
+        "File",
+        "SoftwareSourceCode",
+        "TextDigitalDocument"
+      ],
+      "name": "Teaching notebook",
+      "description": "Jupyter notebook that explains the OSCAR, MinIO, and Jupyter workflow and guides users through the analysis of the generated visual metrics.",
+      "encodingFormat": "application/x-ipynb+json"
+    },
+    {
       "@id": "docker/Dockerfile",
       "@type": [
         "File",
@@ -141,6 +161,148 @@
       ],
       "name": "Sample input image",
       "description": "Example PNG image for testing the grayscale, edges, and metrics outputs.",
+      "encodingFormat": "image/png"
+    },
+    {
+      "@id": "sample-images/",
+      "@type": [
+        "Dataset"
+      ],
+      "name": "Bundled sample images",
+      "description": "Collection of example input images for classroom demonstrations, self-guided testing, and notebook-based analysis.",
+      "hasPart": [
+        {
+          "@id": "sample-images/01_gradient_sunset.png"
+        },
+        {
+          "@id": "sample-images/02_checkerboard.png"
+        },
+        {
+          "@id": "sample-images/03_horizontal_stripes.png"
+        },
+        {
+          "@id": "sample-images/04_basic_shapes.png"
+        },
+        {
+          "@id": "sample-images/05_noise_texture.jpg"
+        },
+        {
+          "@id": "sample-images/06_text_poster.png"
+        },
+        {
+          "@id": "sample-images/07_radial_gradient.png"
+        },
+        {
+          "@id": "sample-images/08_city_blocks.png"
+        },
+        {
+          "@id": "sample-images/09_concentric_circles.png"
+        },
+        {
+          "@id": "sample-images/10_diagonal_lines.png"
+        },
+        {
+          "@id": "sample-images/overview.png"
+        }
+      ]
+    },
+    {
+      "@id": "sample-images/01_gradient_sunset.png",
+      "@type": [
+        "File",
+        "ImageObject"
+      ],
+      "name": "Gradient sunset sample image",
+      "encodingFormat": "image/png"
+    },
+    {
+      "@id": "sample-images/02_checkerboard.png",
+      "@type": [
+        "File",
+        "ImageObject"
+      ],
+      "name": "Checkerboard sample image",
+      "encodingFormat": "image/png"
+    },
+    {
+      "@id": "sample-images/03_horizontal_stripes.png",
+      "@type": [
+        "File",
+        "ImageObject"
+      ],
+      "name": "Horizontal stripes sample image",
+      "encodingFormat": "image/png"
+    },
+    {
+      "@id": "sample-images/04_basic_shapes.png",
+      "@type": [
+        "File",
+        "ImageObject"
+      ],
+      "name": "Basic shapes sample image",
+      "encodingFormat": "image/png"
+    },
+    {
+      "@id": "sample-images/05_noise_texture.jpg",
+      "@type": [
+        "File",
+        "ImageObject"
+      ],
+      "name": "Noise texture sample image",
+      "encodingFormat": "image/jpeg"
+    },
+    {
+      "@id": "sample-images/06_text_poster.png",
+      "@type": [
+        "File",
+        "ImageObject"
+      ],
+      "name": "Text poster sample image",
+      "encodingFormat": "image/png"
+    },
+    {
+      "@id": "sample-images/07_radial_gradient.png",
+      "@type": [
+        "File",
+        "ImageObject"
+      ],
+      "name": "Radial gradient sample image",
+      "encodingFormat": "image/png"
+    },
+    {
+      "@id": "sample-images/08_city_blocks.png",
+      "@type": [
+        "File",
+        "ImageObject"
+      ],
+      "name": "City blocks sample image",
+      "encodingFormat": "image/png"
+    },
+    {
+      "@id": "sample-images/09_concentric_circles.png",
+      "@type": [
+        "File",
+        "ImageObject"
+      ],
+      "name": "Concentric circles sample image",
+      "encodingFormat": "image/png"
+    },
+    {
+      "@id": "sample-images/10_diagonal_lines.png",
+      "@type": [
+        "File",
+        "ImageObject"
+      ],
+      "name": "Diagonal lines sample image",
+      "encodingFormat": "image/png"
+    },
+    {
+      "@id": "sample-images/overview.png",
+      "@type": [
+        "File",
+        "ImageObject"
+      ],
+      "name": "Sample image overview sheet",
       "encodingFormat": "image/png"
     },
     {
@@ -372,6 +534,12 @@
       "@type": "SoftwareApplication",
       "name": "MinIO",
       "url": "https://min.io/"
+    },
+    {
+      "@id": "#software-jupyter",
+      "@type": "SoftwareApplication",
+      "name": "Jupyter Notebook",
+      "url": "https://jupyter.org/"
     },
     {
       "@id": "#author-grycap",
