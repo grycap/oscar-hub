@@ -8,6 +8,11 @@ For every uploaded PNG or JPG image, the service produces:
 - an edge-enhanced version (`*_edges.png`),
 - a JSON report (`*_metrics.json`) with width, height, average brightness, contrast, and edge density.
 
+This crate also includes teaching material:
+
+- `oscar-image-processing-notebook.ipynb`, an English-language Jupyter notebook with didactic explanations of the OSCAR + MinIO + Jupyter workflow,
+- `sample-images/`, a ready-to-use image collection for classroom demonstrations and local testing.
+
 The included `fdl.yml` uses generic paths:
 
 ```yaml
@@ -17,6 +22,23 @@ path: imagemagick/output
 ```
 
 Adjust the service name, OSCAR cluster identifier, and MinIO storage provider/path values before deployment if your environment requires different values.
+
+## Teaching workflow
+
+The bundled notebook is meant to be used after the service has processed one or more images. A typical learning flow is:
+
+1. Deploy the service from `fdl.yml`.
+2. Upload one or more files from `sample-images/` to the service input bucket.
+3. Download or mount the generated artifacts into a local `output/` directory inside this crate.
+4. Open `oscar-image-processing-notebook.ipynb` and inspect the metrics, plots, and galleries.
+
+Example asynchronous upload loop using the bundled sample data:
+
+```bash
+for image in crates/imagemagick/sample-images/*; do
+  oscar-cli service put-file imagemagick "$image"
+done
+```
 
 ## Build a multi-arch container image
 
