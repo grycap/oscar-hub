@@ -67,7 +67,6 @@
         "SoftwareSourceCode"
       ],
       "name": "OSCAR Simple Test Definition",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/simple-test/fdl.yml",
       "encodingFormat": "text/yaml"
     },
     {
@@ -77,7 +76,6 @@
         "SoftwareSourceCode"
       ],
       "name": "OSCAR Simple Test Script",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/simple-test/script.sh",
       "encodingFormat": "text/x-shellscript"
     },
     {
@@ -87,7 +85,6 @@
         "TextDigitalDocument"
       ],
       "name": "Sample Input",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/simple-test/input.txt",
       "encodingFormat": "text/plain"
     },
     {

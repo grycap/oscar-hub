@@ -70,7 +70,6 @@
         "SoftwareSourceCode"
       ],
       "name": "OSCAR Stress Test Definition",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/stress-test/fdl.yml",
       "encodingFormat": "text/yaml"
     },
     {
@@ -80,7 +79,6 @@
         "SoftwareSourceCode"
       ],
       "name": "OSCAR Stress Test Script",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/stress-test/script.sh",
       "encodingFormat": "text/x-shellscript"
     },
     {
@@ -90,7 +88,6 @@
         "ImageObject"
       ],
       "name": "OSCAR Stress Test Service Icon",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/stress-test/icon.png",
       "encodingFormat": "image/png"
     },
     {
@@ -100,7 +97,6 @@
         "TextDigitalDocument"
       ],
       "name": "Sample Input",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/stress-test/input.txt",
       "encodingFormat": "text/plain"
     },
     {

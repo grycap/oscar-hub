@@ -93,7 +93,6 @@
         "SoftwareSourceCode"
       ],
       "name": "Service Definition (FDL)",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/posenet-tf/fdl.yml",
       "encodingFormat": "text/yaml"
     },
     {
@@ -103,7 +102,6 @@
         "SoftwareSourceCode"
       ],
       "name": "Service Execution Script",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/posenet-tf/script.sh",
       "encodingFormat": "text/x-shellscript"
     },
     {
@@ -113,7 +111,6 @@
         "SoftwareSourceCode"
       ],
       "name": "Service Notes",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/posenet-tf/README.md",
       "encodingFormat": "text/markdown"
     },
     {
@@ -124,7 +121,6 @@
       ],
       "name": "Sample body pose image",
       "description": "JPEG image used to validate the exposed PoseNet prediction endpoint.",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/posenet-tf/001.jpg",
       "encodingFormat": "image/jpeg"
     },
     {
@@ -134,7 +130,6 @@
         "ImageObject"
       ],
       "name": "Service Icon",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/posenet-tf/icon.png",
       "encodingFormat": "image/png"
     },
     {

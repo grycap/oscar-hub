@@ -64,7 +64,6 @@
         "SoftwareSourceCode"
       ],
       "name": "OSCAR Cowsay Service Definition",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/cowsay/fdl.yml",
       "encodingFormat": "text/yaml"
     },
     {
@@ -74,7 +73,6 @@
         "SoftwareSourceCode"
       ],
       "name": "OSCAR Cowsay Service Script",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/cowsay/script.sh",
       "encodingFormat": "text/x-shellscript"
     },
     {
@@ -84,7 +82,6 @@
         "ImageObject"
       ],
       "name": "OSCAR Cowsay Service Icon",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/cowsay/icon.png",
       "encodingFormat": "image/png"
     },
     {
@@ -95,7 +92,6 @@
       ],
       "name": "Sample Cowsay Input",
       "description": "Example phrase rendered by cowsay; replace or extend with service-specific fixtures.",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/cowsay/input.txt",
       "encodingFormat": "text/plain"
     },
     {

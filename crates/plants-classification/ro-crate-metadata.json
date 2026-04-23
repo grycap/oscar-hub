@@ -78,7 +78,6 @@
         "SoftwareSourceCode"
       ],
       "name": "OSCAR Service Definition",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/plants-classification/fdl.yml",
       "encodingFormat": "text/yaml"
     },
     {
@@ -88,7 +87,6 @@
         "SoftwareSourceCode"
       ],
       "name": "OSCAR Service Script",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/plants-classification/script.sh",
       "encodingFormat": "text/x-shellscript"
     },
     {
@@ -98,7 +96,6 @@
         "ImageObject"
       ],
       "name": "OSCAR Service Icon",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/plants-classification/icon.png",
       "encodingFormat": "image/png"
     },
     {
@@ -109,7 +106,6 @@
       ],
       "name": "Sample detection image",
       "description": "Replace with a representative image for running the Plants Classification model.",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/plants-classification/input.png",
       "encodingFormat": "image/png"
     },
     {

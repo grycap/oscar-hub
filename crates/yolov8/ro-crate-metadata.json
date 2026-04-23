@@ -72,7 +72,6 @@
         "SoftwareSourceCode"
       ],
       "name": "OSCAR Service Definition",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/yolov8/fdl.yml",
       "encodingFormat": "text/yaml"
     },
     {
@@ -82,7 +81,6 @@
         "SoftwareSourceCode"
       ],
       "name": "OSCAR Service Script",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/yolov8/script.sh",
       "encodingFormat": "text/x-shellscript"
     },
     {
@@ -92,7 +90,6 @@
         "ImageObject"
       ],
       "name": "OSCAR Service Icon",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/yolov8/icon.png",
       "encodingFormat": "image/png"
     },
     {
@@ -103,7 +100,6 @@
       ],
       "name": "Sample detection image",
       "description": "Replace with a representative image for running the YOLOv8 detector.",
-      "url": "https://raw.githubusercontent.com/grycap/oscar-hub/refs/heads/main/crates/yolov8/input.png",
       "encodingFormat": "image/png"
     },
     {
