@@ -1,0 +1,158 @@
+{
+  "@context": [
+    "https://w3id.org/ro/crate/1.1/context"
+  ],
+  "@graph": [
+    {
+      "@type": "CreativeWork",
+      "@id": "ro-crate-metadata.json",
+      "conformsTo": {
+        "@id": "https://w3id.org/ro/crate/1.1"
+      },
+      "about": {
+        "@id": "./"
+      }
+    },
+    {
+      "@id": "./",
+      "@type": [
+        "Dataset",
+        "Service",
+        "SoftwareApplication"
+      ],
+      "datePublished": "2026-04-26",
+      "version": "0.1.0",
+      "URL": "https://github.com/grycap/oscar-hub/tree/main/crates/open-webui",
+      "name": "Open WebUI for OSCAR",
+      "description": "OSCAR exposed service that deploys Open WebUI as a persistent browser interface for OpenAI-compatible model services, including OSCAR-hosted vLLM backends.",
+      "license": {
+        "@id": "#license-open-webui"
+      },
+      "applicationCategory": "OSCAR Service",
+      "memoryRequirements": "4 GiB",
+      "processorRequirements": [
+        "2 vCPU",
+        "0 GPU"
+      ],
+      "serviceType": "exposed",
+      "isBasedOn": [
+        {
+          "@id": "https://github.com/open-webui/open-webui"
+        },
+        {
+          "@id": "https://github.com/grycap/oscar"
+        }
+      ],
+      "softwareRequirements": [
+        {
+          "@id": "#software-open-webui"
+        },
+        {
+          "@id": "#software-openai-compatible-api"
+        }
+      ],
+      "author": {
+        "@id": "#author"
+      },
+      "hasPart": [
+        {
+          "@id": "fdl.yml"
+        },
+        {
+          "@id": "script.sh"
+        },
+        {
+          "@id": "README.md"
+        },
+        {
+          "@id": "docker/Dockerfile"
+        },
+        {
+          "@id": "icon.png"
+        }
+      ]
+    },
+    {
+      "@id": "fdl.yml",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "Service Definition (FDL)",
+      "encodingFormat": "text/yaml"
+    },
+    {
+      "@id": "script.sh",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "Open WebUI Launch Script",
+      "encodingFormat": "text/x-shellscript"
+    },
+    {
+      "@id": "README.md",
+      "@type": [
+        "File",
+        "TextDigitalDocument"
+      ],
+      "name": "Deployment Proposal and Notes",
+      "encodingFormat": "text/markdown"
+    },
+    {
+      "@id": "docker/Dockerfile",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "Container Image Definition",
+      "encodingFormat": "text/plain"
+    },
+    {
+      "@id": "icon.png",
+      "@type": [
+        "File",
+        "ImageObject"
+      ],
+      "name": "Service Icon",
+      "encodingFormat": "image/png"
+    },
+    {
+      "@id": "#author",
+      "@type": "Organization",
+      "name": "GRyCAP",
+      "url": "https://www.grycap.upv.es/"
+    },
+    {
+      "@id": "#license-open-webui",
+      "@type": "CreativeWork",
+      "name": "Open WebUI License",
+      "url": "https://github.com/open-webui/open-webui/blob/main/LICENSE"
+    },
+    {
+      "@id": "https://github.com/open-webui/open-webui",
+      "@type": "SoftwareApplication",
+      "name": "Open WebUI",
+      "description": "Self-hosted AI interface for Ollama and OpenAI-compatible APIs."
+    },
+    {
+      "@id": "https://github.com/grycap/oscar",
+      "@type": "SoftwareApplication",
+      "name": "OSCAR",
+      "description": "Serverless platform for event-driven and exposed containerized services."
+    },
+    {
+      "@id": "#software-open-webui",
+      "@type": "SoftwareApplication",
+      "name": "Open WebUI",
+      "url": "https://github.com/open-webui/open-webui",
+      "softwareVersion": "v0.9.0"
+    },
+    {
+      "@id": "#software-openai-compatible-api",
+      "@type": "SoftwareApplication",
+      "name": "OpenAI-compatible API",
+      "description": "Model serving API consumed by Open WebUI through OPENAI_API_BASE_URL and OPENAI_API_KEY."
+    }
+  ]
+}

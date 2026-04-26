@@ -1,0 +1,36 @@
+functions:
+  oscar:
+  - oscar-cluster:
+      name: open-webui
+      cpu: "2.0"
+      memory: 4Gi
+      image: ghcr.io/open-webui/open-webui:v0.9.0
+      script: script.sh
+      log_level: INFO
+      environment:
+        variables:
+          DATA_DIR: /data/open-webui
+          WEBUI_NAME: OSCAR Open WebUI
+          WEBUI_AUTH: "True"
+          ENABLE_SIGNUP: "False"
+          ENABLE_PERSISTENT_CONFIG: "True"
+          ENABLE_OLLAMA_API: "False"
+          ENABLE_OPENAI_API: "True"
+          OPENAI_API_BASE_URL: http://vllm-gpu-llama.oscar.svc.cluster.local:8000/v1
+          CORS_ALLOW_ORIGIN: "*"
+        secrets:
+          WEBUI_SECRET_KEY: change-me-generate-with-openssl-rand-hex-32
+          WEBUI_ADMIN_EMAIL: admin@example.org
+          WEBUI_ADMIN_PASSWORD: change-me
+          OPENAI_API_KEY: secretkey
+      volume:
+        size: 5Gi
+        mount_path: /data
+      expose:
+        min_scale: 1
+        max_scale: 1
+        api_port: 8080
+        cpu_threshold: 90
+        set_auth: true
+        rewrite_target: true
+        health_path: /
