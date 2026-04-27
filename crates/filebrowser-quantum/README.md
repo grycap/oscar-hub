@@ -42,6 +42,7 @@ Application access supports:
 - Manual fallback with user `admin` and password `FILEBROWSER_ADMIN_PASSWORD` if provided, otherwise `OSCAR_SERVICE_TOKEN`.
 
 OSCAR injects `OSCAR_SERVICE_NAME`, `OSCAR_SERVICE_TOKEN`, and `OSCAR_SERVICE_BASE_PATH` in the container. The startup script uses `OSCAR_SERVICE_TOKEN` as the JWT shared secret and as the fallback admin password.
+The dashboard-generated JWT uses `FILEBROWSER_JWT_SUB` as the username, defaulting to `oscar-dashboard`, and grants admin permissions through the `admin` group.
 
 ## Notes
 

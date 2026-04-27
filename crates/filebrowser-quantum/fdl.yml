@@ -12,6 +12,7 @@ functions:
       environment:
         variables:
           FILEBROWSER_SOURCE_PATH: /data
+          FILEBROWSER_JWT_SUB: oscar-dashboard
       volume:
         name: your-volume-name
         mount_path: /data
