@@ -4,7 +4,7 @@ functions:
       name: filebrowser-quantum
       cpu: "0.5"
       memory: 512Mi
-      image: ghcr.io/gtsteffaniak/filebrowser:latest
+      image: ghcr.io/gtsteffaniak/filebrowser:1.2.4-stable
       script: script.sh
       log_level: INFO
       volume:
