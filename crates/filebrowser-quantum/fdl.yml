@@ -1,0 +1,21 @@
+functions:
+  oscar:
+  - oscar-cluster:
+      name: filebrowser-quantum
+      cpu: "0.5"
+      memory: 512Mi
+      image: ghcr.io/gtsteffaniak/filebrowser:latest
+      script: script.sh
+      log_level: INFO
+      volume:
+        name: you-volume-name
+        mount_path: /data
+      expose:
+        min_scale: 1
+        max_scale: 1
+        api_port: 80
+        cpu_threshold: 80
+        rewrite_target: true
+        set_auth: false
+        health_path: "/"
+        probe_mode: direct

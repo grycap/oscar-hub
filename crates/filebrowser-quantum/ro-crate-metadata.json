@@ -1,0 +1,138 @@
+{
+  "@context": [
+    "https://w3id.org/ro/crate/1.1/context"
+  ],
+  "@graph": [
+    {
+      "@type": "CreativeWork",
+      "@id": "ro-crate-metadata.json",
+      "conformsTo": {
+        "@id": "https://w3id.org/ro/crate/1.1"
+      },
+      "about": {
+        "@id": "./"
+      }
+    },
+    {
+      "@id": "./",
+      "@type": [
+        "Dataset",
+        "Service",
+        "SoftwareApplication"
+      ],
+      "datePublished": "2026-04-27",
+      "version": "0.1.0",
+      "URL": "https://github.com/grycap/oscar-hub/tree/main/crates/filebrowser-quantum",
+      "name": "FileBrowser Quantum",
+      "description": "OSCAR exposed service that deploys FileBrowser Quantum to browse an existing OSCAR volume through a web-based file manager.",
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "applicationCategory": "OSCAR Service",
+      "memoryRequirements": "512 MiB",
+      "processorRequirements": [
+        "0.5 vCPU",
+        "0 GPU"
+      ],
+      "serviceType": "exposed",
+      "isBasedOn": [
+        {
+          "@id": "https://github.com/gtsteffaniak/filebrowser"
+        },
+        {
+          "@id": "https://github.com/grycap/oscar"
+        }
+      ],
+      "softwareRequirements": [
+        {
+          "@id": "#software-filebrowser-quantum"
+        }
+      ],
+      "author": {
+        "@id": "#author"
+      },
+      "hasPart": [
+        {
+          "@id": "fdl.yml"
+        },
+        {
+          "@id": "script.sh"
+        },
+        {
+          "@id": "README.md"
+        },
+        {
+          "@id": "icon.png"
+        }
+      ]
+    },
+    {
+      "@id": "fdl.yml",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "FileBrowser Quantum Service Definition",
+      "encodingFormat": "text/yaml"
+    },
+    {
+      "@id": "script.sh",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "FileBrowser Quantum Service Script",
+      "encodingFormat": "text/x-shellscript"
+    },
+    {
+      "@id": "README.md",
+      "@type": [
+        "File",
+        "TextDigitalDocument"
+      ],
+      "name": "Deployment Notes",
+      "encodingFormat": "text/markdown"
+    },
+    {
+      "@id": "icon.png",
+      "@type": [
+        "File",
+        "ImageObject"
+      ],
+      "name": "Service Icon",
+      "encodingFormat": "image/png"
+    },
+    {
+      "@id": "#author",
+      "@type": "Organization",
+      "name": "GRyCAP",
+      "url": "https://www.grycap.upv.es/"
+    },
+    {
+      "@id": "https://www.apache.org/licenses/LICENSE-2.0",
+      "@type": "CreativeWork",
+      "name": "Apache License 2.0",
+      "identifier": "SPDX:Apache-2.0"
+    },
+    {
+      "@id": "https://github.com/gtsteffaniak/filebrowser",
+      "@type": "SoftwareApplication",
+      "name": "FileBrowser Quantum",
+      "url": "https://github.com/gtsteffaniak/filebrowser",
+      "description": "Web-based file manager for simple deployment."
+    },
+    {
+      "@id": "https://github.com/grycap/oscar",
+      "@type": "SoftwareApplication",
+      "name": "OSCAR",
+      "description": "Serverless platform for event-driven and exposed containerized services."
+    },
+    {
+      "@id": "#software-filebrowser-quantum",
+      "@type": "SoftwareApplication",
+      "name": "FileBrowser Quantum",
+      "url": "https://github.com/gtsteffaniak/filebrowser",
+      "softwareVersion": "latest"
+    }
+  ]
+}
