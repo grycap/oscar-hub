@@ -34,6 +34,16 @@ auth:
       adminGroup: "admin"
       groupsClaim: "groups"
   adminUsername: admin
+userDefaults:
+  permissions:
+    api: true
+    admin: true
+    modify: true
+    share: true
+    realtime: true
+    delete: true
+    create: true
+    download: true
 EOF
 
 echo "Starting FileBrowser Quantum on port 80"
