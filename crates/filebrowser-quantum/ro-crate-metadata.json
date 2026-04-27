@@ -62,7 +62,7 @@
           "@id": "README.md"
         },
         {
-          "@id": "icon.png"
+          "@id": "icon.svg"
         }
       ]
     },
@@ -94,13 +94,13 @@
       "encodingFormat": "text/markdown"
     },
     {
-      "@id": "icon.png",
+      "@id": "icon.svg",
       "@type": [
         "File",
         "ImageObject"
       ],
       "name": "Service Icon",
-      "encodingFormat": "image/png"
+      "encodingFormat": "image/svg+xml"
     },
     {
       "@id": "#author",
