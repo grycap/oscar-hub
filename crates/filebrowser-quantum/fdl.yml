@@ -7,8 +7,13 @@ functions:
       image: ghcr.io/gtsteffaniak/filebrowser:latest
       script: script.sh
       log_level: INFO
+      labels:
+        filebrowser: "true"
+      environment:
+        variables:
+          FILEBROWSER_SOURCE_PATH: /data
       volume:
-        name: you-volume-name
+        name: your-volume-name
         mount_path: /data
       expose:
         min_scale: 1
