@@ -1,24 +1,25 @@
 functions:
   oscar:
   - oscar-cluster:
-      name: openclaw-volume
-      memory: 2Gi
-      cpu: "2.0"
-      image: ghcr.io/openclaw/openclaw:2026.3.8
+      name: gmolto-openclaw
+      memory: 3Gi
+      cpu: "4.0"
+      image: ghcr.io/openclaw/openclaw:2026.4.25
       script: script.sh
       environment:
         variables:
           OPENCLAW_STATE_DIR: "/data/openclaw-state"
           OPENCLAW_CONFIG_PATH: "/data/openclaw-state/openclaw.json"
+          OPENCLAW_PLUGIN_STAGE_DIR: "/data/openclaw-state/plugin-runtime-deps"
           OPENCLAW_DISABLE_DEVICE_AUTH: "1"
-          OPENCLAW_SKIP_CHANNELS: "0"
-          OPENCLAW_SKIP_PROVIDERS: "0"
+          OPENCLAW_SKIP_CHANNELS: "1"
+          OPENCLAW_SKIP_PROVIDERS: "1"
           OPENCLAW_SKIP_BROWSER_CONTROL_SERVER: "1"
           OPENCLAW_SKIP_CANVAS_HOST: "1"
           OPENCLAW_SKIP_GMAIL_WATCHER: "1"
           OPENCLAW_SKIP_CRON: "1"
       volume:
-        size: 1Gi
+        name: gmolto-openclaw-data
         mount_path: /data
       expose:
         min_scale: 1
@@ -26,5 +27,6 @@ functions:
         api_port: 18789
         cpu_threshold: 90
         rewrite_target: true
-        set_auth: true
-        health_path: "/"
+        set_auth: false
+        health_path: "/healthz"
+        probe_mode: direct

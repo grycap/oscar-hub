@@ -6,7 +6,7 @@ Default deployment values match the working OSCAR payload:
 
 - `name: openclaw-volume`
 - `cpu: 2.0`
-- `image: ghcr.io/openclaw/openclaw:2026.3.8`
+- `image: ghcr.io/openclaw/openclaw:2026.4.25`
 
 ## Storage
 
@@ -32,10 +32,17 @@ Once deployed, the UI is exposed at:
 https://<OSCAR_ENDPOINT>/system/services/<service-name>/exposed/
 ```
 
-With `set_auth: true`, use:
+OSCAR authentication is disabled for this service:
 
-- user: `<service-name>`
-- password: service token
+- `set_auth: false`
+
+OpenClaw Gateway authentication uses the OSCAR service token:
+
+- token: `OSCAR_SERVICE_TOKEN`
+
+The script configures the Control UI base path from:
+
+- `OSCAR_SERVICE_BASE_PATH`
 
 ## In-Cluster Access
 
