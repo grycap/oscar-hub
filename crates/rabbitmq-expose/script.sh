@@ -33,7 +33,7 @@ rabbitmqctl set_permissions -p / $SERVICE_NAME "^${QUEUE_NAME}$" "^(amq\.topic|$
 TOPIC_REGEX="^oscar\.${SERVICE_NAME}$"
 
 rabbitmqctl set_topic_permissions -p / "$SERVICE_NAME" amq.topic "$TOPIC_REGEX" "$TOPIC_REGEX"
-# rabbitmqctl set_topic_permissions -p / oscar_user amq.topic "^oscar\.sensor$" "^oscar\.sensor$"
+
 
 # ---Topology Configuration (Queues and Bindings)---
 
@@ -72,7 +72,7 @@ rabbitmqctl import_definitions /tmp/definitions.json
 LIMIT_POLICY_SERVICE="limit-oscar-${SERVICE_NAME}"
 
 # 3. Apply the security policy (as a reinforcement)
-rabbitmqctl set_policy $LIMIT_POLICY_SERVICE "^${QUEUE_NAME}$" '{"max-length":10}' --apply-to queues
+rabbitmqctl set_policy $LIMIT_POLICY_SERVICE "^${QUEUE_NAME}$" "{\"max-length\":${QUEUE_MAX_LENGTH}}" --apply-to queues
 
 # Export the variables so that the Python script can read them
 
