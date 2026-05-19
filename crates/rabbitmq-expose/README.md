@@ -1,11 +1,11 @@
 # RabbitMQ to MinIO Bridge for OSCAR
 
-This project implements a batch processing service designed to run within the OSCAR ecosystem. The architecture uses a custom RabbitMQ 4.3.0 image that acts as a multiprotocol messaging broker, allowing data ingestion from IoT devices (currently only via AMQP) and subsequent processing using Python scripts. The processed messages are sent as a text file to a MinIO bucket.
+This project implements a batch processing service designed to run within the OSCAR ecosystem. The architecture uses a custom RabbitMQ 4.3.0 image that acts as a multiprotocol messaging broker, allowing data ingestion from IoT devices, currently over MQTT, HTTP, and AMQP and subsequent processing using Python scripts. The processed messages are sent as a text file to a MinIO bucket.
 
 ## Definition of the service in the fdl file
 
 - The image used is based on a RabbitMQ Docker image (rabbitmq:4.3.0-management) on which a Python script is executed that listens to the queue created in the service and when it has a certain number of messages, it sends them as a text file to a MinIO bucket.
-- Ensure that the api_port is the one for the AMQP protocol (5672)
+- Ensure that the API port is the one for the desired protocol (AMQP - port 5672, MQTT - port 1883 and RabbitMQ broker API - 15672)
 - Choose a suitable node_Port that is not being used by another exposed service
 - Define the name of the MinIO bucket where the data will be sent, as well as the credentials. The bucket must be created before launching the service.
 - Define the number of messages you want to process
@@ -48,22 +48,37 @@ The service script configures the RabbitMQ broker:
 
 ## Run AMQP client
 
-You can use any client that sends AMQP messages (this will be expandable to other protocols in the future).
+You can use any client that sends AMQP messages, MQTT messages, or HTTP requests.
+
+We have developed 3 Python scripts that will allow you to interact with the Broker through different channels.
 
 Key elements:
 
-- AMQP username: this will be the name you assigned to the service (SERVICE_NAME)
-- Password: this will be the token of the created service
-- Topic where to publish: will have the format oscar.SERVICE_NAME
-- RabbitMQ broker URL: the domain name of the cluster where you deployed the service. The domain without https
-- AMQP port: the nodePort defined when creating the service.
+Username: This will be the name you assigned to the service (SERVICE_NAME).
 
-As an example, we have a Python script (queue-publisher.py) whose main function is to send a sequential burst of data to the RabbitMQ broker to verify that the flow to the consumer and MinIO is working correctly.
+Password: This will be the token for the created service.
 
-To run this script, you must have the Python libraries pika and boto3 installed.
+Publishing topic: This will have the format oscar.SERVICE_NAME for AMQP and HTTP requests, and oscar/SERVICE_NAME for MQTT.
 
+RabbitMQ broker URL: The domain name of the cluster where you deployed the service. The domain without HTTPS.
+
+Port: The nodePort defined when creating the service.
+
+Important libraries for each script:
+
+- queue-publisher-amqp.py
 pika: This is the official Python client library for communicating with RabbitMQ.
 
 boto3: This is the standard library for any S3-compatible system (like your MinIO).
 
+- queue-publisher-mqtt.py
+paho.mqtt: The most widely used open-source library for implementing the MQTT protocol.
+
+- queue-publisher-http.py
+requests: Python's most popular way to make HTTP requests.
+
 ## Notes
+
+We are working on implementing a service that includes all three communication methods.
+
+

@@ -4,10 +4,11 @@
 rabbitmq-server & 
 
 # 2. Wait for the node to become operational
-# rabbitmq-diagnostics -q wait_for_startup
+rabbitmq-diagnostics -q wait --timeout 60
 
 # 3.Enable plugins
-rabbitmq-plugins enable rabbitmq_auth_backend_http 
+rabbitmq-plugins enable rabbitmq_auth_backend_http
+rabbitmq-plugins enable rabbitmq_management 
 rabbitmq-plugins enable rabbitmq_mqtt
 
 
