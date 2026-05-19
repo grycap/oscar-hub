@@ -67,14 +67,17 @@ Port: The nodePort defined when creating the service.
 Important libraries for each script:
 
 - queue-publisher-amqp.py
+
 pika: This is the official Python client library for communicating with RabbitMQ.
 
 boto3: This is the standard library for any S3-compatible system (like your MinIO).
 
 - queue-publisher-mqtt.py
+
 paho.mqtt: The most widely used open-source library for implementing the MQTT protocol.
 
 - queue-publisher-http.py
+
 requests: Python's most popular way to make HTTP requests.
 
 ## Notes
