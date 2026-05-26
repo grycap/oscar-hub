@@ -88,7 +88,6 @@ def process_batch(channel):
 #  Only the admin user is used.
 credentials = pika.PlainCredentials('guest', 'guest') 
 # use user created for the service
-USE user created for the service
 # credentials = pika.PlainCredentials(RABBIT_USER,RABIT_PASS ) 
 host_cluster = 'localhost' 
 amqp_port = 5672 

@@ -6,7 +6,7 @@ This project implements a batch processing service designed to run within the OS
 
 - The image used is based on a RabbitMQ Docker image (rabbitmq:4.3.0-management) on which a Python script is executed that listens to the queue created in the service and when it has a certain number of messages, it sends them as a text file to a MinIO bucket.
 - Ensure that the API port is the one for the desired protocol (AMQP - port 5672, MQTT - port 1883 and RabbitMQ broker API - 15672)
-- Choose a suitable node_Port that is not being used by another exposed service
+- You can assign nodePorts statically ([30100, 30200, 30300]), but ensure these ports have not been previously assigned. If you define nodePorts as an array of zeros ([0,0,0]), they will be assigned dynamically; that is, random ports will be assigned for each protocol.
 - Define the name of the MinIO bucket where the data will be sent, as well as the credentials. The bucket must be created before launching the service.
 - Define the number of messages you want to process
 
@@ -15,21 +15,21 @@ functions:
   oscar:
   - rabbitMQ-broker:
       name: rabbitmq-service
-      image: vrodben1/rabbitmq-expose:0.0.2
+      image: vrodben1/rabbitmq-expose:0.0.3
       memory: 2Gi
       cpu: '1.0'
       script: script-rabbitMQ.sh
       expose:
         min_scale: 1
         max_scale: 1
-        api_port: 5672  
+        api_port: [15672,1883,5672]  
         cpu_threshold: 80     
         default_command: false 
         rewrite_target: false
-        nodePort: 30350
+        nodePort: [30100, 30200, 30300]
       environment:
         variables:
-          BATCH_SIZE: "5"
+          BATCH_SIZE: "10"
           MINIO_ENDPOINT: "https://minio.cluster.im.grycap.net"
           BUCKET: "oscar-bucket"
         secrets:
@@ -46,23 +46,23 @@ The service script configures the RabbitMQ broker:
 - Defines the service queue characteristics and connects the amq.topic exchange to the queue, ensuring messages reach their destination. A maximum queue length (QUEUE_MAX_LENGTH) is set, currently defined as 100 messages.
 - Keeps the Python script running.This Python script implements a batch processor that acts as a bridge between RabbitMQ and MinIO. It uses the pika library to monitor a specific queue and boto3 for integration with S3 storage. Its core logic consists of a loop that queries the queue's status. When the number of accumulated messages equals or exceeds the configured BATCH_SIZE, the script extracts the messages, saves them to a memory buffer, and generates a .txt file. It then uploads the file to MinIO. Finally, it removes the processed messages from the queue.
 
-## Run AMQP client
+## Run client
 
 You can use any client that sends AMQP messages, MQTT messages, or HTTP requests.
 
-We have developed 3 Python scripts that will allow you to interact with the Broker through different channels.
+We have developed 3 Python scripts that will allow you to interact with the broker through different channels.
 
 Key elements:
 
-Username: This will be the name you assigned to the service (SERVICE_NAME).
+- Username: This will be the name you assigned to the service (SERVICE_NAME).
 
-Password: This will be the token for the created service.
+- Password: This will be the token for the created service.
 
-Publishing topic: This will have the format oscar.SERVICE_NAME for AMQP and HTTP requests, and oscar/SERVICE_NAME for MQTT.
+- Publishing topic: This will have the format oscar.SERVICE_NAME for AMQP and HTTP requests, and oscar/SERVICE_NAME for MQTT.
 
-RabbitMQ broker URL: The domain name of the cluster where you deployed the service. The domain without HTTPS.
+- RabbitMQ broker URL: The domain name of the cluster where you deployed the service. The domain without HTTPS.
 
-Port: The nodePort defined when creating the service.
+- Port: The nodePort defined when creating the service. If the protocols were created dynamically, use the OSCAR API (/system/services/serviceName) to view the port assigned to each protocol.
 
 Important libraries for each script:
 
@@ -82,6 +82,6 @@ requests: Python's most popular way to make HTTP requests.
 
 ## Notes
 
-We are working on implementing a service that includes all three communication methods.
+
 
 

@@ -3,7 +3,7 @@ import time
 
 # Configuration
 BROKER = 'cluster.im.grycap.net' 
-PORT = 30351 # nodePort
+PORT = 30200 # nodePort
 TOPIC = "oscar/service-name" # RabbitMQ routes the MQTT topic 'oscar' to the amq.topic exchange with routing key 'oscar'
 USER = "service-name"
 PASSWORD = "tokenService"

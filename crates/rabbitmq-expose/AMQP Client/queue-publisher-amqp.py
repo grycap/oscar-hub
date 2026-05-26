@@ -16,7 +16,7 @@ credentials = pika.PlainCredentials(SERVICE_NAME,SERVICE_TOKEN)
 # If you're in the same environment as Rabbit: 'localhost'
 # If it's remote: the domain without 'https://' or routes
 host_cluster = 'cluster.im.grycap.net' 
-amqp_port = 30350 # # Make sure this is the AMQP NodePort, not the HTTPS one
+amqp_port = 30300 # # Make sure this is the AMQP NodePort, not the HTTPS one
 
 connection = pika.BlockingConnection(
     pika.ConnectionParameters(

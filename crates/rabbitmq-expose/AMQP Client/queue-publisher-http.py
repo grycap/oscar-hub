@@ -2,21 +2,21 @@ import requests
 import json
 import time
 
-def enviar_rafaga_mensajes(cantidad):
-    # --- CONFIGURACIÓN ---
-    USER = "rabbitmq-http-service"
-    PASS = "b331a494f03d7baf4c9f11d9697fd9d52838096077bbe2d2f34eef750e4706a1"
-    URL = "http://graspi.im.grycap.net:30352/api/exchanges/%2f/amq.topic/publish"
+def send_burst_of_messages(number):
+    # --- Configuration---
+    USER = "service-name"
+    PASS = "service-token"
+    URL = "http://cluster.im.grycap.net:30100/api/exchanges/%2f/amq.topic/publish"
 
-    print(f"🚀 Iniciando envío de {cantidad} mensajes...")
+    print(f"🚀 Starting to send {number} messages...")
 
-    for i in range(1, cantidad + 1):
-        # Cuerpo del mensaje variable
-        mensaje_cuerpo = {
+    for i in range(1, number + 1):
+        # Variable message body
+        message = {
             "id": i,
             "timestamp": time.time(),
-            "contenido": f"Mensaje número {i} de la ráfaga",
-            "origen": "python-script"
+            "content": f"Burst message number {i}",
+            "source": "python-script"
         }
 
         payload_api = {
@@ -25,7 +25,7 @@ def enviar_rafaga_mensajes(cantidad):
                 "delivery_mode": 2
             },
             "routing_key": f"oscar.{USER}",
-            "payload": json.dumps(mensaje_cuerpo),
+            "payload": json.dumps(message),
             "payload_encoding": "string"
         }
 
@@ -41,22 +41,22 @@ def enviar_rafaga_mensajes(cantidad):
             if response.status_code == 200:
                 result = response.json()
                 if result.get("routed"):
-                    print(f"✅ [{i}/{cantidad}] Mensaje encolado con éxito.")
+                    print(f"✅ [{i}/{number}] Message successfully routed.")
                 else:
-                    print(f"⚠️ [{i}/{cantidad}] Enviado pero NO enrutado. Revisa routing_key.")
+                    print(f"⚠️ [{i}/{number}] Sent but NOT routed. Check routing_key.")
             else:
-                print(f"❌ Error en mensaje {i}: {response.status_code} - {response.text}")
+                print(f"❌ Error in message {i}: {response.status_code} - {response.text}")
 
         except Exception as e:
-            print(f"❌ Error de conexión en mensaje {i}: {e}")
-            break # Detener si hay un fallo de red grave
+            print(f"❌ Connection error in message {i}: {e}")
+            break 
 
-        # Opcional: un pequeño respiro de 0.1s entre mensajes para fluidez
+        # Optional: a short pause of 3s between messages for improved flow
         time.sleep(3)
 
-    print("🏁 Proceso finalizado.")
+    print("🏁 Process completed.")
 
 if __name__ == "__main__":
-    # Cambia este valor según necesites
-    CANTIDAD_A_ENVIAR = 10 
-    enviar_rafaga_mensajes(CANTIDAD_A_ENVIAR)
+    # Change this value as needed
+    AMOUNT_TO_SEND = 10 
+    send_burst_of_messages(AMOUNT_TO_SEND)

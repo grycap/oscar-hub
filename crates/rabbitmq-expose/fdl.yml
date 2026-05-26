@@ -2,21 +2,21 @@ functions:
   oscar:
   - oscar-broker:
       name: rabbitmq-service
-      image: vrodben1/rabbitmq-expose:0.0.2
+      image: vrodben1/rabbitmq-expose:0.0.3
       memory: 2Gi
       cpu: '1.0'
       script: script.sh
       expose:
         min_scale: 1
         max_scale: 1
-        api_port: 5672  
+        api_port: [15672, 1883,5672]  
         cpu_threshold: 80     
         default_command: false 
         rewrite_target: false
-        nodePort: 30350
+        nodePort: [0,0,0]
       environment:
         variables:
-          BATCH_SIZE: "5"
+          BATCH_SIZE: "10"
           MINIO_ENDPOINT: "https://minio.cluster.com"
           BUCKET: "oscar-test"
         secrets:
