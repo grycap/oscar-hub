@@ -16,7 +16,7 @@
     {
       "@id": "./",
       "@type": [
-        "IoT",
+        "Dataset",
         "ExposeService",
         "SoftwareApplication"
       ],
