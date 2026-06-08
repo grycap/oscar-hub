@@ -2,7 +2,7 @@ functions:
   oscar:
   - oscar-broker:
       name: rabbitmq-service
-      image: vrodben1/rabbitmq-expose:0.0.3
+      image: ghcr.io/grycap/rabbitmq-batch-to-minio:1.0.0
       memory: 2Gi
       cpu: '1.0'
       script: script.sh
