@@ -1,0 +1,16 @@
+functions:
+  oscar:
+  - rabbitMQ-broker:
+      name: rabbitmq-broker
+      image: rabbitmq:4.3.0
+      memory: 0.5Gi
+      cpu: '0.3'
+      script: script.sh
+      expose:
+        min_scale: 1
+        max_scale: 1
+        api_port: [15672, 1883, 5672] 
+        cpu_threshold: 80     
+        default_command: false 
+        rewrite_target: false
+        nodePort: [0,0,0]
