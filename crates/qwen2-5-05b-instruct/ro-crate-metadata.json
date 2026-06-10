@@ -1,0 +1,110 @@
+{
+  "@context": [
+    "https://w3id.org/ro/crate/1.1/context"
+  ],
+  "@graph": [
+    {
+      "@type": "CreativeWork",
+      "@id": "ro-crate-metadata.json",
+      "conformsTo": {
+        "@id": "https://w3id.org/ro/crate/1.1"
+      },
+      "about": {
+        "@id": "./"
+      }
+    },
+    {
+      "@id": "./",
+      "@type": [
+        "Dataset",
+        "Service",
+        "SoftwareApplication"
+      ],
+      "datePublished": "2025-11-26",
+      "URL": "https://github.com/grycap/oscar-hub/tree/main/crates/qwen2-5-05b-instruct",
+      "name": "OSCAR vLLM Qwen2-5-05b-Instruct",
+      "description": "OSCAR service that deploys a vLLM-based Qwen model for efficient large language model inference.",
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "applicationCategory": "OSCAR-KServe Service",
+      "memoryRequirements": "6 GiB",
+      "processorRequirements": [
+        "2 vCPU"
+      ],
+      "serviceType": "exposed",
+      "isBasedOn": [
+        {
+          "@id": "https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct"
+        }
+      ],
+      "author": {
+        "@id": "#author"
+      },
+      "hasPart": [
+        {
+          "@id": "fdl.yml"
+        },
+        {
+          "@id": "script.sh"
+        },
+        {
+          "@id": "icon.png"
+        }
+      ]
+    },
+    {
+      "@id": "fdl.yml",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "Service Definition (FDL)",
+      "encodingFormat": "text/yaml"
+    },
+    {
+      "@id": "script.sh",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "Service Execution Script",
+      "encodingFormat": "text/x-shellscript"
+    },
+    {
+      "@id": "icon.png",
+      "@type": [
+        "File",
+        "ImageObject"
+      ],
+      "name": "Service Icon",
+      "encodingFormat": "image/png"
+    },
+    {
+      "@id": "#author",
+      "@type": "Person",
+      "affiliation": {
+        "@id": "UPV"
+      },
+      "name": "Robert Kazaryan"
+    },
+    {
+      "@id": "UPV",
+      "@type": "Organization",
+      "name": "Universitat Politècnica de València",
+      "url": "https://www.upv.es"
+    },
+    {
+      "@id": "https://www.apache.org/licenses/LICENSE-2.0",
+      "@type": "CreativeWork",
+      "name": "Apache License 2.0",
+      "identifier": "SPDX:Apache-2.0"
+    },
+    {
+      "@id": "https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct",
+      "@type": "SoftwareApplication",
+      "name": "Qwen2.5-0.5B-Instruct",
+      "description": "Qwen 2.5 0.5B parameter model fine-tuned for instruction following."
+    }
+  ]
+}
