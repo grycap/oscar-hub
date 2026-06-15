@@ -28,9 +28,9 @@
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
       "applicationCategory": "OSCAR-KServe Service",
-      "memoryRequirements": "6 GiB",
+      "memoryRequirements": "256 MiB",
       "processorRequirements": [
-        "2 vCPU"
+        "0.1 vCPU"
       ],
       "serviceType": "exposed",
       "isBasedOn": [
