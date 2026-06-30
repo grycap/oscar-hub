@@ -31,7 +31,7 @@ jobs:
             metadata="$crate/ro-crate-metadata.json"
             if [ -f "$metadata" ]; then
               echo "Validating $crate"
-              rocrate-validator validate -p ro-crate-1.1 --verbose --no-paging "$crate"
+              rocrate-validator validate -p ro-crate-1.2 --verbose --no-paging "$crate"
             else
               echo "Skipping $crate (no ro-crate-metadata.json found)"
             fi
