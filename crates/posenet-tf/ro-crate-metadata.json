@@ -1,13 +1,13 @@
 {
   "@context": [
-    "https://w3id.org/ro/crate/1.1/context"
+    "https://w3id.org/ro/crate/1.2/context"
   ],
   "@graph": [
     {
       "@type": "CreativeWork",
       "@id": "ro-crate-metadata.json",
       "conformsTo": {
-        "@id": "https://w3id.org/ro/crate/1.1"
+        "@id": "https://w3id.org/ro/crate/1.2"
       },
       "about": {
         "@id": "./"
@@ -21,12 +21,13 @@
         "SoftwareApplication"
       ],
       "datePublished": "2026-03-13",
-      "URL": "https://github.com/grycap/oscar-hub/tree/main/crates/posenet-tf",
+      "url": "https://github.com/grycap/oscar-hub/tree/main/crates/posenet-tf",
       "name": "PoseNet TF Body Pose Service (by AI4EOSC)",
       "description": "OSCAR exposed service that runs the AI4EOSC PoseNet TensorFlow container and publishes its DEEPaaS API through OSCAR. Users can access the proxied OpenAPI UI and invoke body-pose inference methods directly from the browser or any HTTP client.",
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
+      "version": "1.0.0",
       "applicationCategory": "OSCAR Service",
       "memoryRequirements": "4 GiB",
       "processorRequirements": [
@@ -282,7 +283,8 @@
       "@id": "#oscar-cli",
       "@type": "SoftwareApplication",
       "name": "OSCAR CLI",
-      "url": "https://github.com/grycap/oscar-cli"
+      "url": "https://github.com/grycap/oscar-cli",
+      "version": "v2.1.0"
     }
   ]
 }

@@ -1,13 +1,13 @@
 {
   "@context": [
-    "https://w3id.org/ro/crate/1.1/context"
+    "https://w3id.org/ro/crate/1.2/context"
   ],
   "@graph": [
     {
       "@type": "CreativeWork",
       "@id": "ro-crate-metadata.json",
       "conformsTo": {
-        "@id": "https://w3id.org/ro/crate/1.1"
+        "@id": "https://w3id.org/ro/crate/1.2"
       },
       "about": {
         "@id": "./"
@@ -21,12 +21,13 @@
         "SoftwareApplication"
       ],
       "datePublished": "2026-02-13",
-      "URL": "https://github.com/grycap/oscar-hub/tree/main/crates/vosk-stt",
+      "url": "https://github.com/grycap/oscar-hub/tree/main/crates/vosk-stt",
       "name": "Vosk STT Service",
       "description": "The Vosk STT service is an open-source speech recognition system that converts speech to a text file.",
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
+      "version": "1.0.0",
       "applicationCategory": "OSCAR Service",
       "memoryRequirements": "3 GiB",
       "processorRequirements": [
@@ -240,7 +241,8 @@
       "@id": "#oscar-cli",
       "@type": "SoftwareApplication",
       "name": "OSCAR CLI",
-      "url": "https://github.com/grycap/oscar-cli"
+      "url": "https://github.com/grycap/oscar-cli",
+      "version": "v2.1.0"
     },
     {
       "@id": "https://orcid.org/0000-0002-7335-3849",
@@ -260,7 +262,8 @@
       "@id": "https://github.com/alphacep/vosk-api/tree/master",
       "@type": "SoftwareApplication",
       "name": "Vosk Speech Recognition Toolkit",
-      "description": "Vosk is an offline open source speech recognition toolkit. It enables speech recognition for 20+ languages and dialects ."
+      "description": "Vosk is an offline open source speech recognition toolkit. It enables speech recognition for 20+ languages and dialects .",
+      "version": "0.3.50"
     },
     {
       "@id": "UPV",
