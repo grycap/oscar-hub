@@ -27,7 +27,7 @@
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
-      "version": "latest",
+      "version": "1.0.0",
       "applicationCategory": "OSCAR Service",
       "memoryRequirements": "2 GiB",
       "processorRequirements": [
@@ -331,7 +331,9 @@
       "@id": "https://dashboard.cloud.ai4eosc.eu/catalog/modules/plants-classification",
       "@type": "SoftwareApplication",
       "name": "AI4OS Plants species classifier",
-      "description": "Pretrained Convolutional Neural network model for plant identification using TensorFlow."
+      "description": "Pretrained Convolutional Neural network model for plant identification using TensorFlow.",
+      "url": "https://dashboard.cloud.ai4eosc.eu/catalog/modules/plants-classification",
+      "version": "latest"
     },
     {
       "@id": "UPV",

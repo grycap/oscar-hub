@@ -160,19 +160,24 @@
       "@id": "https://github.com/coder/ghostty-web",
       "@type": "SoftwareApplication",
       "name": "ghostty-web",
-      "description": "Web terminal library that reuses Ghostty's VT100 parser via WebAssembly."
+      "description": "Web terminal library that reuses Ghostty's VT100 parser via WebAssembly.",
+      "version": "v0.4.0",
+      "url": "https://github.com/coder/ghostty-web"
     },
     {
       "@id": "https://github.com/grycap/oscar-cli",
       "@type": "SoftwareApplication",
       "name": "OSCAR CLI",
-      "description": "Command-line client used to manage OSCAR clusters and services."
+      "description": "Command-line client used to manage OSCAR clusters and services.",
+      "version": "v2.1.0",
+      "url": "https://github.com/grycap/oscar-cli"
     },
     {
       "@id": "#software-ghostty-web",
       "@type": "SoftwareApplication",
       "name": "ghostty-web",
-      "url": "https://github.com/coder/ghostty-web"
+      "url": "https://github.com/coder/ghostty-web",
+      "version": "v0.4.0"
     },
     {
       "@id": "#software-oscar-cli",
@@ -185,7 +190,8 @@
       "@id": "#software-tmux",
       "@type": "SoftwareApplication",
       "name": "tmux",
-      "url": "https://github.com/tmux/tmux/wiki"
+      "url": "https://github.com/tmux/tmux/wiki",
+      "version": "3.7"
     }
   ]
 }

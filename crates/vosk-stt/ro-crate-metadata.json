@@ -263,7 +263,8 @@
       "@type": "SoftwareApplication",
       "name": "Vosk Speech Recognition Toolkit",
       "description": "Vosk is an offline open source speech recognition toolkit. It enables speech recognition for 20+ languages and dialects .",
-      "version": "0.3.50"
+      "version": "0.3.50",
+      "url": "https://github.com/alphacep/vosk-api/tree/master"
     },
     {
       "@id": "UPV",

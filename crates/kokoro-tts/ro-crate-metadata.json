@@ -262,7 +262,9 @@
       "@id": "https://huggingface.co/hexgrad/Kokoro-82M",
       "@type": "SoftwareApplication",
       "name": "Kokoro-82M",
-      "description": "Kokoro is an open-weight TTS model with 82 million parameters."
+      "description": "Kokoro is an open-weight TTS model with 82 million parameters.",
+      "url": "https://huggingface.co/hexgrad/Kokoro-82M",
+      "version": "latest"
     },
     {
       "@id": "UPV",

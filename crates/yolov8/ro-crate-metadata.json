@@ -265,7 +265,8 @@
       "@type": "SoftwareApplication",
       "name": "AI4OS YOLO model",
       "description": "Pretrained object detection model based on YOLO using PyTorch.",
-      "version": "latest"
+      "version": "latest",
+      "url": "https://dashboard.cloud.ai4eosc.eu/catalog/modules/ai4os-yolo-torch"
     },
     {
       "@id": "UPV",

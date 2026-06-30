@@ -262,22 +262,30 @@
     {
       "@id": "https://dashboard.cloud.ai4eosc.eu/catalog/modules/posenet-tf",
       "@type": "SoftwareApplication",
-      "name": "PoseNet TF module in the AI4EOSC catalog"
+      "name": "PoseNet TF module in the AI4EOSC catalog",
+      "url": "https://dashboard.cloud.ai4eosc.eu/catalog/modules/posenet-tf",
+      "version": "latest"
     },
     {
       "@id": "https://github.com/ai4os-hub/posenet-tf",
-      "@type": "SoftwareSourceCode",
-      "name": "ai4os-hub/posenet-tf"
+      "@type": "SoftwareApplication",
+      "name": "ai4os-hub/posenet-tf",
+      "url": "https://github.com/ai4os-hub/posenet-tf",
+      "version": "latest"
     },
     {
       "@id": "https://hub.docker.com/r/ai4oshub/posenet-tf",
       "@type": "SoftwareApplication",
-      "name": "ai4oshub/posenet-tf Docker image"
+      "name": "ai4oshub/posenet-tf Docker image",
+      "url": "https://hub.docker.com/r/ai4oshub/posenet-tf",
+      "version": "latest"
     },
     {
       "@id": "https://docs.ai4os.eu/en/latest/reference/api.html",
       "@type": "SoftwareApplication",
-      "name": "DEEPaaS API reference"
+      "name": "DEEPaaS API reference",
+      "url": "https://docs.ai4os.eu/en/latest/reference/api.html",
+      "version": "latest"
     },
     {
       "@id": "#oscar-cli",

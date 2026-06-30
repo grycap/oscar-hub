@@ -264,7 +264,9 @@
       "@id": "https://dashboard.cloud.ai4eosc.eu/catalog/modules/obsea-fish-detection",
       "@type": "SoftwareApplication",
       "name": "OBSEA Fish Detector model",
-      "description": "Fish detection and classification algorithm using YOLOv8, developed by OBSEA."
+      "description": "Fish detection and classification algorithm using YOLOv8, developed by OBSEA.",
+      "version": "latest",
+      "url": "https://dashboard.cloud.ai4eosc.eu/catalog/modules/obsea-fish-detection"
     },
     {
       "@id": "UPV",
