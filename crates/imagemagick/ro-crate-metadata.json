@@ -1,13 +1,13 @@
 {
   "@context": [
-    "https://w3id.org/ro/crate/1.1/context"
+    "https://w3id.org/ro/crate/1.2/context"
   ],
   "@graph": [
     {
       "@type": "CreativeWork",
       "@id": "ro-crate-metadata.json",
       "conformsTo": {
-        "@id": "https://w3id.org/ro/crate/1.1"
+        "@id": "https://w3id.org/ro/crate/1.2"
       },
       "about": {
         "@id": "./"
@@ -21,12 +21,13 @@
         "SoftwareApplication"
       ],
       "datePublished": "2026-04-22",
-      "URL": "https://github.com/grycap/oscar-hub/tree/main/crates/imagemagick",
+      "url": "https://github.com/grycap/oscar-hub/tree/main/crates/imagemagick",
       "name": "ImageMagick Service",
       "description": "OSCAR service for lightweight image processing with ImageMagick. For every input image, it generates a grayscale PNG, an edge-enhanced PNG, and a JSON file with width, height, brightness, contrast, and edge-density metrics. It supports both asynchronous storage-driven execution and synchronous invocations, and it bundles a didactic Jupyter notebook plus sample images for teaching and self-guided experimentation.",
       "license": {
         "@id": "#license-apache-2.0"
       },
+      "version": "1.0.0",
       "applicationCategory": "OSCAR Service",
       "memoryRequirements": "512 MiB",
       "processorRequirements": [
@@ -515,31 +516,36 @@
       "@id": "#oscar-cli",
       "@type": "SoftwareApplication",
       "name": "OSCAR CLI",
-      "url": "https://docs.oscar.grycap.net/oscar-cli/"
+      "url": "https://docs.oscar.grycap.net/oscar-cli/",
+      "version": "v2.1.0"
     },
     {
       "@id": "#software-imagemagick",
       "@type": "SoftwareApplication",
       "name": "ImageMagick",
-      "url": "https://imagemagick.org/"
+      "url": "https://imagemagick.org/",
+      "version": "7.1.2-26"
     },
     {
       "@id": "#software-oscar-cli",
       "@type": "SoftwareApplication",
       "name": "OSCAR CLI",
-      "url": "https://docs.oscar.grycap.net/oscar-cli/"
+      "url": "https://docs.oscar.grycap.net/oscar-cli/",
+      "version": "v2.1.0"
     },
     {
       "@id": "#software-minio",
       "@type": "SoftwareApplication",
       "name": "MinIO",
-      "url": "https://min.io/"
+      "url": "https://min.io/",
+      "version": "RELEASE.2025-10-15T17-29-55Z"
     },
     {
       "@id": "#software-jupyter",
       "@type": "SoftwareApplication",
       "name": "Jupyter Notebook",
-      "url": "https://jupyter.org/"
+      "url": "https://jupyter.org/",
+      "version": "7.6.0"
     },
     {
       "@id": "#author-grycap",

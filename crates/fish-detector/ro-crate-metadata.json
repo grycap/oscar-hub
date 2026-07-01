@@ -1,13 +1,13 @@
 {
   "@context": [
-    "https://w3id.org/ro/crate/1.1/context"
+    "https://w3id.org/ro/crate/1.2/context"
   ],
   "@graph": [
     {
       "@type": "CreativeWork",
       "@id": "ro-crate-metadata.json",
       "conformsTo": {
-        "@id": "https://w3id.org/ro/crate/1.1"
+        "@id": "https://w3id.org/ro/crate/1.2"
       },
       "about": {
         "@id": "./"
@@ -21,12 +21,13 @@
         "SoftwareApplication"
       ],
       "datePublished": "2025-11-17",
-      "URL": "https://github.com/grycap/oscar-hub/tree/main/crates/fish-detector",
+      "url": "https://github.com/grycap/oscar-hub/tree/main/crates/fish-detector",
       "name": "Fish Detector Service (by OBSEA)",
       "description": "OSCAR service that deploys the Fish Detector workflow by OBSEA.",
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
+      "version": "1.0.0",
       "applicationCategory": "OSCAR Service",
       "memoryRequirements": "3 GiB",
       "processorRequirements": [
@@ -242,7 +243,8 @@
       "@id": "#oscar-cli",
       "@type": "SoftwareApplication",
       "name": "OSCAR CLI",
-      "url": "https://github.com/grycap/oscar-cli"
+      "url": "https://github.com/grycap/oscar-cli",
+      "version": "v2.1.0"
     },
     {
       "@id": "https://orcid.org/0000-0002-7335-3849",
@@ -262,7 +264,9 @@
       "@id": "https://dashboard.cloud.ai4eosc.eu/catalog/modules/obsea-fish-detection",
       "@type": "SoftwareApplication",
       "name": "OBSEA Fish Detector model",
-      "description": "Fish detection and classification algorithm using YOLOv8, developed by OBSEA."
+      "description": "Fish detection and classification algorithm using YOLOv8, developed by OBSEA.",
+      "version": "latest",
+      "url": "https://dashboard.cloud.ai4eosc.eu/catalog/modules/obsea-fish-detection"
     },
     {
       "@id": "UPV",
