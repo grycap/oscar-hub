@@ -1,13 +1,13 @@
 {
   "@context": [
-    "https://w3id.org/ro/crate/1.1/context"
+    "https://w3id.org/ro/crate/1.2/context"
   ],
   "@graph": [
     {
       "@type": "CreativeWork",
       "@id": "ro-crate-metadata.json",
       "conformsTo": {
-        "@id": "https://w3id.org/ro/crate/1.1"
+        "@id": "https://w3id.org/ro/crate/1.2"
       },
       "about": {
         "@id": "./"
@@ -22,7 +22,7 @@
       ],
       "datePublished": "2026-05-15",
       "version": "0.1.0",
-      "URL": "https://github.com/grycap/oscar-hub/tree/main/crates/rabbitmq-minio",
+      "url": "https://github.com/grycap/oscar-hub/tree/main/crates/rabbitmq-minio",
       "name": "RabbitMQ to MinIO Bridge for OSCAR",
       "description": "This project implements a batch processing service designed to run within the OSCAR ecosystem. The architecture uses a custom RabbitMQ 4.3.0 image that acts as a multiprotocol messaging broker, allowing data ingestion from IoT devices (currently only via AMQP) and subsequent processing using Python scripts. The processed messages are sent as a text file to a MinIO bucket.",
       "license": {

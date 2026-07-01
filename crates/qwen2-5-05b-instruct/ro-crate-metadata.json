@@ -1,13 +1,13 @@
 {
   "@context": [
-    "https://w3id.org/ro/crate/1.1/context"
+    "https://w3id.org/ro/crate/1.2/context"
   ],
   "@graph": [
     {
       "@type": "CreativeWork",
       "@id": "ro-crate-metadata.json",
       "conformsTo": {
-        "@id": "https://w3id.org/ro/crate/1.1"
+        "@id": "https://w3id.org/ro/crate/1.2"
       },
       "about": {
         "@id": "./"
@@ -21,12 +21,13 @@
         "SoftwareApplication"
       ],
       "datePublished": "2025-11-26",
-      "URL": "https://github.com/grycap/oscar-hub/tree/main/crates/qwen2-5-05b-instruct",
+      "url": "https://github.com/grycap/oscar-hub/tree/main/crates/qwen2-5-05b-instruct",
       "name": "OSCAR vLLM Qwen2-5-05b-Instruct",
       "description": "OSCAR service that deploys a vLLM-based Qwen model for efficient large language model inference.",
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
+      "version": "0.1.0",
       "applicationCategory": "OSCAR-KServe Service",
       "memoryRequirements": "256 MiB",
       "processorRequirements": [
@@ -104,7 +105,9 @@
       "@id": "https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct",
       "@type": "SoftwareApplication",
       "name": "Qwen2.5-0.5B-Instruct",
-      "description": "Qwen 2.5 0.5B parameter model fine-tuned for instruction following."
+      "description": "Qwen 2.5 0.5B parameter model fine-tuned for instruction following.",
+      "url": "https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct",
+      "version": "latest"
     }
   ]
 }
