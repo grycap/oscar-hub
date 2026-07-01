@@ -1,13 +1,13 @@
 {
   "@context": [
-    "https://w3id.org/ro/crate/1.1/context"
+    "https://w3id.org/ro/crate/1.2/context"
   ],
   "@graph": [
     {
       "@type": "CreativeWork",
       "@id": "ro-crate-metadata.json",
       "conformsTo": {
-        "@id": "https://w3id.org/ro/crate/1.1"
+        "@id": "https://w3id.org/ro/crate/1.2"
       },
       "about": {
         "@id": "./"
@@ -22,7 +22,7 @@
       ],
       "datePublished": "2026-03-24",
       "version": "0.1.0",
-      "URL": "https://github.com/grycap/oscar-hub/tree/main/crates/ghostty-web",
+      "url": "https://github.com/grycap/oscar-hub/tree/main/crates/ghostty-web",
       "name": "Ghostty Web Terminal with OSCAR CLI",
       "description": "OSCAR exposed service that provides a browser-based terminal backed by ghostty-web and a real PTY session inside the container. The image includes OSCAR CLI, Bash, and tmux, and it can optionally persist the user workspace by mounting a MinIO bucket under /mnt.",
       "license": {
@@ -160,31 +160,38 @@
       "@id": "https://github.com/coder/ghostty-web",
       "@type": "SoftwareApplication",
       "name": "ghostty-web",
-      "description": "Web terminal library that reuses Ghostty's VT100 parser via WebAssembly."
+      "description": "Web terminal library that reuses Ghostty's VT100 parser via WebAssembly.",
+      "version": "v0.4.0",
+      "url": "https://github.com/coder/ghostty-web"
     },
     {
       "@id": "https://github.com/grycap/oscar-cli",
       "@type": "SoftwareApplication",
       "name": "OSCAR CLI",
-      "description": "Command-line client used to manage OSCAR clusters and services."
+      "description": "Command-line client used to manage OSCAR clusters and services.",
+      "version": "v2.1.0",
+      "url": "https://github.com/grycap/oscar-cli"
     },
     {
       "@id": "#software-ghostty-web",
       "@type": "SoftwareApplication",
       "name": "ghostty-web",
-      "url": "https://github.com/coder/ghostty-web"
+      "url": "https://github.com/coder/ghostty-web",
+      "version": "v0.4.0"
     },
     {
       "@id": "#software-oscar-cli",
       "@type": "SoftwareApplication",
       "name": "OSCAR CLI",
-      "url": "https://github.com/grycap/oscar-cli"
+      "url": "https://github.com/grycap/oscar-cli",
+      "version": "v2.1.0"
     },
     {
       "@id": "#software-tmux",
       "@type": "SoftwareApplication",
       "name": "tmux",
-      "url": "https://github.com/tmux/tmux/wiki"
+      "url": "https://github.com/tmux/tmux/wiki",
+      "version": "3.7"
     }
   ]
 }
