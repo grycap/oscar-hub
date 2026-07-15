@@ -28,11 +28,18 @@
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
       "applicationCategory": "OSCAR-KServe Service",
-      "memoryRequirements": "256 MiB",
-      "processorRequirements": [
-        "0.1 vCPU"
+      "memoryRequirements": [
+        "0 GiB",
+        "6 kserve-GiB"
       ],
-      "serviceType": "exposed",
+      "processorRequirements": [
+        "0 vCPU",
+        "2 kserve-vCPU"
+      ],
+      "serviceType": [
+        "exposed",
+        "kserve"
+      ],
       "isBasedOn": [
         {
           "@id": "https://huggingface.co/Qwen/Qwen2.5-0.5B-Instruct"
