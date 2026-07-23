@@ -27,3 +27,14 @@ Description of the configuration parameters:
 * volume: Output audio volume level.
 * output: Output audio file format (for example: "mp3","wav", "flac").
 
+## Build the image
+
+Build the image from the crate root so the Dockerfile can access the `docker/` directory:
+
+```bash
+cd docker
+docker build -t ghcr.io/<your-org>/kokoro-tts:latest .
+```
+
+After pushing the image, update the `image:` field in `fdl.yml` if you deploy from a registry.
+
