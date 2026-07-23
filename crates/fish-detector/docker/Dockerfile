@@ -1,7 +1,9 @@
 # Construction phase
-FROM ubuntu:22.04 AS builder
-
+FROM --platform=$BUILDPLATFORM ubuntu:22.04 AS builder
+ARG TARGETPLATFORM
+ARG BUILDPLATFORM
 ARG TARGETARCH
+
 WORKDIR /app
 
 RUN apt-get update && \
@@ -19,8 +21,10 @@ RUN apt-get update && \
 COPY ./fish_detector.py ./requirements.txt /app/
 
 # Download YOLO model
-RUN wget https://github.com/obsea-upc/obsea-fish-detector-oscar/releases/download/model_v1/yolov8x_obsea_19sp_2538img.pt \
-    -O /app/yolov8x_obsea_19sp_2538img.pt
+#RUN wget https://github.com/obsea-upc/obsea-fish-detector-oscar/releases/download/model_v1/yolov8x_obsea_19sp_2538img.pt \
+#    -O /app/yolov8x_obsea_19sp_2538img.pt
+
+COPY ./yolov8x_obsea_19sp_2538img.pt /app/yolov8x_obsea_19sp_2538img.pt
 
 # Install torch and torchvision according to architecture
 RUN if [ "$TARGETARCH" = "arm64" ]; then \
@@ -32,15 +36,15 @@ RUN if [ "$TARGETARCH" = "arm64" ]; then \
     rm -rf /root/.cache/pip
 
 # Final stage: light image
-FROM ubuntu:22.04
+FROM --platform=$BUILDPLATFORM ubuntu:22.04
+ARG TARGETPLATFORM
+ARG BUILDPLATFORM
+
 WORKDIR /app
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-        python3 \
-        python3-pip \
-        ffmpeg \
-        gawk && \
+    python3 python3-pip ffmpeg gawk && \
     rm -rf /var/lib/apt/lists/*
 
 
@@ -54,6 +58,10 @@ COPY --from=builder /usr/local/bin /usr/local/bin
 
 # Ensure that the system finds executables in the user path
 ENV PATH="/root/.local/bin:$PATH"
+
+LABEL org.opencontainers.image.source="https://github.com/grycap/oscar-hub"
+LABEL org.opencontainers.image.description="Fish detector based on YoloV8 for OSCAR Hub"
+LABEL org.opencontainers.image.licenses="MIT"
 
 # Run the detection script
 ENTRYPOINT ["python3", "fish_detector.py"]
