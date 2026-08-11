@@ -10,7 +10,7 @@ functions:
       expose:
         min_scale: 1
         max_scale: 1
-        api_port: 5000
+        api_port: [5000]
         cpu_threshold: 90
         rewrite_target: false
         default_command: true
