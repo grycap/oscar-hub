@@ -2,8 +2,8 @@ functions:
   oscar:
   - oscar-replica:
       name: cowsay
-      cpu: '1.0'
-      memory: 1Gi
+      cpu: '0.2'
+      memory: 128Mi
       image: ghcr.io/grycap/cowsay
       script: script.sh
       log_level: CRITICAL   # To avoid supervisor logs in response
