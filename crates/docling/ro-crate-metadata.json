@@ -150,13 +150,15 @@
       "@id": "#software-oscar-cli",
       "@type": "SoftwareApplication",
       "name": "OSCAR CLI",
-      "url": "https://docs.oscar.grycap.net/oscar-cli/"
+      "url": "https://docs.oscar.grycap.net/oscar-cli/",
+      "version": "v2.1.0"
     },
     {
       "@id": "#software-minio",
       "@type": "SoftwareApplication",
       "name": "MinIO",
-      "url": "https://min.io/"
+      "url": "https://min.io/",
+      "version": "RELEASE.2025-10-15T17:55Z"
     },
     {
       "@id": "#acceptance-test-sync",
