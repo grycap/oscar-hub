@@ -1,0 +1,18 @@
+functions:
+  oscar:
+  - oscar-cluster:
+      name: docling
+      memory: 4Gi
+      cpu: '2.0'
+      image: quay.io/docling-project/docling-serve-cpu:v1.32.0
+      script: script.sh
+      log_level: DEBUG
+      synchronous:
+        min_scale: 0
+        max_scale: 1
+      input:
+      - storage_provider: minio.default
+        path: docling/input
+      output:
+      - storage_provider: minio.default
+        path: docling/output
