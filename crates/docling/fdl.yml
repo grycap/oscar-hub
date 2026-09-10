@@ -6,7 +6,7 @@ functions:
       cpu: '2.0'
       image: quay.io/docling-project/docling-serve-cpu:v1.32.0
       script: script.sh
-      log_level: DEBUG
+      log_level: CRITICAL
       synchronous:
         min_scale: 0
         max_scale: 1
