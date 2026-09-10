@@ -1,0 +1,158 @@
+{
+  "@context": [
+    "https://w3id.org/ro/crate/1.2/context"
+  ],
+  "@graph": [
+    {
+      "@type": "CreativeWork",
+      "@id": "ro-crate-metadata.json",
+      "conformsTo": {
+        "@id": "https://w3id.org/ro/crate/1.2"
+      },
+      "about": {
+        "@id": "./"
+      }
+    },
+    {
+      "@id": "./",
+      "@type": [
+        "Dataset",
+        "Service",
+        "SoftwareApplication"
+      ],
+      "datePublished": "2026-09-10",
+      "url": "https://github.com/grycap/oscar-hub/tree/main/crates/yolov8n-onnx-kserve",
+      "name": "OSCAR KServe YOLOv8n ONNX Object Detection",
+      "description": "OSCAR service that deploys a YOLOv8n object detection model (exported to ONNX) as a KServe InferenceService. When an image is uploaded to the input bucket, the script preprocesses it, calls the KServe v2 inference endpoint, applies confidence filtering and non-maximum suppression, and writes the annotated results back to MinIO.",
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "version": "1.0.0",
+      "applicationCategory": "OSCAR-KServe Service",
+      "memoryRequirements": [
+        "1 GiB",
+        "2 kserve-GiB"
+      ],
+      "processorRequirements": [
+        "1 vCPU",
+        "1 kserve-vCPU"
+      ],
+      "serviceType": [
+        "asynchronous",
+        "kserve"
+      ],
+      "isBasedOn": [
+        {
+          "@id": "https://github.com/ultralytics/ultralytics"
+        }
+      ],
+      "author": {
+        "@id": "#author"
+      },
+      "hasPart": [
+        {
+          "@id": "fdl.yaml"
+        },
+        {
+          "@id": "script.sh"
+        },
+        {
+          "@id": "Dockerfile"
+        },
+        {
+          "@id": "Dockerfile.script"
+        },
+        {
+          "@id": "image01.png"
+        },
+        {
+          "@id": "image02.jpeg"
+        }
+      ]
+    },
+    {
+      "@id": "fdl.yaml",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "Service Definition (FDL)",
+      "encodingFormat": "text/yaml"
+    },
+    {
+      "@id": "script.sh",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "Service Execution Script",
+      "encodingFormat": "text/x-shellscript"
+    },
+    {
+      "@id": "Dockerfile",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "Model Storage Image",
+      "description": "Builds the KServe model storage image containing the YOLOv8n ONNX file.",
+      "encodingFormat": "text/plain"
+    },
+    {
+      "@id": "Dockerfile.script",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "Script Runner Image",
+      "description": "Builds the Python environment used to run script.sh.",
+      "encodingFormat": "text/plain"
+    },
+    {
+      "@id": "image01.png",
+      "@type": [
+        "File",
+        "ImageObject"
+      ],
+      "name": "Sample test image",
+      "encodingFormat": "image/png"
+    },
+    {
+      "@id": "image02.jpeg",
+      "@type": [
+        "File",
+        "ImageObject"
+      ],
+      "name": "Sample test image",
+      "encodingFormat": "image/jpeg"
+    },
+    {
+      "@id": "#author",
+      "@type": "Person",
+      "affiliation": {
+        "@id": "UPV"
+      },
+      "name": "Robert Kazaryan"
+    },
+    {
+      "@id": "UPV",
+      "@type": "Organization",
+      "name": "Universitat Politècnica de València",
+      "url": "https://www.upv.es"
+    },
+    {
+      "@id": "https://www.apache.org/licenses/LICENSE-2.0",
+      "@type": "CreativeWork",
+      "name": "Apache License 2.0",
+      "identifier": "SPDX:Apache-2.0"
+    },
+    {
+      "@id": "https://github.com/ultralytics/ultralytics",
+      "@type": "SoftwareApplication",
+      "name": "YOLOv8n",
+      "description": "Ultralytics YOLOv8 nano object detection model, exported to ONNX format.",
+      "url": "https://github.com/ultralytics/ultralytics",
+      "version": "latest"
+    }
+  ]
+}
