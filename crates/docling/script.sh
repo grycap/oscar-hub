@@ -44,11 +44,9 @@ cp "$INPUT_FILE_PATH" "$recognized_input"
 conversion_output="$work_dir/output"
 mkdir -p "$conversion_output"
 
-printf 'Converting %s with Docling standard pipeline\n' "$input_basename" >&2
-
 docling "$recognized_input" \
     --pipeline standard \
-    --output "$conversion_output"
+    --output "$conversion_output" > /dev/null 2>&1
 
 generated_file=''
 for candidate in "$conversion_output"/*.md "$conversion_output"/*/*.md; do
