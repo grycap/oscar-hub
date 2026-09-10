@@ -23,7 +23,7 @@ MinIO (input) → OSCAR service → script.sh → KServe (Triton + YOLOv8n ONNX)
 
 | File | Description |
 |------|-------------|
-| `fdl.yaml` | OSCAR FDL definition with embedded KServe configuration |
+| `fdl.yml` | OSCAR FDL definition with embedded KServe configuration |
 | `script.sh` | Inference script run by OSCAR (preprocessing → KServe call → postprocessing) |
 | `Dockerfile` | Builds the model storage image (`busybox` + ONNX model file) |
 | `Dockerfile.script` | Builds the script runner image (`python:3.11-slim` + `numpy`, `pillow`, `curl`) |
@@ -37,7 +37,7 @@ MinIO (input) → OSCAR service → script.sh → KServe (Triton + YOLOv8n ONNX)
 Deploy the OSCAR service, which also provisions the KServe InferenceService automatically:
 
 ```bash
-oscar-cli apply fdl.yaml
+oscar-cli apply fdl.yml
 ```
 
 Verify the service was created:

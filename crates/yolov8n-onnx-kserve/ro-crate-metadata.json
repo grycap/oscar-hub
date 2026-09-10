@@ -51,19 +51,19 @@
       },
       "hasPart": [
         {
-          "@id": "fdl.yaml"
+          "@id": "fdl.yml"
         },
         {
           "@id": "script.sh"
+        },
+        {
+          "@id": "icon.png"
         },
         {
           "@id": "Dockerfile"
         },
         {
           "@id": "Dockerfile.script"
-        },
-        {
-          "@id": "icon.png"
         },
         {
           "@id": "image01.png"
@@ -74,7 +74,7 @@
       ]
     },
     {
-      "@id": "fdl.yaml",
+      "@id": "fdl.yml",
       "@type": [
         "File",
         "SoftwareSourceCode"
