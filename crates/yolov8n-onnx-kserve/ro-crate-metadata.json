@@ -63,6 +63,9 @@
           "@id": "Dockerfile.script"
         },
         {
+          "@id": "icon.png"
+        },
+        {
           "@id": "image01.png"
         },
         {
@@ -107,6 +110,15 @@
       "name": "Script Runner Image",
       "description": "Builds the Python environment used to run script.sh.",
       "encodingFormat": "text/plain"
+    },
+    {
+      "@id": "icon.png",
+      "@type": [
+        "File",
+        "ImageObject"
+      ],
+      "name": "Service Icon",
+      "encodingFormat": "image/png"
     },
     {
       "@id": "image01.png",
