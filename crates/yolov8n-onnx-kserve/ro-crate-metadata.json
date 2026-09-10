@@ -58,18 +58,6 @@
         },
         {
           "@id": "icon.png"
-        },
-        {
-          "@id": "Dockerfile"
-        },
-        {
-          "@id": "Dockerfile.script"
-        },
-        {
-          "@id": "image01.png"
-        },
-        {
-          "@id": "image02.jpeg"
         }
       ]
     },
@@ -92,26 +80,6 @@
       "encodingFormat": "text/x-shellscript"
     },
     {
-      "@id": "Dockerfile",
-      "@type": [
-        "File",
-        "SoftwareSourceCode"
-      ],
-      "name": "Model Storage Image",
-      "description": "Builds the KServe model storage image containing the YOLOv8n ONNX file.",
-      "encodingFormat": "text/plain"
-    },
-    {
-      "@id": "Dockerfile.script",
-      "@type": [
-        "File",
-        "SoftwareSourceCode"
-      ],
-      "name": "Script Runner Image",
-      "description": "Builds the Python environment used to run script.sh.",
-      "encodingFormat": "text/plain"
-    },
-    {
       "@id": "icon.png",
       "@type": [
         "File",
@@ -119,24 +87,6 @@
       ],
       "name": "Service Icon",
       "encodingFormat": "image/png"
-    },
-    {
-      "@id": "image01.png",
-      "@type": [
-        "File",
-        "ImageObject"
-      ],
-      "name": "Sample test image",
-      "encodingFormat": "image/png"
-    },
-    {
-      "@id": "image02.jpeg",
-      "@type": [
-        "File",
-        "ImageObject"
-      ],
-      "name": "Sample test image",
-      "encodingFormat": "image/jpeg"
     },
     {
       "@id": "#author",
