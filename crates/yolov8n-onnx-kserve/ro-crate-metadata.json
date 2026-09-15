@@ -22,7 +22,7 @@
       ],
       "datePublished": "2026-09-10",
       "url": "https://github.com/grycap/oscar-hub/tree/main/crates/yolov8n-onnx-kserve",
-      "name": "OSCAR KServe YOLOv8n ONNX Object Detection",
+      "name": "YOLOv8n ONNX KServe Inference Service",
       "description": "OSCAR service that deploys a YOLOv8n object detection model (exported to ONNX) as a KServe InferenceService. When an image is uploaded to the input bucket, the script preprocesses it, calls the KServe v2 inference endpoint, applies confidence filtering and non-maximum suppression, and writes the annotated results back to MinIO.",
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
