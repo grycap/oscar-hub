@@ -8,7 +8,7 @@ vLLM on CPU, and an OCI modelcar image that contains the
 
 | File | Description |
 |---|---|
-| `fdl.yaml` | OSCAR service definition with a KServe `llm_inference` block. |
+| `fdl.yml` | OSCAR service definition with a KServe `llm_inference` block. |
 | `docker/Dockerfile.vllm` | vLLM CPU runtime wrapper with user `uid=1010` for KServe modelcar compatibility. |
 | `docker/Dockerfile.model` | Modelcar image that downloads the model from Hugging Face. |
 
@@ -17,10 +17,23 @@ vLLM on CPU, and an OCI modelcar image that contains the
 - OSCAR cluster with KServe enabled.
 - `oscar-cli` configured against your cluster.
 
+### Enable KServe locally with kind
+
+For a local OSCAR development cluster, create it with KServe enabled:
+
+```bash
+cd /path/to/oscar
+./deploy/kind-deploy.sh --devel --kserve
+```
+
+The `--kserve` option installs the KServe `InferenceService` and
+`LLMInferenceService` controllers. It requires Traefik, which is the default
+Gateway API provider used by the script.
+
 ## 1. Deploy the service
 
 ```bash
-oscar-cli apply fdl.yaml
+oscar-cli apply fdl.yml
 ```
 
 Verify that the service was created:
@@ -74,23 +87,23 @@ Once the service is ready, the model will be exposed on `https://<YOUR_CLUSTER>/
 ### vLLM CPU runtime
 
 ```bash
-docker buildx build --platform linux/amd64,linux/arm64 -t ghcr.io/grycap/kserve-vllm-openai-cpu:v0.22.1 -f Dockerfile.vllm . --push
+docker buildx build --platform linux/amd64,linux/arm64 -t ghcr.io/grycap/kserve-vllm-openai-cpu:v0.22.1 -f docker/Dockerfile.vllm . --push
 ```
 
 ### OCI modelcar (Qwen2.5 model)
 
 ```bash
-docker buildx build --platform linux/amd64,linux/arm64 -t ghcr.io/grycap/kserve-qwen2-5-05b-instruct:latest -f Dockerfile.model . --push
+docker buildx build --platform linux/amd64,linux/arm64 -t ghcr.io/grycap/kserve-qwen2-5-05b-instruct:latest -f docker/Dockerfile.model . --push
 ```
 
 If you use a local registry (for example `localhost:5001`), update the tags in
-the commands above and in `fdl.yaml` (`runtime_image` and `storage_uri`).
+the commands above and in `fdl.yml` (`runtime_image` and `storage_uri`).
 
 ## Notes
 
 - The first startup can take several minutes (model download and pod rollout).
 - The current example defines modest resources (`cpu: 2`, `memory: 6Gi`); adjust them for your cluster.
-- `fdl.yaml` uses `--dtype=auto` and `--enforce-eager` for more stable CPU execution.
+- `fdl.yml` uses `--dtype=auto` and `--enforce-eager` for more stable CPU execution.
 
 ## Additional Resources
 
