@@ -49,6 +49,11 @@
       "author": {
         "@id": "#author"
       },
+      "subjectOf": [
+        {
+          "@id": "#acceptance-test-async"
+        }
+      ],
       "hasPart": [
         {
           "@id": "fdl.yml"
@@ -58,6 +63,24 @@
         },
         {
           "@id": "icon.png"
+        },
+        {
+          "@id": "input.png"
+        },
+        {
+          "@id": "docker/Dockerfile"
+        },
+        {
+          "@id": "docker/Dockerfile.script"
+        },
+        {
+          "@id": "docker/onnx/8/yolov8n.onnx"
+        },
+        {
+          "@id": "#expected-output-summary"
+        },
+        {
+          "@id": "#expected-output-image"
         }
       ]
     },
@@ -87,6 +110,233 @@
       ],
       "name": "Service Icon",
       "encodingFormat": "image/png"
+    },
+    {
+      "@id": "input.png",
+      "@type": [
+        "File",
+        "ImageObject"
+      ],
+      "name": "Sample YOLOv8n input image",
+      "description": "PNG image uploaded to the OSCAR input bucket for the asynchronous acceptance test.",
+      "encodingFormat": "image/png"
+    },
+    {
+      "@id": "docker/Dockerfile",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "YOLOv8n ONNX modelcar Dockerfile",
+      "encodingFormat": "text/vnd.dockerfile"
+    },
+    {
+      "@id": "docker/Dockerfile.script",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "YOLOv8n OSCAR worker Dockerfile",
+      "encodingFormat": "text/vnd.dockerfile"
+    },
+    {
+      "@id": "docker/onnx/8/yolov8n.onnx",
+      "@type": [
+        "File",
+        "MediaObject"
+      ],
+      "name": "YOLOv8n ONNX model",
+      "encodingFormat": "application/onnx"
+    },
+    {
+      "@id": "#acceptance-test-async",
+      "@type": "HowTo",
+      "name": "Asynchronous YOLOv8n acceptance test",
+      "description": "Deploy the service, upload the supplied image, and verify that the inference produces summary and annotated-image outputs.",
+      "tool": [
+        {
+          "@id": "#tool-oscar-cli"
+        }
+      ],
+      "supply": [
+        {
+          "@id": "#supply-input-image"
+        }
+      ],
+      "step": [
+        {
+          "@id": "#step-apply"
+        },
+        {
+          "@id": "#step-async-put"
+        },
+        {
+          "@id": "#step-async-get"
+        }
+      ]
+    },
+    {
+      "@id": "#tool-oscar-cli",
+      "@type": "HowToTool",
+      "name": "OSCAR CLI",
+      "item": {
+        "@id": "#oscar-cli"
+      }
+    },
+    {
+      "@id": "#supply-input-image",
+      "@type": "HowToSupply",
+      "name": "Sample YOLOv8n input image",
+      "item": {
+        "@id": "input.png"
+      }
+    },
+    {
+      "@id": "#expected-output-summary",
+      "@type": [
+        "File",
+        "TextDigitalDocument"
+      ],
+      "name": "Detection summary output",
+      "description": "Non-empty text file named *_predictions_summary.txt generated after inference.",
+      "encodingFormat": "text/plain"
+    },
+    {
+      "@id": "#expected-output-image",
+      "@type": [
+        "File",
+        "ImageObject"
+      ],
+      "name": "Annotated detection image",
+      "description": "JPEG image named *_annotated.jpg generated after inference.",
+      "encodingFormat": "image/jpeg"
+    },
+    {
+      "@id": "#step-apply",
+      "@type": "HowToStep",
+      "position": 1,
+      "text": "Deploy the FDL on an OSCAR cluster with KServe enabled.",
+      "potentialAction": {
+        "@id": "#action-apply"
+      }
+    },
+    {
+      "@id": "#step-async-put",
+      "@type": "HowToStep",
+      "position": 2,
+      "text": "Upload input.png to the configured MinIO input path and wait for the asynchronous inference to finish.",
+      "timeRequired": "PT120S",
+      "potentialAction": {
+        "@id": "#action-async-put"
+      }
+    },
+    {
+      "@id": "#step-async-get",
+      "@type": "HowToStep",
+      "position": 3,
+      "text": "List and download the output files; confirm that the summary is non-empty and the annotated JPEG exists.",
+      "potentialAction": {
+        "@id": "#action-async-get"
+      }
+    },
+    {
+      "@id": "#action-apply",
+      "@type": "CreateAction",
+      "name": "Apply OSCAR FDL",
+      "object": {
+        "@id": "fdl.yml"
+      },
+      "target": {
+        "@id": "#entry-apply"
+      },
+      "additionalProperty": [
+        {
+          "@id": "#command-template-apply"
+        }
+      ]
+    },
+    {
+      "@id": "#entry-apply",
+      "@type": "EntryPoint",
+      "actionApplication": {
+        "@id": "#oscar-cli"
+      }
+    },
+    {
+      "@id": "#command-template-apply",
+      "@type": "PropertyValue",
+      "propertyID": "commandTemplate",
+      "value": "oscar-cli apply fdl.yml"
+    },
+    {
+      "@id": "#action-async-put",
+      "@type": "TransferAction",
+      "name": "Upload sample image",
+      "object": {
+        "@id": "input.png"
+      },
+      "target": {
+        "@id": "#entry-async-put"
+      },
+      "additionalProperty": [
+        {
+          "@id": "#command-template-async-put"
+        }
+      ]
+    },
+    {
+      "@id": "#entry-async-put",
+      "@type": "EntryPoint",
+      "actionApplication": {
+        "@id": "#oscar-cli"
+      }
+    },
+    {
+      "@id": "#command-template-async-put",
+      "@type": "PropertyValue",
+      "propertyID": "commandTemplate",
+      "value": "oscar-cli service put-file yolov8n-onnx-kserve minio kserve-isvc-yolo8n-onnx/input input.png"
+    },
+    {
+      "@id": "#action-async-get",
+      "@type": "TransferAction",
+      "name": "Retrieve inference outputs",
+      "target": {
+        "@id": "#entry-async-get"
+      },
+      "result": [
+        {
+          "@id": "#expected-output-summary"
+        },
+        {
+          "@id": "#expected-output-image"
+        }
+      ],
+      "additionalProperty": [
+        {
+          "@id": "#command-template-async-get"
+        }
+      ]
+    },
+    {
+      "@id": "#entry-async-get",
+      "@type": "EntryPoint",
+      "actionApplication": {
+        "@id": "#oscar-cli"
+      }
+    },
+    {
+      "@id": "#command-template-async-get",
+      "@type": "PropertyValue",
+      "propertyID": "commandTemplate",
+      "value": "oscar-cli service list-files yolov8n-onnx-kserve minio kserve-isvc-yolo8n-onnx/output"
+    },
+    {
+      "@id": "#oscar-cli",
+      "@type": "SoftwareApplication",
+      "name": "OSCAR CLI",
+      "url": "https://github.com/grycap/oscar-cli",
+      "version": "v2.1.0"
     },
     {
       "@id": "#author",

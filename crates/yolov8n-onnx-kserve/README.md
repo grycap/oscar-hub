@@ -19,16 +19,29 @@ MinIO (input) → OSCAR service → script.sh → KServe (Triton + YOLOv8n ONNX)
 - OSCAR cluster with KServe installed
 - `oscar-cli` configured to point to the cluster or `https://dashboard.oscar.grycap.net`
 
+### Enable KServe locally with kind
+
+For a local OSCAR development cluster, create it with KServe enabled:
+
+```bash
+cd /path/to/oscar
+./deploy/kind-deploy.sh --devel --kserve
+```
+
+The `--kserve` option installs the KServe `InferenceService` and
+`LLMInferenceService` controllers. It requires Traefik, which is the default
+Gateway API provider used by the script.
+
 ## Files
 
 | File | Description |
 |------|-------------|
 | `fdl.yml` | OSCAR FDL definition with embedded KServe configuration |
 | `script.sh` | Inference script run by OSCAR (preprocessing → KServe call → postprocessing) |
-| `Dockerfile` | Builds the model storage image (`busybox` + ONNX model file) |
-| `Dockerfile.script` | Builds the script runner image (`python:3.11-slim` + `numpy`, `pillow`, `curl`) |
-| `onnx/8/yolov8n.onnx` | YOLOv8n model in ONNX format |
-| `image01.png`, `image02.jpeg` | Sample test images |
+| `docker/Dockerfile` | Builds the model storage image (`busybox` + ONNX model file) |
+| `docker/Dockerfile.script` | Builds the script runner image (`python:3.11-slim` + `numpy`, `pillow`, `curl`) |
+| `docker/onnx/8/yolov8n.onnx` | YOLOv8n model in ONNX format |
+| `input.png` | Sample input image for the acceptance test |
 
 ## Deployment Steps
 
@@ -51,7 +64,7 @@ oscar-cli service list
 Upload a test image to the OSCAR service input bucket to trigger processing:
 
 ```bash
-oscar-cli service put-file kserve-isvc-yolo8n-onnx minio kserve-isvc-yolo8n-onnx/input image01.png
+oscar-cli service put-file yolov8n-onnx-kserve minio kserve-isvc-yolo8n-onnx/input input.png
 ```
 > Note: it can take several minutes to deploy the KServe InferenceService and download the model, especially if it's the first time.
 
@@ -64,14 +77,16 @@ oscar-cli service list-files kserve-isvc-yolo8n-onnx minio kserve-isvc-yolo8n-on
 oscar-cli service get-file kserve-isvc-yolo8n-onnx minio kserve-isvc-yolo8n-onnx/output <filename> .
 ```
 
-You can also browse results through the Dashboard.
+Verify that the output contains a non-empty `*_predictions_summary.txt` file
+and an `*_annotated.jpg` image. You can also browse results through the
+Dashboard.
 
 ## Building the Images
 
 **Model image** (contains the ONNX file, served at startup):
 
 ```bash
-docker build -t ghcr.io/grycap/kserve-yolo8n-onnx -f Dockerfile .
+docker build -t ghcr.io/grycap/kserve-yolo8n-onnx -f docker/Dockerfile docker
 ```
 
 > Note: the image must be built and pushed to a registry before deploying the service
@@ -79,5 +94,5 @@ docker build -t ghcr.io/grycap/kserve-yolo8n-onnx -f Dockerfile .
 **Script runner image** (Python environment for `script.sh`):
 
 ```bash
-docker build -t ghcr.io/grycap/kserve-yolo8n-onnx-script -f Dockerfile.script .
+docker build -t ghcr.io/grycap/kserve-yolo8n-onnx-script -f docker/Dockerfile.script docker
 ```
