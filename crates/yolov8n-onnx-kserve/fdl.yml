@@ -10,7 +10,7 @@ functions:
         type: inference
         inference:
           model_format: onnx
-        api_version: "v2"
+          api_version: "v2"
         storage_uri: "oci://ghcr.io/grycap/kserve-yolo8n-onnx"
         min_scale: 1
         cpu: '1.0'
