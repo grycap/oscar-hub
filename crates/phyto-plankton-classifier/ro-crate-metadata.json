@@ -1,0 +1,353 @@
+{
+  "@context": [
+    "https://w3id.org/ro/crate/1.2/context"
+  ],
+  "@graph": [
+    {
+      "@type": "CreativeWork",
+      "@id": "ro-crate-metadata.json",
+      "conformsTo": {
+        "@id": "https://w3id.org/ro/crate/1.2"
+      },
+      "about": {
+        "@id": "./"
+      }
+    },
+    {
+      "@id": "./",
+      "@type": [
+        "Dataset",
+        "Service",
+        "SoftwareApplication"
+      ],
+      "datePublished": "2025-05-25",
+      "url": "https://github.com/grycap/oscar-hub/tree/main/crates/phyto-plankton-classifier",
+      "name": "Phyto-Plankton Classifier Service (by AI4EOSC)",
+      "description": "OSCAR service that deploys the Phytoplankton species classifier workflow from AI4EOSC.",
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "version": "1.0.0",
+      "applicationCategory": "OSCAR Service",
+      "memoryRequirements": "4 GiB",
+      "processorRequirements": [
+        "1 vCPU",
+        "0 GPU"
+      ],
+      "serviceType": [
+        "asynchronous",
+        "synchronous"
+      ],
+      "isBasedOn": [
+        {
+          "@id": "https://dashboard.cloud.ai4eosc.eu/catalog/modules/phyto-plankton-classification"
+        }
+      ],
+      "author": {
+        "@id": "#author"
+      },
+      "subjectOf": [
+        {
+          "@id": "#acceptance-test-sync"
+        },
+        {
+          "@id": "#acceptance-test-async"
+        }
+      ],
+      "hasPart": [
+        {
+          "@id": "fdl.yml"
+        },
+        {
+          "@id": "script.sh"
+        },
+        {
+          "@id": "icon.png"
+        },
+        {
+          "@id": "input.jpg"
+        },
+        {
+          "@id": "#expected-json"
+        }
+      ]
+    },
+    {
+      "@id": "fdl.yml",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "OSCAR Service Definition",
+      "encodingFormat": "text/yaml"
+    },
+    {
+      "@id": "script.sh",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "OSCAR Service Script",
+      "encodingFormat": "text/x-shellscript"
+    },
+    {
+      "@id": "icon.png",
+      "@type": [
+        "File",
+        "ImageObject"
+      ],
+      "name": "OSCAR Service Icon",
+      "encodingFormat": "image/png"
+    },
+    {
+      "@id": "input.jpg",
+      "@type": [
+        "File",
+        "ImageObject"
+      ],
+      "name": "Sample classification image",
+      "description": "Replace with a representative image for running the Phytoplankton classifier.",
+      "encodingFormat": "image/jpeg"
+    },
+    {
+      "@id": "#acceptance-test-async",
+      "@type": "HowTo",
+      "name": "Asynchronous Phyto-Plankton Classifier acceptance test",
+      "description": "Upload a sample image, wait for classification to complete remotely, then download the prediction artifact and check the expected confirmation text.",
+      "tool": [
+        {
+          "@id": "#tool-oscar-cli"
+        }
+      ],
+      "supply": [
+        {
+          "@id": "#supply-sample-image"
+        }
+      ],
+      "step": [
+        {
+          "@id": "#step-async-put"
+        },
+        {
+          "@id": "#step-async-wait"
+        },
+        {
+          "@id": "#step-async-get"
+        }
+      ]
+    },
+    {
+      "@id": "#acceptance-test-sync",
+      "@type": "HowTo",
+      "name": "Synchronous CLI acceptance test",
+      "description": "Execute the service locally with the sample input and validate the output string.",
+      "tool": [
+        {
+          "@id": "#tool-oscar-cli"
+        }
+      ],
+      "supply": [
+        {
+          "@id": "#supply-input-jpg"
+        }
+      ],
+      "step": [
+        {
+          "@id": "#step-sync-run"
+        }
+      ]
+    },
+    {
+      "@id": "#tool-oscar-cli",
+      "@type": "HowToTool",
+      "name": "OSCAR CLI",
+      "item": {
+        "@id": "#oscar-cli"
+      }
+    },
+    {
+      "@id": "#supply-sample-image",
+      "@type": "HowToSupply",
+      "name": "Sample classification image",
+      "item": {
+        "@id": "input.jpg"
+      }
+    },
+    {
+      "@id": "#supply-input-jpg",
+      "@type": "HowToSupply",
+      "name": "Sample classification image",
+      "item": {
+        "@id": "input.jpg"
+      }
+    },
+    {
+      "@id": "#expected-json",
+      "@type": [
+        "File"
+      ],
+      "name": "Expected classification output",
+      "description": "JSON file produced by the service containing classification results.",
+      "encodingFormat": "text/plain"
+    },
+    {
+      "@id": "#step-sync-run",
+      "@type": "HowToStep",
+      "position": 1,
+      "text": "Run the service using the provided sample input.",
+      "potentialAction": {
+        "@id": "#action-sync-run"
+      }
+    },
+    {
+      "@id": "#entry-sync-run",
+      "@type": "EntryPoint",
+      "actionApplication": {
+        "@id": "#oscar-cli"
+      }
+    },
+    {
+      "@id": "#command-template-sync-run",
+      "@type": "PropertyValue",
+      "propertyID": "commandTemplate",
+      "value": "oscar-cli service run phyto-plankton-classifier -i {input}"
+    },
+    {
+      "@id": "#step-async-put",
+      "@type": "HowToStep",
+      "position": 1,
+      "text": "Upload the sample classification image to the service storage.",
+      "potentialAction": {
+        "@id": "#action-async-put"
+      }
+    },
+    {
+      "@id": "#step-async-wait",
+      "@type": "HowToStep",
+      "position": 2,
+      "text": "Wait for the remote inference to produce classification outputs.",
+      "timeRequired": "PT20S"
+    },
+    {
+      "@id": "#step-async-get",
+      "@type": "HowToStep",
+      "position": 3,
+      "text": "Download the most recent output artifact and confirm it is the expected classification JSON.",
+      "potentialAction": {
+        "@id": "#action-async-get"
+      }
+    },
+    {
+      "@id": "#action-sync-run",
+      "@type": "ConsumeAction",
+      "name": "Run service synchronously",
+      "object": {
+        "@id": "input.jpg"
+      },
+      "target": {
+        "@id": "#entry-sync-run"
+      },
+      "result": {
+        "@id": "#expected-json"
+      },
+      "additionalProperty": [
+        {
+          "@id": "#command-template-sync-run"
+        }
+      ]
+    },
+    {
+      "@id": "#action-async-put",
+      "@type": "TransferAction",
+      "name": "service put-file",
+      "object": {
+        "@id": "input.jpg"
+      },
+      "target": {
+        "@id": "#entry-async-put"
+      },
+      "additionalProperty": [
+        {
+          "@id": "#command-template-async-put"
+        }
+      ]
+    },
+    {
+      "@id": "#entry-async-put",
+      "@type": "EntryPoint",
+      "actionApplication": {
+        "@id": "#oscar-cli"
+      }
+    },
+    {
+      "@id": "#command-template-async-put",
+      "@type": "PropertyValue",
+      "propertyID": "commandTemplate",
+      "value": "oscar-cli service put-file phyto-plankton-classifier {source}"
+    },
+    {
+      "@id": "#action-async-get",
+      "@type": "TransferAction",
+      "name": "service get-file",
+      "target": {
+        "@id": "#entry-async-get"
+      },
+      "result": {
+        "@id": "#expected-json"
+      },
+      "additionalProperty": [
+        {
+          "@id": "#command-template-async-get"
+        }
+      ]
+    },
+    {
+      "@id": "#entry-async-get",
+      "@type": "EntryPoint",
+      "actionApplication": {
+        "@id": "#oscar-cli"
+      }
+    },
+    {
+      "@id": "#command-template-async-get",
+      "@type": "PropertyValue",
+      "propertyID": "commandTemplate",
+      "value": "oscar-cli service get-file phyto-plankton-classifier --download-latest-into {destination}"
+    },
+    {
+      "@id": "#oscar-cli",
+      "@type": "SoftwareApplication",
+      "name": "OSCAR CLI",
+      "url": "https://github.com/grycap/oscar-cli",
+      "version": "v2.1.0"
+    },
+    {
+      "@id": "#author",
+      "@type": "Person",
+      "affiliation": {
+        "@id": "UPV"
+      },
+      "name": "Robert Kazaryan"
+    },
+    {
+      "@id": "https://www.apache.org/licenses/LICENSE-2.0",
+      "@type": "CreativeWork",
+      "name": "Apache License 2.0",
+      "identifier": "SPDX:Apache-2.0"
+    },
+    {
+      "@id": "https://dashboard.cloud.ai4eosc.eu/catalog/modules/phyto-plankton-classification",
+      "@type": "SoftwareApplication",
+      "name": "Phytoplankton species classifier (VLIZ)",
+      "description": "Pretrained Xception convolutional neural network for phytoplankton species identification from images, using Keras on top of TensorFlow.",
+      "url": "https://dashboard.cloud.ai4eosc.eu/catalog/modules/phyto-plankton-classification",
+      "version": "latest"
+    },
+    {
+      "@id": "UPV",
+      "@type": "Organization",
+      "name": "Universitat Politècnica de València",
+      "url": "https://www.upv.es"
+    }
+  ]
+}
