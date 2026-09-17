@@ -29,7 +29,10 @@
       },
       "version": "1.0.0",
       "applicationCategory": "OSCAR-KServe Service",
-      "memoryRequirements": "2 GiB",
+      "memoryRequirements": [
+        "1 GiB",
+        "1 kserve-GiB"
+      ],
       "processorRequirements": [
         "1 vCPU",
         "1 kserve-vCPU"
