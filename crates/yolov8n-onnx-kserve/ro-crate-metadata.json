@@ -225,7 +225,7 @@
       "@type": "HowToStep",
       "position": 2,
       "text": "Wait for the remote inference to produce detection outputs.",
-      "timeRequired": "PT10S"
+      "timeRequired": "PT20S"
     },
     {
       "@id": "#step-async-get",
