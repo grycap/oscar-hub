@@ -151,7 +151,7 @@
     {
       "@id": "#acceptance-test-async",
       "@type": "HowTo",
-      "name": "Asynchronous YOLOv8n acceptance test",
+      "name": "Asynchronous YOLOv8n ONNX KServe acceptance test",
       "description": "Upload the supplied image, and verify that the inference produces summary and annotated-image outputs.",
       "tool": [
         {
