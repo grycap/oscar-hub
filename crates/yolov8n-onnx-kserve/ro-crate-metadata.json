@@ -168,6 +168,9 @@
           "@id": "#step-async-put"
         },
         {
+          "@id": "#step-async-wait"
+        },
+        {
           "@id": "#step-async-get"
         }
       ]
@@ -217,6 +220,13 @@
       "potentialAction": {
         "@id": "#action-async-put"
       }
+    },
+    {
+      "@id": "#step-async-wait",
+      "@type": "HowToStep",
+      "position": 2,
+      "text": "Wait for the remote inference to produce detection outputs.",
+      "timeRequired": "PT60S"
     },
     {
       "@id": "#step-async-get",
