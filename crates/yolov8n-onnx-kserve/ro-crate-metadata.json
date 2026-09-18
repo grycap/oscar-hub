@@ -152,7 +152,7 @@
       "@id": "#acceptance-test-async",
       "@type": "HowTo",
       "name": "Asynchronous YOLOv8n acceptance test",
-      "description": "Deploy the service, upload the supplied image, and verify that the inference produces summary and annotated-image outputs.",
+      "description": "Upload the supplied image, and verify that the inference produces summary and annotated-image outputs.",
       "tool": [
         {
           "@id": "#tool-oscar-cli"
@@ -164,9 +164,6 @@
         }
       ],
       "step": [
-        {
-          "@id": "#step-apply"
-        },
         {
           "@id": "#step-async-put"
         },
@@ -212,15 +209,6 @@
       "encodingFormat": "image/jpeg"
     },
     {
-      "@id": "#step-apply",
-      "@type": "HowToStep",
-      "position": 1,
-      "text": "Deploy the FDL on an OSCAR cluster with KServe enabled.",
-      "potentialAction": {
-        "@id": "#action-apply"
-      }
-    },
-    {
       "@id": "#step-async-put",
       "@type": "HowToStep",
       "position": 2,
@@ -238,35 +226,6 @@
       "potentialAction": {
         "@id": "#action-async-get"
       }
-    },
-    {
-      "@id": "#action-apply",
-      "@type": "CreateAction",
-      "name": "Apply OSCAR FDL",
-      "object": {
-        "@id": "fdl.yml"
-      },
-      "target": {
-        "@id": "#entry-apply"
-      },
-      "additionalProperty": [
-        {
-          "@id": "#command-template-apply"
-        }
-      ]
-    },
-    {
-      "@id": "#entry-apply",
-      "@type": "EntryPoint",
-      "actionApplication": {
-        "@id": "#oscar-cli"
-      }
-    },
-    {
-      "@id": "#command-template-apply",
-      "@type": "PropertyValue",
-      "propertyID": "commandTemplate",
-      "value": "oscar-cli apply fdl.yml"
     },
     {
       "@id": "#action-async-put",
