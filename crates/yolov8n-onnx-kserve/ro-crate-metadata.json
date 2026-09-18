@@ -254,7 +254,7 @@
       "@id": "#command-template-async-put",
       "@type": "PropertyValue",
       "propertyID": "commandTemplate",
-      "value": "oscar-cli service put-file yolov8n-onnx-kserve minio kserve-isvc-yolo8n-onnx/input input.png"
+      "value": "oscar-cli service put-file yolov8n-onnx-kserve {source}"
     },
     {
       "@id": "#action-async-get",
@@ -288,7 +288,7 @@
       "@id": "#command-template-async-get",
       "@type": "PropertyValue",
       "propertyID": "commandTemplate",
-      "value": "oscar-cli service list-files yolov8n-onnx-kserve minio kserve-isvc-yolo8n-onnx/output"
+      "value": "oscar-cli service get-file yolov8n-onnx-kserve --download-latest-into {destination}"
     },
     {
       "@id": "#oscar-cli",
