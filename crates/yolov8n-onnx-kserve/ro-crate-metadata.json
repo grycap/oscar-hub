@@ -216,7 +216,6 @@
       "@type": "HowToStep",
       "position": 2,
       "text": "Upload input.png to the configured MinIO input path and wait for the asynchronous inference to finish.",
-      "timeRequired": "PT120S",
       "potentialAction": {
         "@id": "#action-async-put"
       }
@@ -226,7 +225,7 @@
       "@type": "HowToStep",
       "position": 2,
       "text": "Wait for the remote inference to produce detection outputs.",
-      "timeRequired": "PT60S"
+      "timeRequired": "PT10S"
     },
     {
       "@id": "#step-async-get",
