@@ -66,8 +66,8 @@ Once the service is ready, the model will be exposed on `https://<YOUR_CLUSTER>/
             ]
         }'
     ```
-    > Replace `<TOKEN>` with your service token or four personal OIDC token.  
-    
+    > Replace `<TOKEN>` with your service token or four personal OIDC token.
+
     > Note: If there is only one model, it will have the same name as the OSCAR service.
 
 ### Through Open WebUI
@@ -78,7 +78,7 @@ Once the service is ready, the model will be exposed on `https://<YOUR_CLUSTER>/
     docker run -d -p 3000:8080 -e WEBUI_AUTH=False -v open-webui:/app/backend/data --name open-webui ghcr.io/open-webui/open-webui:main
     ```
 3. Go to [http://localhost:3000/](http://localhost:3000/)
-4. Add a connection to the service:  
+4. Add a connection to the service:
     `Top right corner → Admin Panel → Settings → Connections → OpenAI API`
 5. Try it
 
