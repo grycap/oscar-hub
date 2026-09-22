@@ -2,6 +2,7 @@ functions:
   oscar:
   - oscar-kserve-cluster:
       name: qwen2-5-05b-instruct
+      image: alpine
       kserve:
         type: llm_inference
         llm_inference:
