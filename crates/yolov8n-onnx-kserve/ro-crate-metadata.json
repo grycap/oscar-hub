@@ -214,7 +214,7 @@
     {
       "@id": "#step-async-put",
       "@type": "HowToStep",
-      "position": 2,
+      "position": 1,
       "text": "Upload input.png to the configured MinIO input path and wait for the asynchronous inference to finish.",
       "potentialAction": {
         "@id": "#action-async-put"

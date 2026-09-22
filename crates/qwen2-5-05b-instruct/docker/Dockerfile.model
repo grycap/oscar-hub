@@ -10,7 +10,7 @@ FROM --platform=$BUILDPLATFORM busybox
 ARG TARGETPLATFORM
 ARG BUILDPLATFORM
 # Create a non-root user and group, and set permissions for the /models directory
-# Necesary to avoid permission issues when KServe tries to access the model files
+# Necessary to avoid permission issues when KServe tries to access the model files
 # Default KServe modelcard uid is 1010
 RUN addgroup -g 1010 storage \
 	&& adduser -D -u 1010 -G storage storage \

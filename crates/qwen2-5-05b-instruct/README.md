@@ -66,7 +66,7 @@ Once the service is ready, the model will be exposed on `https://<YOUR_CLUSTER>/
             ]
         }'
     ```
-    > Replace `<TOKEN>` with your service token or four personal OIDC token.
+    > Replace `<TOKEN>` with your service token or your personal OIDC token.
 
     > Note: If there is only one model, it will have the same name as the OSCAR service.
 

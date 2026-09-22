@@ -64,7 +64,7 @@ oscar-cli service list
 Upload a test image to the OSCAR service input bucket to trigger processing:
 
 ```bash
-oscar-cli service put-file yolov8n-onnx-kserve minio kserve-isvc-yolo8n-onnx/input input.png
+oscar-cli service put-file yolov8n-onnx-kserve minio input.png
 ```
 > Note: it can take several minutes to deploy the KServe InferenceService and download the model, especially if it's the first time.
 
@@ -73,8 +73,8 @@ oscar-cli service put-file yolov8n-onnx-kserve minio kserve-isvc-yolo8n-onnx/inp
 Wait a few seconds for the job to complete, then list and download the output files:
 
 ```bash
-oscar-cli service list-files kserve-isvc-yolo8n-onnx minio kserve-isvc-yolo8n-onnx/output
-oscar-cli service get-file kserve-isvc-yolo8n-onnx minio kserve-isvc-yolo8n-onnx/output <filename> .
+oscar-cli service list-files yolov8n-onnx-kserve minio kserve-isvc-yolo8n-onnx/output
+oscar-cli service get-file yolov8n-onnx-kserve minio kserve-isvc-yolo8n-onnx/output/<filename> .
 ```
 
 Verify that the output contains a non-empty `*_predictions_summary.txt` file
