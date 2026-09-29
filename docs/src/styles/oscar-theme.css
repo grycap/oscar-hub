@@ -1,0 +1,111 @@
+/* OSCAR documentation identity, adapted from oscar/docs/stylesheets/oscar-theme.css.
+   Solid surfaces preserve OSCAR Hub's design without introducing gradients. */
+:root {
+  --oscar-primary: #7bc47f;
+  --oscar-primary-strong: #5aae60;
+  --sl-font: 'Lato';
+  --sl-font-mono: 'Roboto Mono';
+  --sl-content-width: 52rem;
+  --sl-sidebar-width: 15rem;
+  --sl-nav-height: 4.25rem;
+  --sl-text-body: 1.045rem;
+  --sl-text-body-sm: .9rem;
+  --sl-text-code: .875rem;
+  --sl-text-h1: 2.35rem;
+  --sl-text-h2: 1.7rem;
+  --sl-text-h3: 1.35rem;
+  --sl-line-height: 1.65;
+
+  /* OSCAR's slate palette. */
+  --sl-color-white: #f2f4f8;
+  --sl-color-gray-1: #e8ecf2;
+  --sl-color-gray-2: #b8bfca;
+  --sl-color-gray-3: #9aa4b1;
+  --sl-color-gray-4: #6d7887;
+  --sl-color-gray-5: #2a3039;
+  --sl-color-gray-6: #121821;
+  --sl-color-black: #080a0d;
+  --sl-color-accent-low: #203626;
+  --sl-color-accent: #7bc47f;
+  --sl-color-accent-high: #97db9a;
+  --sl-color-text: #e8ecf2;
+  --sl-color-text-accent: #97db9a;
+  --sl-color-bg: #080a0d;
+  --sl-color-bg-nav: #080a0d;
+  --sl-color-bg-sidebar: #080a0d;
+  --sl-color-bg-inline-code: #1c2730;
+  --sl-color-hairline: #2a3039;
+  --sl-color-hairline-light: #2a3039;
+  --sl-color-hairline-shade: #2a3039;
+  --oscar-panel: #121821;
+  --oscar-panel-border: #2d4636;
+  --oscar-code-bg: #0e131a;
+  --oscar-code-text: #e8ecf2;
+}
+:root[data-theme='light'] {
+  /* OSCAR's default palette. */
+  --sl-color-white: #1f2937;
+  --sl-color-gray-1: #2a3543;
+  --sl-color-gray-2: #4f5b6b;
+  --sl-color-gray-3: #617185;
+  --sl-color-gray-4: #8a99aa;
+  --sl-color-gray-5: #d7e0ea;
+  --sl-color-gray-6: #eef3f8;
+  --sl-color-gray-7: #f5f7fb;
+  --sl-color-black: #fff;
+  --sl-color-accent-low: #e6f2e8;
+  --sl-color-accent: #3a8f53;
+  --sl-color-accent-high: #2f7244;
+  --sl-color-text: #2a3543;
+  --sl-color-text-accent: #2f7244;
+  --sl-color-bg: #f5f7fb;
+  --sl-color-bg-nav: #f8fbff;
+  --sl-color-bg-sidebar: #f5f7fb;
+  --sl-color-bg-inline-code: #eef3f8;
+  --sl-color-hairline: #d7e0ea;
+  --sl-color-hairline-light: #d7e0ea;
+  --sl-color-hairline-shade: #d7e0ea;
+  --oscar-panel: #fff;
+  --oscar-panel-border: #cfe2d4;
+  --oscar-code-bg: #f2f6fa;
+  --oscar-code-text: #2a3543;
+}
+/* Header, navigation and readable article surface mirror OSCAR's documentation. */
+header.header { border-bottom-color: var(--oscar-panel-border); }
+.site-title { color: var(--sl-color-white); font-size: 1.1rem; font-weight: 700; gap: .75rem; }
+.site-title img { height: 2.5rem; width: 2.5rem; border-radius: 50%; }
+.social-icons a { color: var(--sl-color-text-accent); }
+.sidebar-pane { border-inline-end-color: transparent; }
+.sidebar-content { padding-top: 1.5rem; }
+.sidebar-content a, .sidebar-content summary, .sidebar-content .large { font-size: .95rem; }
+.sidebar-content a[aria-current='page'] { background: var(--sl-color-accent-low); color: var(--sl-color-text-accent); border-radius: 6px; font-weight: 700; }
+.right-sidebar { border-inline-start-color: transparent; }
+.right-sidebar-panel { padding-top: 2rem; }
+.right-sidebar-panel a { font-size: .875rem; }
+.main-pane > main {
+  width: calc(100% - 2rem);
+  max-width: calc(var(--sl-content-width) + 2 * var(--sl-content-pad-x));
+  margin: 1.5rem auto;
+  background: var(--oscar-panel);
+  border: 1px solid var(--oscar-panel-border);
+  border-radius: 16px;
+  padding-bottom: 1rem;
+}
+.content-panel { padding: 1.2rem 1.1rem; }
+.content-panel + .content-panel { border-top: 0; padding-top: 0; }
+h1#_top { font-weight: 800; letter-spacing: -.02em; }
+.sl-markdown-content h2, .sl-markdown-content h3 { font-weight: 700; }
+.sl-markdown-content a { text-decoration-thickness: 1px; text-underline-offset: 2px; }
+.sl-markdown-content table { font-size: .9rem; border: 1px solid var(--oscar-panel-border); border-radius: 10px; }
+.sl-markdown-content th { background: var(--sl-color-accent-low); }
+.sl-markdown-content :not(pre) > code { border-radius: 4px; }
+.sl-markdown-content .expressive-code { --ec-codeBg: var(--oscar-code-bg); --ec-codeFg: var(--oscar-code-text); --ec-brdCol: var(--oscar-panel-border); --ec-brdRad: 10px; }
+.sl-markdown-content .starlight-aside { border-radius: 12px; }
+.pagination-links a { border-radius: 10px; border-color: var(--oscar-panel-border); }
+:focus-visible { outline: 2px solid var(--sl-color-text-accent); outline-offset: 3px; }
+@media (max-width: 49.99rem) {
+  .main-pane > main { width: calc(100% - 1rem); margin: .75rem auto; border-radius: 12px; }
+  .content-panel { padding: 1rem; }
+  .site-title { font-size: 1rem; }
+  .site-title img { height: 2rem; width: 2rem; }
+}

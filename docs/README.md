@@ -47,3 +47,7 @@ All commands are run from the root of the project, from a terminal:
 ## 👀 Want to learn more?
 
 Check out [Starlight’s docs](https://starlight.astro.build/), read [the Astro documentation](https://docs.astro.build), or jump into the [Astro Discord server](https://astro.build/chat).
+
+## OSCAR documentation theme
+
+The guide uses the OSCAR documentation palette, logo, and Lato / Roboto Mono typography. `src/styles/oscar-theme.css` adapts the identity defined in `oscar/docs/stylesheets/oscar-theme.css` to Starlight, with solid backgrounds for OSCAR Hub. Both light and dark themes, search, sidebar navigation, and existing `/guide/` routes are preserved. No content conversion or additional build dependencies are required.
