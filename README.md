@@ -72,6 +72,13 @@ A GitHub action has been configured to automatically validate new entries submit
 
 To produce a static bundle without the dev server, run `npm run build` to regenerate `dist/`. This command now builds both the catalog landing page and the `/guide` documentation bundle.
 
+The catalog and service detail pages are generated from every directory under `crates/` containing valid `ro-crate-metadata.json` with a `./` dataset node. The catalog offers table and summary-card views with shared search and filters; the selected view is retained in the URL. The header includes the same moon/sun theme toggle and GitHub icon as OSCAR Landing. Theme selection is saved locally and defaults to the system preference. Each build discovers new services and derives the service-type filter from their metadata; no manual catalog or filter registration is required. Details are published at `/services/<slug>/`, together with an unchanged copy of the original RO-Crate JSON. The existing Pages workflow runs on pushes to `main` and publishes the complete `dist/` bundle, including `/guide`.
+
+Run `npm test` to check automatic crate discovery, metadata preservation, generated links, and search/filter behavior. The generation regression test adds a new crate in a temporary workspace and verifies that a rebuild includes its catalog entry, detail page, and new service type. Tests also run before the Pages build.
+
+“Files & artifacts” offers on-demand previews of local UTF-8 text files up to 256 KiB and PNG, JPEG, GIF and WebP images up to 5 MiB. YAML and shell scripts use syntax highlighting in both themes. File contents and the YAML/shell highlighter are downloaded only when a preview is opened; successful previews are reused for the current page. Other text formats, including Markdown and notebooks, show their source as plain text. Directories, unavailable artifacts, binaries and larger files keep their existing repository links. RO-Crate metadata also loads on demand.
+
+
 ---
 
 ## 📚 Guide
