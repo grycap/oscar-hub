@@ -256,12 +256,6 @@
       }
     },
     {
-      "@id": "UPV",
-      "@type": "Organization",
-      "name": "Universitat Politècnica de València",
-      "url": "https://www.upv.es"
-    },
-    {
       "@id": "https://www.apache.org/licenses/LICENSE-2.0",
       "@type": "CreativeWork",
       "name": "Apache License 2.0",
