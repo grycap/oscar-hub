@@ -315,11 +315,12 @@
     },
     {
       "@id": "#author",
-      "@type": "Person",
-      "affiliation": {
+      "@type": "Organization",
+      "name": "GRyCAP-UPV",
+      "url": "https://www.grycap.upv.es/",
+      "parentOrganization": {
         "@id": "UPV"
-      },
-      "name": "Robert Kazaryan"
+      }
     },
     {
       "@id": "https://www.apache.org/licenses/LICENSE-2.0",

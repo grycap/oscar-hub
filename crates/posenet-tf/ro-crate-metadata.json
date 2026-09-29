@@ -250,8 +250,8 @@
     {
       "@id": "#author",
       "@type": "Organization",
-      "name": "AI4OS Hub",
-      "url": "https://github.com/ai4os-hub"
+      "name": "GRyCAP-UPV",
+      "url": "https://www.grycap.upv.es/"
     },
     {
       "@id": "https://www.apache.org/licenses/LICENSE-2.0",
