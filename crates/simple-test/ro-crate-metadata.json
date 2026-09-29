@@ -39,7 +39,7 @@
         "synchronous"
 ],
       "author": {
-        "@id": "https://orcid.org/0000-0002-8049-253X"
+        "@id": "#author"
       },
       "subjectOf": [
         {
@@ -89,10 +89,11 @@
       "encodingFormat": "text/plain"
     },
     {
-      "@id": "https://orcid.org/0000-0002-8049-253X",
-      "@type": "Person",
-      "name": "Germán Moltó",
-      "affiliation": {
+      "@id": "#author",
+      "@type": "Organization",
+      "name": "GRyCAP-UPV",
+      "url": "https://www.grycap.upv.es/",
+      "parentOrganization": {
         "@id": "UPV"
       }
     },

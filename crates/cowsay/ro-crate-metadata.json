@@ -36,7 +36,7 @@
       ],
       "serviceType": "synchronous",
       "author": {
-        "@id": "https://grycap.upv.es"
+        "@id": "#author"
       },
       "subjectOf": [
         {
@@ -180,10 +180,10 @@
       "value": "oscar-cli service run cowsay -i {input}"
     },
     {
-      "@id": "https://grycap.upv.es",
+      "@id": "#author",
       "@type": "Organization",
-      "name": "GRyCAP",
-      "url": "https://grycap.upv.es",
+      "name": "GRyCAP-UPV",
+      "url": "https://www.grycap.upv.es/",
       "parentOrganization": {
         "@id": "UPV"
       }
