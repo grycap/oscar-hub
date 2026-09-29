@@ -1,0 +1,17 @@
+functions:
+  oscar:
+  - oscar-cluster:
+      name: phyto-plankton-classifier
+      cpu: '1.0'
+      memory: 4Gi
+      image: ai4oshub/phyto-plankton-classification
+      script: script.sh
+      log_level: INFO
+      synchronous:
+        min_scale: 0
+      input:
+      - storage_provider: minio.default
+        path: phyto-plankton-classifier/input
+      output:
+      - storage_provider: minio.default
+        path: phyto-plankton-classifier/output
