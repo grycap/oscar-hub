@@ -86,6 +86,35 @@ test('a directly opened detail page keeps its usable catalog link', () => {
   assert.equal(wentBack, false);
 });
 
+test('preview toggles load only opened content and allow retry after a loader failure', async () => {
+  const status = element();
+  const preview = element({ open: false, querySelector: () => status });
+  let attempts = 0;
+  vm.runInNewContext(`${script}\nwatchPreview(preview, loader);`, {
+    document: { querySelector: () => null, querySelectorAll: () => [] },
+    window: { location: new URL('https://hub.example/services/demo/') },
+    preview,
+    loader: async details => {
+      assert.equal(details, preview);
+      if (++attempts === 1) throw new Error('Unavailable module');
+      status.textContent = '';
+    }
+  });
+  await preview.listeners.toggle();
+  assert.equal(attempts, 0);
+  preview.open = true;
+  await preview.listeners.toggle();
+  assert.match(status.textContent, /Unable to load content/);
+  preview.open = false;
+  await preview.listeners.toggle();
+  assert.equal(attempts, 1);
+  preview.open = true;
+  await preview.listeners.toggle();
+  assert.equal(attempts, 2);
+  assert.equal(status.textContent, '');
+});
+
+
 test('switching to cards preserves active filters, counts and shareable URL state', () => {
   const { elements, rows, cards, viewButtons, window } = catalog('https://hub.example/?type=kserve&q=detector');
   assert.equal(elements['#serviceTable'].hidden, false);

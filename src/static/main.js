@@ -111,6 +111,25 @@ if (backLink) {
   });
 }
 
+function watchPreview(preview, load) {
+  preview.addEventListener('toggle', async () => {
+    if (!preview.open) return;
+    try {
+      await load(preview);
+    } catch {
+      preview.querySelector('.preview-status').textContent = 'Unable to load content. Close and reopen to retry.';
+    }
+  });
+}
+
+const metadataPreview = document.querySelector('[data-json-source]');
+if (metadataPreview) {
+  watchPreview(metadataPreview, async preview => {
+    const { loadMetadataPreview } = await import('./json-view.js');
+    await loadMetadataPreview(preview);
+  });
+}
+
 const DEV_HOSTS = new Set(['localhost', '127.0.0.1']);
 if (DEV_HOSTS.has(window.location.hostname) && 'EventSource' in window) {
   const source = new EventSource('/__dev_reload');

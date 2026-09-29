@@ -15,6 +15,10 @@
   --subtle: #eef1f5;
   --hover: #f5faf5;
   --code-bg: #eef1f5;
+  --json-key: #275c82;
+  --json-string: #2f7434;
+  --json-number: #8c491c;
+  --json-literal: #764284;
   --radius: 10px;
   --max-width: 1240px;
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -35,6 +39,10 @@
   --subtle: #1e2b22;
   --hover: #1d2c22;
   --code-bg: #111a14;
+  --json-key: #9bc9ec;
+  --json-string: #a9d8ad;
+  --json-number: #e7b27c;
+  --json-literal: #d3b1e3;
 }
 *, *::before, *::after { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--text); line-height: 1.55; min-height: 100vh; display: flex; flex-direction: column; }
@@ -161,6 +169,10 @@ dd { margin: 0; font-size: 14px; overflow-wrap: anywhere; }
 .file-list small { color: var(--muted); font-size: 11px; flex-shrink: 0; }
 .file-list .file-entry { display: block; }
 .file-heading { display: flex; justify-content: space-between; gap: 16px; }
+.file-preview { margin-top: 12px; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+.file-preview > summary { padding: 10px 14px; }
+.file-list .preview-status { margin: 12px 14px; }
+.preview-status:empty { display: none; }
 .version, .artifact-label { display: inline-block; margin-left: 8px; font-size: 11px; color: var(--muted); }
 .procedure { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin: 12px 0; overflow: hidden; }
 summary { cursor: pointer; padding: 16px 20px; font-size: 14px; font-weight: 550; }
@@ -170,6 +182,22 @@ summary:hover { background: var(--subtle); }
 .procedure-content p { margin-bottom: 8px; }
 .procedure-content small { color: var(--muted); }
 pre { padding: 16px; background: var(--code-bg); overflow: auto; font-size: 12px; line-height: 1.65; tab-size: 2; }
+.json-toolbar { display: flex; flex-wrap: wrap; gap: 8px; padding: 8px 16px; border-top: 1px solid var(--border); }
+.json-toolbar .button { min-height: 36px; padding: 6px 12px; font-size: 12px; }
+.json-viewer { padding: 16px; max-height: 600px; overflow: auto; background: var(--code-bg); color: var(--text); font: 13px/1.75 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
+.json-line { white-space: pre; min-height: 24px; padding-left: 20px; }
+.json-fold { margin: 0; }
+.json-fold > summary { width: max-content; min-width: 100%; padding: 0; min-height: 24px; font: inherit; white-space: pre; }
+.json-fold > summary::marker { color: var(--muted); font-size: 11px; }
+.json-fold > summary:hover { background: var(--accent-soft); }
+.json-children { padding-left: 20px; border-left: 1px solid var(--border); margin-left: 5px; }
+.json-fold[open] > summary > .json-collapsed { display: none; }
+.json-count { color: var(--muted); font: 11px/1.75 ui-sans-serif, system-ui, sans-serif; margin-left: 12px; }
+.json-key { color: var(--json-key); }
+.json-string { color: var(--json-string); }
+.json-number { color: var(--json-number); }
+.json-boolean, .json-null { color: var(--json-literal); }
+.json-punctuation { color: var(--muted); }
 .view-switcher { display: inline-flex; gap: 3px; padding: 3px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); }
 .view-switcher button { display: inline-flex; align-items: center; justify-content: center; gap: 7px; border: 1px solid transparent; border-radius: 5px; padding: 8px 12px; min-height: 38px; background: transparent; color: var(--muted); cursor: pointer; font-size: 12px; font-weight: 600; }
 .view-switcher button:hover { background: var(--accent-soft); }

@@ -85,6 +85,16 @@ test('adding a crate automatically generates its row, filter, detail, files and 
   for (const content of ['Example Author', 'Second author', 'Example Software', '2.0.0', '1.2.3', '1 GiB', '6 kserve-GiB', 'https://example.org/service', '/blob/main/crates/new-crate/fdl.yml']) assert.ok(detail.includes(content), content);
   assert.match(detail, /https:\/\/github.com\/grycap\/oscar-hub\/blob\/main\/crates\/new-crate\/ro-crate-metadata.json/);
   assert.doesNotMatch(detail, /Download RO-Crate JSON| download[ >]/);
+  assert.match(detail, /class="json-viewer"/);
+  const metadataSection = detail.match(/<section class="detail-section" aria-labelledby="ro-crate">([\s\S]*?)<\/section>/)[1];
+  assert.match(metadataSection, /class="file-list"/);
+  assert.match(metadataSection, />ro-crate-metadata\.json</);
+  assert.match(metadataSection, /<small>application\/json<\/small>/);
+  assert.match(metadataSection, /data-json-source="ro-crate-metadata\.json"/);
+  assert.match(metadataSection, /<summary>Show content/);
+  assert.match(metadataSection, /class="json-viewer"[^>]* hidden><\/div>/);
+  assert.doesNotMatch(detail, /json-line|json-fold|Inspect complete metadata|complete metadata is available/);
+  await fs.access(path.join(output, 'assets/json-view.js'));
 
   assert.equal(await fs.readFile(path.join(output, 'services/new-crate/ro-crate-metadata.json'), 'utf8'), await fs.readFile(path.join(root, 'crates/new-crate/ro-crate-metadata.json'), 'utf8'));
   await checkLocalLinks(output, path.join(output, 'index.html'));

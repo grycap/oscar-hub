@@ -163,7 +163,8 @@ function renderFileEntry(title, description, format, preview = '') {
 
 function renderMetadataFile(service) {
   const title = link('ro-crate-metadata.json', `${REPOSITORY}/blob/main/${encodePath(service.repoPath)}/ro-crate-metadata.json`);
-  return `<section class="detail-section" aria-labelledby="ro-crate"><h2 id="ro-crate">RO-Crate metadata</h2><ul class="file-list">${renderFileEntry(title, '', 'application/json')}</ul></section>`;
+  const preview = `<details class="file-preview" data-json-source="ro-crate-metadata.json"><summary>Show content<span class="sr-only"> of ro-crate-metadata.json</span></summary><p class="preview-status" role="status" aria-live="polite"></p><noscript><p><a href="ro-crate-metadata.json">Open JSON content</a></p></noscript><div class="json-toolbar" hidden><button class="button button--quiet" type="button" data-json-action="expand">Expand all</button><button class="button button--quiet" type="button" data-json-action="collapse">Collapse all</button></div><div class="json-viewer" role="region" aria-label="RO-Crate JSON metadata" tabindex="0" hidden></div></details>`;
+  return `<section class="detail-section" aria-labelledby="ro-crate"><h2 id="ro-crate">RO-Crate metadata</h2><ul class="file-list">${renderFileEntry(title, '', 'application/json', preview)}</ul></section>`;
 }
 
 function renderParts(service) {
