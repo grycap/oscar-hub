@@ -1,5 +1,5 @@
 # Construction phase
-FROM --platform=$BUILDPLATFORM ubuntu:22.04 AS builder
+FROM ubuntu:22.04 AS builder
 ARG TARGETPLATFORM
 ARG BUILDPLATFORM
 ARG TARGETARCH
@@ -36,7 +36,7 @@ RUN if [ "$TARGETARCH" = "arm64" ]; then \
     rm -rf /root/.cache/pip
 
 # Final stage: light image
-FROM --platform=$BUILDPLATFORM ubuntu:22.04
+FROM ubuntu:22.04
 ARG TARGETPLATFORM
 ARG BUILDPLATFORM
 
