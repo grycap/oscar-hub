@@ -130,6 +130,13 @@ if (metadataPreview) {
   });
 }
 
+document.querySelectorAll('[data-file-source]').forEach(preview => {
+  watchPreview(preview, async details => {
+    const { loadFilePreview } = await import('./file-view.js');
+    await loadFilePreview(details);
+  });
+});
+
 const DEV_HOSTS = new Set(['localhost', '127.0.0.1']);
 if (DEV_HOSTS.has(window.location.hostname) && 'EventSource' in window) {
   const source = new EventSource('/__dev_reload');

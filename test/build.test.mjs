@@ -148,3 +148,51 @@ test('missing optional fields and malformed crates do not block a new valid serv
   assert.doesNotMatch(html, /href="[^"]*missing.txt/);
   assert.doesNotMatch(html, /href="[^"]*#expected-output/);
 });
+
+test('preview assets remain separate from HTML and omit directories, binaries, large files and escaping paths', async t => {
+  const root = await workspace(t);
+  const files = {
+    'fdl.yml': 'name: "PREVIEW_ONLY_MARKER <script>"\n',
+    'docker/run.sh': '#!/bin/sh\necho "$INPUT_FILE_PATH"\n',
+    'README.md': '# Notes\n',
+    'Dockerfile': 'FROM alpine\n',
+    'input.json': '{"example":true}',
+    'empty.txt': '',
+    'binary.txt': Buffer.from([0, 255, 1]),
+    'invalid.txt': Buffer.from([255, 254]),
+    'large.txt': 'x'.repeat(256 * 1024 + 1),
+    'icon.png': Buffer.from([137, 80, 78, 71]),
+    'model.onnx': Buffer.from([0, 255]),
+    'large.png': Buffer.alloc(5 * 1024 * 1024 + 1)
+  };
+  const references = [...Object.keys(files), 'docker/', 'missing.txt', '#expected', 'outside.txt', '../escape.txt', 'https://example.org/file.txt'];
+  await addCrate(root, 'previews', { hasPart: references.map(id => ({ '@id': id })) });
+  const crateDir = path.join(root, 'crates', 'previews');
+  for (const [id, content] of Object.entries(files)) {
+    await fs.mkdir(path.dirname(path.join(crateDir, id)), { recursive: true });
+    await fs.writeFile(path.join(crateDir, id), content);
+  }
+  await fs.writeFile(path.join(root, 'outside.txt'), 'OUTSIDE_MARKER');
+  await fs.symlink(path.join(root, 'outside.txt'), path.join(crateDir, 'outside.txt'));
+  await fs.writeFile(path.join(root, 'crates', 'escape.txt'), 'ESCAPE_MARKER');
+  const [service] = await buildSite({ root });
+  const output = path.join(root, 'dist', 'services', 'previews');
+  const html = await fs.readFile(path.join(output, 'index.html'), 'utf8');
+  assert.doesNotMatch(html, /PREVIEW_ONLY_MARKER|OUTSIDE_MARKER|ESCAPE_MARKER|src="files\//);
+  for (const part of service.parts) {
+    if (['fdl.yml', 'docker/run.sh', 'README.md', 'Dockerfile', 'input.json', 'empty.txt', 'icon.png'].includes(part.id)) {
+      assert.ok(part.preview, part.id);
+      assert.match(html, new RegExp(`data-file-source="${part.preview.url}"`));
+      assert.deepEqual(await fs.readFile(path.join(output, part.preview.url)), Buffer.from(files[part.id]));
+    } else assert.equal(part.preview, null, part.id);
+  }
+  assert.equal(service.parts.find(part => part.id === 'fdl.yml').preview.language, 'yaml');
+  assert.equal(service.parts.find(part => part.id === 'docker/run.sh').preview.language, 'bash');
+  assert.equal(service.parts.find(part => part.id === 'README.md').preview.language, '');
+  const bundle = await fs.readFile(path.join(root, 'dist', 'assets', 'highlight.js'), 'utf8');
+  assert.doesNotMatch(bundle, /from[ ]*["']highlight\.js/);
+  const { highlightCode } = await import(`data:text/javascript;base64,${Buffer.from(bundle).toString('base64')}`);
+  assert.match(highlightCode('name: value', 'yaml'), /hljs-attr/);
+  assert.match(highlightCode('if true; then echo "$INPUT"; fi', 'bash'), /hljs-keyword/);
+  assert.doesNotMatch(html, /(?:src|href)="[^"<>]*highlight\.js/);
+});

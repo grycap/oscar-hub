@@ -172,7 +172,13 @@ function renderParts(service) {
   return `<section class="detail-section" aria-labelledby="files"><h2 id="files">Files &amp; artifacts</h2><ul class="file-list">${service.parts.map(part => {
     const title = part.exists ? link(part.id, `${REPOSITORY}/${part.id.endsWith('/') ? 'tree' : 'blob'}/main/${encodePath(service.repoPath)}/${encodePath(part.id)}`) : `<span>${escape(part.name ?? part.id)}</span><span class="artifact-label">${part.id?.startsWith('#') ? 'Expected artifact' : 'Referenced artifact'}</span>`;
     const description = `${part.name !== part.id ? part.name ?? '' : ''}${part.description ? ` — ${part.description}` : ''}`;
-    return renderFileEntry(title, description, part.encodingFormat);
+    let preview = '';
+    if (part.preview) {
+      const { url, kind, language = '' } = part.preview;
+      const viewer = kind === 'image' ? `<img class="file-image" alt="${escape(part.name ?? part.id)}" hidden>` : `<pre class="file-code-viewer" role="region" aria-label="Content of ${escape(part.id)}" tabindex="0" hidden><code></code></pre>`;
+      preview = `<details class="file-preview" data-file-source="${escape(url)}" data-file-kind="${kind}" data-file-language="${language}"><summary>Show content<span class="sr-only"> of ${escape(part.id)}</span></summary><p class="preview-status" role="status" aria-live="polite"></p><noscript><p><a href="${escape(url)}">Open file content</a></p></noscript>${viewer}</details>`;
+    }
+    return renderFileEntry(title, description, part.encodingFormat, preview);
   }).join('')}</ul></section>`;
 }
 

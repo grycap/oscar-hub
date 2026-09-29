@@ -205,8 +205,17 @@ function getContentType(filePath) {
       return 'application/javascript; charset=utf-8';
     case '.json':
       return 'application/json; charset=utf-8';
+    case '.txt':
+      return 'text/plain; charset=utf-8';
     case '.png':
       return 'image/png';
+    case '.jpg':
+    case '.jpeg':
+      return 'image/jpeg';
+    case '.gif':
+      return 'image/gif';
+    case '.webp':
+      return 'image/webp';
     case '.svg':
       return 'image/svg+xml';
     case '.ico':

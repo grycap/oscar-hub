@@ -2,6 +2,7 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 import { fileURLToPath, pathToFileURL } from 'url';
+import { build as bundle } from 'esbuild';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -17,6 +18,12 @@ export async function buildSite({ root = repoRoot, destination = path.join(root,
   await fs.rm(destination, { recursive: true, force: true });
   await fs.mkdir(path.join(destination, 'assets'), { recursive: true });
   await fs.cp(staticDir, path.join(destination, 'assets'), { recursive: true });
+  await bundle({
+    entryPoints: [path.join(__dirname, 'highlight.mjs')],
+    outfile: path.join(destination, 'assets', 'highlight.js'),
+    bundle: true, format: 'esm', platform: 'browser', target: 'es2020', minify: true
+  });
+  await fs.copyFile(path.join(repoRoot, 'node_modules', 'highlight.js', 'LICENSE'), path.join(destination, 'assets', 'highlight-LICENSE.txt'));
   await copyServiceIcons(services, destination);
   await Promise.all([
     fs.writeFile(path.join(destination, 'index.html'), renderCatalog(services), 'utf8'),
@@ -43,6 +50,11 @@ async function writeServicePages(services, destination, renderService) {
     await Promise.all([
       fs.writeFile(path.join(directory, 'index.html'), renderService(service), 'utf8'),
       fs.writeFile(path.join(directory, 'ro-crate-metadata.json'), service.rawMetadata, 'utf8'),
+      ...service.parts.filter(part => part.preview).map(async part => {
+        const target = path.join(directory, part.preview.url);
+        await fs.mkdir(path.dirname(target), { recursive: true });
+        await fs.writeFile(target, part.preview.bytes);
+      })
     ]);
   }));
 }
@@ -123,7 +135,8 @@ async function parseService(cratePath, slug, repoPath) {
   const authors = asArray(dataset.author).map(ref => resolveReference(graph, ref)).filter(Boolean);
   const licenses = asArray(dataset.license).map(ref => resolveReference(graph, ref)).filter(Boolean);
   const sources = asArray(dataset.isBasedOn).map(ref => resolveReference(graph, ref)).filter(Boolean);
-  const parts = await Promise.all(asArray(dataset.hasPart).map(async ref => {
+  const serviceDirectory = await fs.realpath(path.dirname(cratePath));
+  const parts = await Promise.all(asArray(dataset.hasPart).map(async (ref, index) => {
     const node = resolveReference(graph, ref);
     const id = typeof ref === 'string' ? ref : ref?.['@id'];
     // Contextual nodes (e.g. expected outputs) aren't files in the repository.
@@ -131,7 +144,8 @@ async function parseService(cratePath, slug, repoPath) {
     const candidate = local ? path.resolve(path.dirname(cratePath), id) : null;
     const contained = candidate?.startsWith(path.dirname(cratePath) + path.sep);
     const exists = !!(contained && await fileExists(candidate));
-    return { ...node, id, exists };
+    const preview = exists ? await filePreview(candidate, serviceDirectory, id, node?.encodingFormat, index) : null;
+    return { ...node, id, exists, preview };
   }));
 
   return {
@@ -157,6 +171,33 @@ async function parseService(cratePath, slug, repoPath) {
     graph, dataset, rawMetadata: raw,
     icon: iconInfo
   };
+}
+
+async function filePreview(candidate, serviceDirectory, id, format, index) {
+  try {
+    const actualPath = await fs.realpath(candidate);
+    if (!actualPath.startsWith(serviceDirectory + path.sep)) return null;
+    const info = await fs.stat(actualPath);
+    if (!info.isFile()) return null;
+    const extension = path.extname(id).toLowerCase();
+    const images = { '.png': 'png', '.jpg': 'jpg', '.jpeg': 'jpg', '.gif': 'gif', '.webp': 'webp' };
+    if (images[extension]) {
+      if (info.size > 5 * 1024 * 1024) return null;
+      return { kind: 'image', url: `files/${index}.${images[extension]}`, bytes: await fs.readFile(actualPath) };
+    }
+    const textFile = /^text\//i.test(format ?? '') || /(?:json|yaml|xml)/i.test(format ?? '') ||
+      /\.(?:ya?ml|sh|bash|zsh|json|md|txt|py|js|mjs|ts|toml|ini|cfg|conf|csv|ipynb|xml|html|css)$/i.test(id) ||
+      /(?:^|\/)(?:Dockerfile(?:\.[^/]+)?|README|LICENSE|Makefile)$/i.test(id);
+    if (!textFile || info.size > 256 * 1024) return null;
+    const bytes = await fs.readFile(actualPath);
+    const content = new TextDecoder('utf-8', { fatal: true }).decode(bytes);
+    if (/[\u0000-\u0008\u000b\u000c\u000e-\u001f]/.test(content)) return null;
+    const language = /\.(?:yaml|yml)$/i.test(id) || /yaml/i.test(format ?? '') ? 'yaml' :
+      /\.(?:sh|bash|zsh)$/i.test(id) || /shellscript/i.test(format ?? '') || /^#![^\n]*\b(?:bash|sh|zsh|dash|ksh)\b/.test(content) ? 'bash' : '';
+    return { kind: 'text', language, url: `files/${index}.txt`, bytes };
+  } catch {
+    return null;
+  }
 }
 
 function resolveIcon(graph, dataset, cratePath, slug) {

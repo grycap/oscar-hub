@@ -10,5 +10,11 @@
     "docs:build": "npm --prefix docs run build",
     "docs:preview": "npm --prefix docs run preview",
     "test": "node --test"
+  },
+  "dependencies": {
+    "highlight.js": "11.11.1"
+  },
+  "devDependencies": {
+    "esbuild": "0.28.2"
   }
 }
