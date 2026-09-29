@@ -19,6 +19,23 @@
   --max-width: 1240px;
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0e1511;
+  --surface: #162019;
+  --text: #edf3ee;
+  --muted: #b1bfb5;
+  --border: #35473b;
+  --accent: #a9d8ad;
+  --accent-soft: #233629;
+  --accent-border: #405e46;
+  --accent-hover: #c5e6c8;
+  --button-text: #142219;
+  --control-border: #617667;
+  --subtle: #1e2b22;
+  --hover: #1d2c22;
+  --code-bg: #111a14;
+}
 *, *::before, *::after { box-sizing: border-box; }
 body { margin: 0; background: var(--bg); color: var(--text); line-height: 1.55; min-height: 100vh; display: flex; flex-direction: column; }
 [hidden] { display: none !important; }
@@ -54,6 +71,12 @@ nav a[aria-current], nav a:hover { color: #a9d8ad; }
 .nav-tooltip { position: absolute; top: 100%; right: 0; padding-top: 8px; visibility: hidden; white-space: nowrap; z-index: 20; }
 .nav-tooltip > span { display: block; padding: 8px 12px; background: #19251e; color: #e7f2e8; border: 1px solid #718077; border-radius: 6px; font-size: 12px; font-weight: 500; }
 .guide-link:hover .nav-tooltip, .guide-link:focus-visible .nav-tooltip { visibility: visible; }
+.theme-toggle { border: 1px solid #718077; border-radius: 30px; color: #e5e7eb; background: transparent; }
+.theme-toggle:hover { border-color: var(--brand); }
+.theme-toggle__sun { display: none; }
+.theme-toggle.is-light { background: #fff; border-color: #cfd8d1; }
+.theme-toggle.is-light .theme-toggle__sun { display: block; color: #b45309; }
+.theme-toggle.is-light .theme-toggle__moon { display: none; }
 .header-actions .github-link { color: #19251e; background: var(--brand); border: 1px solid var(--brand); border-radius: 7px; }
 .header-actions .github-link:hover { color: #19251e; background: #a9d8ad; text-decoration: none; }
 .header-actions .github-link .ui-icon { width: 20px; height: 20px; }

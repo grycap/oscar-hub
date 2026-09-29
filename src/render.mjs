@@ -49,6 +49,7 @@ function shell(title, content, prefix = '', description = 'Discover OSCAR servic
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>${escape(title)} | OSCAR Hub</title>
   <meta name="description" content="${escape(description)}">
+  <script src="${prefix}assets/theme.js"></script>
   <link rel="stylesheet" href="${prefix}assets/style.css">
 </head>
 <body>
@@ -59,6 +60,7 @@ function shell(title, content, prefix = '', description = 'Discover OSCAR servic
       <nav aria-label="Main navigation">
         <div class="header-actions">
           <a class="guide-link icon-button" href="${prefix}guide/" aria-label="Contribution Guide">${uiIcon('book-open', prefix)}<span class="nav-tooltip" role="tooltip"><span>Contribution Guide</span></span></a>
+          <button id="theme-toggle" class="theme-toggle icon-button" type="button" aria-label="Switch to light mode" aria-pressed="false" hidden>${uiIcon('moon', prefix, 'theme-toggle__moon')}${uiIcon('sun', prefix, 'theme-toggle__sun')}</button>
           <a class="github-link icon-button" href="${REPOSITORY}" target="_blank" rel="noreferrer" aria-label="GitHub Repository (opens in a new tab)" title="GitHub Repository">${uiIcon('github', prefix)}<span class="sr-only">GitHub Repository (opens in a new tab)</span></a>
         </div>
       </nav>
