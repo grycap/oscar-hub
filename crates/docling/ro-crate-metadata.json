@@ -42,7 +42,7 @@
         "@id": "https://github.com/docling-project/docling-serve"
       },
       "author": {
-        "@id": "#author-grycap"
+        "@id": "#author"
       },
       "softwareRequirements": [
         {
@@ -127,10 +127,19 @@
       "encodingFormat": "application/pdf"
     },
     {
-      "@id": "#author-grycap",
+      "@id": "#author",
       "@type": "Organization",
-      "name": "GRyCAP - Universitat Politècnica de València",
-      "url": "https://www.grycap.upv.es/"
+      "name": "GRyCAP-UPV",
+      "url": "https://www.grycap.upv.es/",
+      "parentOrganization": {
+        "@id": "UPV"
+      }
+    },
+    {
+      "@id": "UPV",
+      "@type": "Organization",
+      "name": "Universitat Politècnica de València",
+      "url": "https://www.upv.es"
     },
     {
       "@id": "https://opensource.org/license/mit",
