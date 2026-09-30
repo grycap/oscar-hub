@@ -10,9 +10,6 @@ functions:
      log_level: CRITICAL		
      environment:
        variables:
-         read_timeout: "300"
-         write_timeout: "300"
-         exec_timeout: "0"
          STRESS_DURATION_SECONDS: "10"
      synchronous:
        min_scale: 1
