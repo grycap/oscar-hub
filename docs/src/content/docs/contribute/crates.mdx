@@ -16,10 +16,10 @@ The `./` dataset node must include:
 
 - `name`: Human-friendly service name.
 - `description`: Two or three sentences describing what the service does and how OSCAR users benefit.
-- `serviceType`: `synchronous`, `asynchronous`, or `exposed`.
+- `serviceType`: A string or array of execution types, such as `synchronous`, `asynchronous`, `exposed`, or `kserve`. The catalog derives filter options from the metadata automatically.
 - `license`: Link or inline object describing the license.
 - `author`: Use `GRyCAP-UPV` for the repository owner in the crate metadata. Individual contribution history is maintained through Git commits and pull requests.
-- `URL`: Target application endpoint, repository, or landing page.
+- `url` (or legacy `URL`): Target application endpoint, repository, or landing page.
 - `datePublished`: `YYYY-MM-DD` format.
 - `hasPart`: Entries for `fdl.yml` and `script.sh` (both files are mandatory in every crate).
 
@@ -38,11 +38,17 @@ npm run build && rocrate-validator validate -p ro-crate-1.1 --no-paging ./crates
 - The build will warn if an icon is missing or if the dataset node cannot be found.
 - [`rocrate-validator`](https://pypi.org/project/rocrate-validator/) (Python) or any JSON-LD validator confirms structural correctness whenever you tweak schema-heavy sections.
 
+## Automatic catalog publication
+
+On every push to `main`, the Pages workflow runs the catalog tests and `npm run build`, then publishes `dist/`. The build discovers crates automatically and generates both the catalog entry and `/services/<slug>/` detail page. New service types appear in the filter without editing the frontend. Descriptions are summarized in the catalog and displayed in full on the detail page, which also includes the original RO-Crate JSON.
+
+Run `npm test` to verify catalog generation and filtering before opening a pull request.
+
 ## Keeping crates up to date
 
 - **Version updates:** Increment `datePublished`, and describe the change in the pull request.
 - **Deprecations:** Mention alternatives in the dataset `description` and note the status in the pull request if a service is being retired.
-- **Icon refresh:** Replace the PNG and ensure the aspect ratio stays square so cards render uniformly.
+- **Icon refresh:** Replace the PNG and ensure the aspect ratio stays square so catalog icons render uniformly.
 
 ## Troubleshooting
 
@@ -50,6 +56,6 @@ npm run build && rocrate-validator validate -p ro-crate-1.1 --no-paging ./crates
 | --- | --- |
 | Crate missing from the catalog | Check for JSON syntax errors or missing `./` dataset node. Run `npm run dev` and inspect the console warnings. |
 | Icon placeholder shows initials | Confirm the dataset `logo` reference points to `icon.png` and that the file exists. |
-| Filters misbehave | Ensure `serviceType` uses lowercase values that match the `<select>` options in `src/build.mjs`. |
+| Filters misbehave | Ensure `serviceType` uses lowercase strings or an array of strings. Filter options are generated automatically from all crates. |
 
 Once your crate passes these checks, open a pull request referencing the relevant issue.

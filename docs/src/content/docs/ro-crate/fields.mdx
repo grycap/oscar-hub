@@ -11,12 +11,12 @@ description: Field-by-field summary plus validation tools for OSCAR Hub RO-Crate
 | `@graph` | array | Container for every node. The dataset (`./`) plus all linked entities live here. |
 | `name` | string | Used across the UI anywhere the service name appears. Prefer `Title Case`. |
 | `description` | string | Plain text. Avoid Markdown or HTML. |
-| `serviceType` | string | Lowercase. Extend the UI options before adding new values. |
-| `URL` | string/URL | Destination for more information or the actual service entrypoint. |
+| `serviceType` | string/array | Lowercase execution types. The catalog derives filter options automatically from all crates. |
+| `url` / `URL` | string/URL | Destination for more information or the actual service entrypoint. |
 | `keywords` | array | Optional list of tags. Helps search filters and external catalogues. |
 | `license` | object/ref | Inline object or `@id` referencing a CreativeWork node. |
 | `author` | object/ref | Inline object or `@id` referencing a Person/Organization node. |
-| `memoryRequirements` | string | Mention GPU models, RAM, storage, or accelerator requirements. |
+| `memoryRequirements` | string/array | Mention GPU models, RAM, storage, or accelerator requirements. |
 | `processorRequirements` | array | List multiple CPU/GPU profiles when useful. |
 | `softwareRequirements` | array | Reference nodes that describe frameworks, models, or utilities. |
 | `datePublished` | string | ISO date. Keeps change history transparent. |
@@ -27,7 +27,7 @@ description: Field-by-field summary plus validation tools for OSCAR Hub RO-Crate
 
 1. **Schema linting:** Use `ajv` or another JSON schema validator against the RO-Crate 1.1 profile if you introduce new sections.
 2. **Build script warnings:** `npm run build` will surface missing dataset nodes, icons, or empty fields.
-3. **Visual QA:** Inspect `dist/index.html` and confirm your service card looks correct. Use the search/filter UI to verify metadata filters behave.
+3. **Visual QA:** Inspect `dist/index.html` and confirm your catalog entry and service detail page look correct. Use the search/filter UI to verify metadata filters behave.
 4. **`roc-validator` check:** Install the CLI once (`pip install roc-validator`) and run `rocrate-validator validate -p ro-crate-1.1 --verbose --no-paging ./crates/<service>` before opening a PR. This mirrors the GitHub Action enforced on every pull request.
 5. **Documentation parity:** Whenever you add a new required field, update the relevant doc page within this guide so future contributors stay aligned.
 
