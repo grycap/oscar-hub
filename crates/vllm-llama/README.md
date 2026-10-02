@@ -74,11 +74,6 @@ To deploy the service, you can use either [OSCAR CLI](https://github.com/grycap/
 oscar-cli apply fdl.yml
 ```
 
-The FDL now names the service `vllm-llama`. Applying it does not rename an existing
-`vllm-gpu-llama` deployment: the old service and route remain separate until you
-explicitly retire them. Update clients to the new `/system/services/vllm-llama/exposed`
-route when moving from the previous definition.
-
 ## 4. Access and test the service
 
 You can test your service in different ways:
