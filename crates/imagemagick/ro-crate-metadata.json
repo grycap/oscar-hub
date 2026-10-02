@@ -452,7 +452,7 @@
       "@id": "#command-template-sync-run",
       "@type": "PropertyValue",
       "propertyID": "commandTemplate",
-      "value": "oscar-cli service run imagemagick --input {input} --output {destination}"
+      "value": "oscar-cli service run imagemagick --file-input {input} --output {destination}"
     },
     {
       "@id": "#action-async-put",

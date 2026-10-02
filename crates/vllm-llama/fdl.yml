@@ -1,7 +1,7 @@
 functions:
   oscar:
   - oscar-cluster:
-      name: vllm-gpu-llama
+      name: vllm-llama
       cpu: '2.0'
       enable_gpu: true
       memory: 10Gi
@@ -9,7 +9,7 @@ functions:
       script: script.sh
       environment:
         variables:
-          OPENAI_BASE_URL: "/system/services/vllm-gpu-llama/exposed"
+          OPENAI_BASE_URL: "/system/services/vllm-llama/exposed"
           GPU_MEMORY_UTILIZATION: "0.5"
           MAX_MODEL_LEN: "1000"
         secrets:

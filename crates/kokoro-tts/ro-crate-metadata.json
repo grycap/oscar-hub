@@ -216,7 +216,7 @@
         "@id": "#entry-async-get"
       },
       "result": {
-        "@id": "#expected-json"
+        "@id": "#expected-audio"
       },
       "additionalProperty": [
         {

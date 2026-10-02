@@ -31,7 +31,7 @@
       "applicationCategory": "OSCAR-KServe Service",
       "memoryRequirements": [
         "1 GiB",
-        "1 kserve-GiB"
+        "2 kserve-GiB"
       ],
       "processorRequirements": [
         "1 vCPU",
@@ -231,7 +231,7 @@
       "@id": "#step-async-get",
       "@type": "HowToStep",
       "position": 3,
-      "text": "List and download the output files; confirm that the summary is non-empty and the annotated JPEG exists.",
+      "text": "Download the latest annotated JPEG; inspect the summary separately as documented in the README.",
       "potentialAction": {
         "@id": "#action-async-get"
       }
@@ -272,14 +272,9 @@
       "target": {
         "@id": "#entry-async-get"
       },
-      "result": [
-        {
-          "@id": "#expected-output-summary"
-        },
-        {
-          "@id": "#expected-output-image"
-        }
-      ],
+      "result": {
+        "@id": "#expected-output-image"
+      },
       "additionalProperty": [
         {
           "@id": "#command-template-async-get"

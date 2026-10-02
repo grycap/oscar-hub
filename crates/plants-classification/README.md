@@ -9,7 +9,7 @@ In order to invoke the function, first you have to create a service,
 either by the OSCAR UI or by using the FDL within the following command.
 
 ``` sh
-oscar-cli apply plants-classification.yaml
+oscar-cli apply fdl.yml
 ```
 
 Once the service is created you can make the invocation with the following

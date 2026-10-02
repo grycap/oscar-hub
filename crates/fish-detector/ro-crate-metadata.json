@@ -63,6 +63,9 @@
         },
         {
           "@id": "#expected-image"
+        },
+        {
+          "@id": "#expected-json"
         }
       ]
     },
@@ -107,7 +110,7 @@
       "@id": "#acceptance-test-async",
       "@type": "HowTo",
       "name": "Asynchronous Fish-Detector acceptance test",
-      "description": "Upload a sample image, wait for detection to complete remotely, then download the prediction artifacts and check the expected confirmation text.",
+      "description": "Upload a sample image, wait for detection to complete, then check the latest JSON output. Inspect the annotated JPEG separately.",
       "tool": [
         {
           "@id": "#tool-oscar-cli"
@@ -153,8 +156,15 @@
         "ImageObject"
       ],
       "name": "Expected detection output",
-      "description": "JPEG image produced by the service containing annotated detections and JSON file containing the detection results.",
+      "description": "JPEG image produced by the service containing annotated detections.",
       "encodingFormat": "image/jpeg"
+    },
+    {
+      "@id": "#expected-json",
+      "@type": "File",
+      "name": "Expected detection results",
+      "description": "The generated JSON contains an array of detections.",
+      "value": "["
     },
     {
       "@id": "#step-async-put",
@@ -176,7 +186,7 @@
       "@id": "#step-async-get",
       "@type": "HowToStep",
       "position": 3,
-      "text": "Download the latest output artifacts and confirm that it is the expected detection JPG and JSON.",
+      "text": "Download the latest output and check that it contains the JSON detection array.",
       "potentialAction": {
         "@id": "#action-async-get"
       }
@@ -218,7 +228,7 @@
         "@id": "#entry-async-get"
       },
       "result": {
-        "@id": "#expected-image"
+        "@id": "#expected-json"
       },
       "additionalProperty": [
         {
@@ -237,7 +247,7 @@
       "@id": "#command-template-async-get",
       "@type": "PropertyValue",
       "propertyID": "commandTemplate",
-      "value": "oscar-cli service get-file fish-detector --download-latest-into {destination}/input.jpg/"
+      "value": "oscar-cli service get-file fish-detector --download-latest-into {destination}"
     },
     {
       "@id": "#oscar-cli",

@@ -1,8 +1,6 @@
 #!/bin/sh
+set -e
 
-FILE_NAME=`basename "$INPUT_FILE_PATH"`
-OUTPUT_FILE="$TMP_OUTPUT_DIR/$FILE_NAME"
+mkdir -p "$TMP_OUTPUT_DIR"
 
-python3 fish_detector.py -i "$INPUT_FILE_PATH" -o "$OUTPUT_FILE"
-
-echo  $?
+python3 fish_detector.py -i "$INPUT_FILE_PATH" -o "$TMP_OUTPUT_DIR"

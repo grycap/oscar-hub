@@ -216,7 +216,7 @@
         "@id": "#entry-async-get"
       },
       "result": {
-        "@id": "#expected-txt"
+        "@id": "#expected-text"
       },
       "additionalProperty": [
         {

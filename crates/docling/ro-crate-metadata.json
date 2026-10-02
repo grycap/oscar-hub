@@ -313,7 +313,7 @@
       "@id": "#command-template-sync-run",
       "@type": "PropertyValue",
       "propertyID": "commandTemplate",
-      "value": "oscar-cli service run docling --input {input}"
+      "value": "oscar-cli service run docling --file-input {input}"
     },
     {
       "@id": "#action-async-put",

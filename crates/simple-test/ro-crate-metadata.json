@@ -31,7 +31,7 @@
       "applicationCategory": "OSCAR Service",
       "memoryRequirements": "128 MiB",
       "processorRequirements": [
-        "1 vCPU",
+        "0.2 vCPU",
         "0 GPU"
       ],
       "serviceType": [
@@ -237,7 +237,7 @@
       "@id": "#command-template-sync-run",
       "@type": "PropertyValue",
       "propertyID": "commandTemplate",
-      "value": "oscar-cli service run simple-test -i {input}"
+      "value": "oscar-cli service run simple-test --file-input {input}"
     },
     {
       "@id": "#action-async-put",
