@@ -2,7 +2,7 @@
 
 ![Original TopAnat enrichment icon: a stylized fin and gene-expression network](icon.png)
 
-This asynchronous OSCAR service uses [BgeeDB](https://bioconductor.org/packages/BgeeDB) (an R/Bioconductor package) and [topGO](https://bioconductor.org/packages/topGO) to run [TopAnat](https://www.bgee.org/analysis/top-anat/) ([official tutorial](https://www.bgee.org/support/tutorial-TopAnat)): enrichment of anatomical structures in which genes are expressed according to [Bgee](https://www.bgee.org/). It downloads reference annotations and expression calls from Bgee; it does **not** host the Bgee database. Outbound HTTPS access to Bgee is required.
+This synchronous and asynchronous OSCAR service uses [BgeeDB](https://bioconductor.org/packages/BgeeDB) (an R/Bioconductor package) and [topGO](https://bioconductor.org/packages/topGO) to run [TopAnat](https://www.bgee.org/analysis/top-anat/) ([official tutorial](https://www.bgee.org/support/tutorial-TopAnat)): enrichment of anatomical structures in which genes are expressed according to [Bgee](https://www.bgee.org/). It downloads reference annotations and expression calls from Bgee; it does **not** host the Bgee database. Outbound HTTPS access to Bgee is required.
 
 ## Container image and limitations
 
@@ -24,6 +24,14 @@ The [FDL](fdl.yml) requests 1 CPU and 1536 MiB of memory and uses the `minio.def
 
 The output TSV has `organId`, `organName`, `annotated`, `significant`, `expected`, `foldEnrichment`, `pValue` and `FDR` columns. The first row in this pinned example is the pectoral fin (`UBERON:0000151`), although exact values can change with upstream data or software revisions.
 
+For a synchronous invocation, the service returns the generated TSV directly. Use `--decode-output` to extract it from the response (which also includes logs); this example writes the TSV locally:
+
+```sh
+oscar-cli service run bgee-topanat --cluster <cluster> --file-input input.tsv --decode-output --output topanat-results.tsv
+```
+
+The reference-data download and analysis can take several minutes; the synchronous request must remain open until completion. Use the asynchronous input/output path if the client or ingress has a shorter timeout.
+
 ## Local execution and acceptance
 
 A direct Docker run uses the same OSCAR environment variables:
@@ -37,7 +45,7 @@ docker run --rm --platform linux/amd64 -i \
   /bin/sh < script.sh
 ```
 
-The [RO-Crate metadata](ro-crate-metadata.json) defines an asynchronous acceptance test. From this crate directory, inspect its planned commands and then run it against the same cluster:
+The [RO-Crate metadata](ro-crate-metadata.json) defines synchronous and asynchronous acceptance tests. From this crate directory, inspect their planned commands and then run them against the same cluster:
 
 ```sh
 oscar-cli hub validate bgee-topanat --local-path ../ --print-acceptance-commands
@@ -46,4 +54,4 @@ oscar-cli service logs list bgee-topanat --cluster <cluster>
 oscar-cli bucket get bgee-topanat --prefix output/ --cluster <cluster>
 ```
 
-The acceptance test checks for `pectoral fin` in the latest output. It waits a fixed four minutes, so it can fail if image pulling or job admission takes longer; it could also read an older output if the new job fails. Check the job associated with the new upload and the output object's modification time before treating a pass as end-to-end evidence. The [OSCAR asynchronous invocation guide](https://docs.oscar.grycap.net/latest/invoking-async/) explains the MinIO input/output flow.
+The synchronous acceptance test checks for `pectoral fin` in the decoded response. The asynchronous acceptance test checks for the same term in the latest output and waits a fixed four minutes, so it can fail if image pulling or job admission takes longer; it could also read an older output if the new job fails. Check the job associated with the new upload and the output object's modification time before treating an asynchronous pass as end-to-end evidence. The [OSCAR asynchronous invocation guide](https://docs.oscar.grycap.net/latest/invoking-async/) explains the MinIO input/output flow.

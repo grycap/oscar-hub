@@ -11,7 +11,7 @@
       "@id": "./",
       "@type": ["Dataset", "Service", "SoftwareApplication"],
       "name": "BgeeDB TopAnat anatomical enrichment",
-      "description": "Asynchronous OSCAR analysis of gene-list enrichment in anatomical structures, using BgeeDB, topGO, and the Bgee public data service.",
+      "description": "Synchronous and asynchronous OSCAR analysis of gene-list enrichment in anatomical structures, using BgeeDB, topGO, and the Bgee public data service.",
       "image": {"@id": "icon.png"},
       "license": {"@id": "https://www.gnu.org/licenses/gpl-3.0.html"},
       "url": "https://github.com/grycap/oscar-hub/tree/main/crates/bgee-topanat",
@@ -20,7 +20,7 @@
       "applicationCategory": "OSCAR Service",
       "memoryRequirements": "1536 MiB",
       "processorRequirements": ["1 vCPU", "0 GPU"],
-      "serviceType": ["asynchronous"],
+      "serviceType": ["asynchronous", "synchronous"],
       "keywords": ["Bgee", "BgeeDB", "TopAnat", "anatomical enrichment", "gene expression"],
       "isBasedOn": [{"@id": "https://github.com/BgeeDB/BgeeDB_R"}],
       "author": {"@id": "#author"},
@@ -31,7 +31,7 @@
         {"@id": "icon.png"},
         {"@id": "input.tsv"}
       ],
-      "subjectOf": [{"@id": "#acceptance-async"}]
+      "subjectOf": [{"@id": "#acceptance-async"}, {"@id": "#acceptance-sync"}]
     },
     {"@id": "fdl.yml", "@type": ["File", "SoftwareSourceCode"], "name": "OSCAR FDL", "encodingFormat": "text/yaml"},
     {"@id": "script.sh", "@type": ["File", "SoftwareSourceCode"], "name": "OSCAR entry script", "encodingFormat": "text/x-shellscript"},
@@ -53,6 +53,15 @@
       "supply": [{"@id": "#sample-input"}],
       "step": [{"@id": "#step-put"}, {"@id": "#step-wait"}, {"@id": "#step-get"}]
     },
+    {
+      "@id": "#acceptance-sync", "@type": "HowTo",
+      "name": "Synchronous zebrafish TopAnat acceptance test",
+      "description": "Invoke the service with the example gene list and check that the decoded TSV response contains the pectoral-fin anatomical term.",
+      "tool": [{"@id": "#tool-cli"}],
+      "supply": [{"@id": "#sample-input"}],
+      "step": [{"@id": "#step-run"}]
+    },
+    {"@id": "#step-run", "@type": "HowToStep", "position": 1, "text": "Invoke TopAnat synchronously with the example gene list.", "potentialAction": {"@id": "#action-run"}},
     {"@id": "#step-put", "@type": "HowToStep", "position": 1, "text": "Upload the gene list to the MinIO input path.", "potentialAction": {"@id": "#action-put"}},
     {"@id": "#step-wait", "@type": "HowToStep", "position": 2, "text": "Allow for image pulling, downloading Bgee reference data, and the enrichment computation.", "timeRequired": "PT240S"},
     {"@id": "#step-get", "@type": "HowToStep", "position": 3, "text": "Download the latest output TSV and check for pectoral fin.", "potentialAction": {"@id": "#action-get"}},
@@ -69,6 +78,14 @@
       "additionalProperty": [{"@id": "#template-get"}]
     },
     {"@id": "#entry-get", "@type": "EntryPoint", "actionApplication": {"@id": "#cli"}},
-    {"@id": "#template-get", "@type": "PropertyValue", "propertyID": "commandTemplate", "value": "oscar-cli service get-file bgee-topanat --download-latest-into {destination}"}
+    {"@id": "#template-get", "@type": "PropertyValue", "propertyID": "commandTemplate", "value": "oscar-cli service get-file bgee-topanat --download-latest-into {destination}"},
+    {
+      "@id": "#action-run", "@type": "ConsumeAction", "name": "service run",
+      "object": {"@id": "input.tsv"}, "target": {"@id": "#entry-run"},
+      "result": {"@id": "#expected-pectoral-fin"},
+      "additionalProperty": [{"@id": "#template-run"}]
+    },
+    {"@id": "#entry-run", "@type": "EntryPoint", "actionApplication": {"@id": "#cli"}},
+    {"@id": "#template-run", "@type": "PropertyValue", "propertyID": "commandTemplate", "value": "oscar-cli service run bgee-topanat --file-input {input} --decode-output"}
   ]
 }
