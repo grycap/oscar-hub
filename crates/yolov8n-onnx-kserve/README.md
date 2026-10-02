@@ -12,12 +12,16 @@ MinIO (input) → OSCAR service → script.sh → KServe (Triton + YOLOv8n ONNX)
 - `*_predictions_raw.json` – Raw KServe v2 response
 - `*_predictions_filtered.json` – Detections after confidence + NMS filtering
 - `*_predictions_summary.txt` – Human-readable detection summary
-- `*_annotated.jpg` – Input image with bounding boxes drawn
+- `*_annotated.jpg` – Input image with bounding boxes drawn (in `annotated/`)
 
 ## Prerequisites
 
 - OSCAR cluster with KServe installed
 - `oscar-cli` configured to point to the cluster or `https://dashboard.oscar.grycap.net`
+- An `oscar-cli` build using OSCAR API types that support
+  `kserve.inference.api_version`. A CLI built against OSCAR v4.1.2 uses the
+  older `kserve.api_version` field and silently drops the nested value,
+  causing this ONNX model to request protocol `v1` instead of `v2`.
 
 ### Enable KServe locally with kind
 
@@ -74,17 +78,19 @@ Wait a few seconds for the job to complete, then list and download the output fi
 
 ```bash
 oscar-cli service list-files yolov8n-onnx-kserve minio kserve-isvc-yolo8n-onnx/output
-oscar-cli service get-file yolov8n-onnx-kserve minio kserve-isvc-yolo8n-onnx/output/<filename> .
+oscar-cli service list-files yolov8n-onnx-kserve minio kserve-isvc-yolo8n-onnx/annotated
+oscar-cli service get-file yolov8n-onnx-kserve minio kserve-isvc-yolo8n-onnx/annotated/<filename> ./annotated.jpg
 ```
 
-Verify that the output contains a non-empty `*_predictions_summary.txt` file
-and an `*_annotated.jpg` image. You can also browse results through the
-Dashboard.
+Verify that `output/` contains a non-empty `*_predictions_summary.txt` and
+`annotated/` contains an `*_annotated.jpg` image. You can also browse results
+through the Dashboard.
 
-The Hub acceptance test downloads only the latest annotated JPEG. It does not
-check the summary: use `service list-files` and `service get-file` above to
-inspect the summary separately. `--download-latest-into` retrieves a single
-object, even when several output files are generated.
+The Hub acceptance test downloads the latest JPEG from the first configured
+output path (`annotated/`); JSON and summary files are filtered into `output/`
+instead. It does not check the summary: use `service list-files` and
+`service get-file` above to inspect it separately. `--download-latest-into`
+retrieves a single object.
 
 ## Building the Images
 
