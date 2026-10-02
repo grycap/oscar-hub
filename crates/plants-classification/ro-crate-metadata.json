@@ -148,7 +148,7 @@
       ],
       "supply": [
         {
-          "@id": "#supply-input-png"
+          "@id": "#supply-sample-image"
         }
       ],
       "step": [
@@ -202,7 +202,7 @@
       "@id": "#command-template-sync-run",
       "@type": "PropertyValue",
       "propertyID": "commandTemplate",
-      "value": "oscar-cli service run plants-classification -i {input}"
+      "value": "oscar-cli service run plants-classification --file-input {input}"
     },
     {
       "@id": "#step-async-put",

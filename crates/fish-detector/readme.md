@@ -6,9 +6,15 @@ This is a container that will run the [obsea-fish-detection](https://dashboard.c
 
 The fish-detector service processes individual images. When an image is uploaded to the service's input bucket, the inference model detects and classifies fishes, returning both a processed image with bounding boxes and a JSON file containing the detection results.
 
+The Hub acceptance test checks the latest JSON output for the sample `input.jpg`.
+To check both artifacts manually after the job completes, download
+`fish-detector/output/input.jpg` and `fish-detector/output/input.json` using
+`oscar-cli service get-file fish-detector minio <remote-path> <local-file>`.
+The CLI's `--download-latest-into` option retrieves only one object, not both.
+
 ## Build the image
 
-Build the image from the crate root so the Dockerfile can access the `docker/` directory:
+Build the image from the `docker/` directory, where the Dockerfile's source files and model are located:
 
 ```bash
 cd docker

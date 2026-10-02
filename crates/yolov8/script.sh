@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 IMAGE_NAME=$(basename "${INPUT_FILE_PATH%.*}")
 OUTPUT_FILE="$TMP_OUTPUT_DIR/output_$IMAGE_NAME.png"

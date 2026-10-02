@@ -69,7 +69,7 @@
       "additionalProperty": [{"@id": "#template-sync"}]
     },
     {"@id": "#entry-sync", "@type": "EntryPoint", "actionApplication": {"@id": "#oscar-cli"}},
-    {"@id": "#template-sync", "@type": "PropertyValue", "propertyID": "commandTemplate", "value": "oscar-cli service run phyto-plankton-classifier --input {input} --output {destination}"},
+    {"@id": "#template-sync", "@type": "PropertyValue", "propertyID": "commandTemplate", "value": "oscar-cli service run phyto-plankton-classifier --file-input {input} --output {destination}"},
     {
       "@id": "#action-put", "@type": "TransferAction", "name": "service put-file", "object": {"@id": "sample.jpg"},
       "target": {"@id": "#entry-put"}, "additionalProperty": [{"@id": "#template-put"}]

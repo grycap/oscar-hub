@@ -7,7 +7,7 @@ This crate deploys the `ai4oshub/posenet-tf` container as an OSCAR exposed servi
 - The container listens on port `5000`.
 - OSCAR runs the image default command (`deepaas-run`) because `expose.default_command` is enabled.
 - The proxied DEEPaaS health endpoint is `/system/services/posenet-tf/exposed/v2`.
-- The pod health probes run directly against `/v2` inside the container because `probe_mode: direct` is enabled.
+- The FDL specifies `/v2` as the health path; probe routing depends on OSCAR's default mode.
 - The proxied OpenAPI UI is `/system/services/posenet-tf/exposed/api`.
 
 ## Accessing the API

@@ -7,7 +7,7 @@ functions:
      image: ubuntu
      script: script.sh
      allowed_users: []
-     log_level: CRITICAL		
+     log_level: CRITICAL
      environment:
        variables:
          STRESS_DURATION_SECONDS: "10"

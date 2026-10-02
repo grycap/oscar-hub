@@ -8,7 +8,7 @@ functions:
       script: script.sh
       log_level: INFO
       environment:
-        Variables:
+        variables:
           EXAMPLE_ENV: example-value
       input:
       - storage_provider: your-storage-provider

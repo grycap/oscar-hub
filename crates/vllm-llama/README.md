@@ -32,13 +32,14 @@ The most important part of the service definition is its environment variables, 
 ```yaml
 ...
 environment:
-    Variables:
-        OPENAI_BASE_URL: "/system/services/vllm-gpu-llama/exposed"
-        API_KEY: "secretkey"
+    variables:
+        OPENAI_BASE_URL: "/system/services/vllm-llama/exposed"
         GPU_MEMORY_UTILIZATION: "0.5"
         MAX_MODEL_LEN: "1000"
 ...
 ```
+
+The API key is configured separately in `environment.secrets` in `fdl.yml`.
 
 As mentioned before, the environment variables will be used in the script as arguments to the command that launches the model.
 
@@ -49,7 +50,7 @@ python3 -m vllm.entrypoints.openai.api_server --root-path $OPENAI_BASE_URL --mod
 ...
 ```
 
-You can find the complete definition of the service and its script in `vllm_llama.yaml` and `script.sh`.
+You can find the complete definition of the service and its script in `fdl.yml` and `script.sh`.
 
 If you want to learn more about optimizing vLLM, check its documentation on [Optimization and Tuning](https://docs.vllm.ai/en/latest/performance/optimization.html).
 
@@ -58,7 +59,7 @@ If you want to learn more about optimizing vLLM, check its documentation on [Opt
 > - The `--enforce-eager` argument is also important, as it reduces memory usage.
 
 ## 3. Interact with the deployed service's API using Postman.
-To deploy the service, you can use [API](https://docs.oscar.grycap.net/latest/api) use file `vllm_llama.json`
+To deploy the service through the [OSCAR API](https://docs.oscar.grycap.net/latest/api), use the service definition in `fdl.yml` as a starting point for the request payload.
 OSCAR exposes a secure REST API available at the Kubernetes master's node IP through an Ingress Controller. This API has been described following the [OpenAPI Specification](https://www.openapis.org)
 > **Note**: 
 > - The bearer token used to run a service can be either the OSCAR service access token or the user's Access Token if the OSCAR cluster is integrated with EGI Check-in.
@@ -67,11 +68,16 @@ OSCAR exposes a secure REST API available at the Kubernetes master's node IP thr
 
 ## 4. Deploy the service with OSCAR CLI
 
-To deploy the service, you can use either [OSCAR CLI](https://github.com/grycap/oscar-cli) with the provided FDL file (`vllm_llama.yaml`) and script (`script.sh`), or the [Dashboard](https://dashboard.oscar.grycap.net/).
+To deploy the service, you can use either [OSCAR CLI](https://github.com/grycap/oscar-cli) with the provided FDL file (`fdl.yml`) and script (`script.sh`), or the [Dashboard](https://dashboard.oscar.grycap.net/).
 
 ```bash
-oscar-cli apply vllm_llama.yaml
+oscar-cli apply fdl.yml
 ```
+
+The FDL now names the service `vllm-llama`. Applying it does not rename an existing
+`vllm-gpu-llama` deployment: the old service and route remain separate until you
+explicitly retire them. Update clients to the new `/system/services/vllm-llama/exposed`
+route when moving from the previous definition.
 
 ## 4. Access and test the service
 
@@ -82,7 +88,7 @@ You can test your service in different ways:
 1. Open a terminal and try:
 
     ```bash
-    curl -X POST "https://<YOUR_CLUSTER>/system/services/vllm-gpu-llama/exposed/v1/chat/completions" \
+    curl -X POST "https://<YOUR_CLUSTER>/system/services/vllm-llama/exposed/v1/chat/completions" \
     -H "Content-Type: application/json" \
     -H "Authorization: Bearer secretkey" \
     --data '{
@@ -105,7 +111,7 @@ You can test your service in different ways:
 
 > **Warning**: You can't use this method if you have specified `$API_KEY`.
 
-1. Go to `https://<YOUR_CLUSTER>/system/services/vllm-gpu-llama/exposed/docs`
+1. Go to `https://<YOUR_CLUSTER>/system/services/vllm-llama/exposed/docs`
 
 2. Find the `POST /v1/chat/completions`
 

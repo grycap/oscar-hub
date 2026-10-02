@@ -249,7 +249,7 @@
       "@id": "#command-template-sync-run",
       "@type": "PropertyValue",
       "propertyID": "commandTemplate",
-      "value": "oscar-cli service run stress-test -i {input}"
+      "value": "oscar-cli service run stress-test --file-input {input}"
     },
     {
       "@id": "#action-async-put",

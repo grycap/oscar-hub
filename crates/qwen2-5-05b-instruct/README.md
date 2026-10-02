@@ -48,6 +48,8 @@ The service name in this example is `qwen2-5-05b-instruct`.
 
 Once the service is ready, the model will be exposed on `https://<YOUR_CLUSTER>/system/services/<SERVICE_NAME>/models` and you can test your service in different ways:
 
+This is currently a manual smoke test: `oscar-cli hub validate` cannot exercise the KServe `/models` route (its HTTP acceptance action targets `/exposed`), so this crate does not declare an automated RO-Crate acceptance test. Check the response status and that `choices` contains a generated message before treating deployment as validated.
+
 ### Direct request with `curl`
 
 1. Open a terminal and try:

@@ -81,6 +81,11 @@ Verify that the output contains a non-empty `*_predictions_summary.txt` file
 and an `*_annotated.jpg` image. You can also browse results through the
 Dashboard.
 
+The Hub acceptance test downloads only the latest annotated JPEG. It does not
+check the summary: use `service list-files` and `service get-file` above to
+inspect the summary separately. `--download-latest-into` retrieves a single
+object, even when several output files are generated.
+
 ## Building the Images
 
 **Model image** (contains the ONNX file, served at startup):

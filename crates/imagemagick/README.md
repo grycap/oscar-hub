@@ -95,7 +95,7 @@ oscar-cli service get-file imagemagick --download-latest-into ./output
 Example synchronous invocation:
 
 ```bash
-oscar-cli service run imagemagick --input ./crates/imagemagick/input.png --output ./result.zip
+oscar-cli service run imagemagick --file-input ./crates/imagemagick/input.png --output ./result.zip
 ```
 
 Because the script generates three output files, synchronous execution returns a ZIP archive containing `*_gray.png`, `*_edges.png`, and `*_metrics.json`.

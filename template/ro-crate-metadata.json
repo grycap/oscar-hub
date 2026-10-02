@@ -28,7 +28,7 @@
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
       "applicationCategory": "OSCAR Service",
-      "memoryRequirements": "2 GiB",
+      "memoryRequirements": "1 GiB",
       "processorRequirements": [
         "1 vCPU",
         "0 GPU"
@@ -253,7 +253,7 @@
       "@id": "#command-template-sync-run",
       "@type": "PropertyValue",
       "propertyID": "commandTemplate",
-      "value": "oscar-cli service run your-service-id -i {input}"
+      "value": "oscar-cli service run your-service-name --file-input {input}"
     },
     {
       "@id": "#action-async-put",
@@ -282,7 +282,7 @@
       "@id": "#command-template-async-put",
       "@type": "PropertyValue",
       "propertyID": "commandTemplate",
-      "value": "oscar-cli service put-file your-service-id {source}"
+      "value": "oscar-cli service put-file your-service-name {source}"
     },
     {
       "@id": "#action-async-get",
@@ -311,7 +311,7 @@
       "@id": "#command-template-async-get",
       "@type": "PropertyValue",
       "propertyID": "commandTemplate",
-      "value": "oscar-cli service get-file your-service-id --download-latest-into {destination}"
+      "value": "oscar-cli service get-file your-service-name --download-latest-into {destination}"
     },
     {
       "@id": "https://orcid.org/0000-0000-0000-0000",

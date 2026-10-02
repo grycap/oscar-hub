@@ -8,7 +8,7 @@ functions:
      script: script.sh
      vo: vo.imagine-ai.eu
      allowed_users: []
-     log_level: CRITICAL		
+     log_level: CRITICAL
      input:
      - storage_provider: minio.default
        path: yolov8/input

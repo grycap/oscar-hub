@@ -27,7 +27,7 @@ To deploy this service through
 this folder and run:
 
 ```sh
-oscar-cli apply cowsay.yaml
+oscar-cli apply fdl.yml
 ```
 
 It can also be deployed through the OSCAR's web interface using the container

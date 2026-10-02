@@ -8,5 +8,5 @@ functions:
       script: script.sh
       log_level: CRITICAL   # To avoid supervisor logs in response
       environment:
-        Variables:
+        variables:
           INPUT_TYPE: json  # Comment to set input string encoded in base64
