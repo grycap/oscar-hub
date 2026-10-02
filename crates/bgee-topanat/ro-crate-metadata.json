@@ -1,0 +1,74 @@
+{
+  "@context": ["https://w3id.org/ro/crate/1.2/context"],
+  "@graph": [
+    {
+      "@id": "ro-crate-metadata.json",
+      "@type": "CreativeWork",
+      "conformsTo": {"@id": "https://w3id.org/ro/crate/1.2"},
+      "about": {"@id": "./"}
+    },
+    {
+      "@id": "./",
+      "@type": ["Dataset", "Service", "SoftwareApplication"],
+      "name": "BgeeDB TopAnat anatomical enrichment",
+      "description": "Asynchronous OSCAR analysis of gene-list enrichment in anatomical structures, using BgeeDB, topGO, and the Bgee public data service.",
+      "image": {"@id": "icon.png"},
+      "license": {"@id": "https://www.gnu.org/licenses/gpl-3.0.html"},
+      "url": "https://github.com/grycap/oscar-hub/tree/main/crates/bgee-topanat",
+      "datePublished": "2026-10-02",
+      "version": "0.1.0",
+      "applicationCategory": "OSCAR Service",
+      "memoryRequirements": "1536 MiB",
+      "processorRequirements": ["1 vCPU", "0 GPU"],
+      "serviceType": ["asynchronous"],
+      "keywords": ["Bgee", "BgeeDB", "TopAnat", "anatomical enrichment", "gene expression"],
+      "isBasedOn": [{"@id": "https://github.com/BgeeDB/BgeeDB_R"}],
+      "author": {"@id": "#author"},
+      "hasPart": [
+        {"@id": "fdl.yml"},
+        {"@id": "script.sh"},
+        {"@id": "README.md"},
+        {"@id": "icon.png"},
+        {"@id": "input.tsv"}
+      ],
+      "subjectOf": [{"@id": "#acceptance-async"}]
+    },
+    {"@id": "fdl.yml", "@type": ["File", "SoftwareSourceCode"], "name": "OSCAR FDL", "encodingFormat": "text/yaml"},
+    {"@id": "script.sh", "@type": ["File", "SoftwareSourceCode"], "name": "OSCAR entry script", "encodingFormat": "text/x-shellscript"},
+    {"@id": "README.md", "@type": ["File", "TextDigitalDocument"], "name": "Deployment and analysis guide", "encodingFormat": "text/markdown"},
+    {"@id": "icon.png", "@type": ["File", "ImageObject"], "name": "TopAnat enrichment icon", "description": "Original stylized fin and gene-expression network representing anatomical enrichment; not an official Bgee logo.", "encodingFormat": "image/png"},
+    {"@id": "input.tsv", "@type": ["File", "TextDigitalDocument"], "name": "Zebrafish pectoral-fin gene list", "encodingFormat": "text/tab-separated-values", "isBasedOn": {"@id": "https://github.com/BgeeDB/BgeeDB_R/blob/a4605555db4eab28a30ab5a506b9ab2aaa8155ef/data/geneList.RData"}},
+    {"@id": "https://www.gnu.org/licenses/gpl-3.0.html", "@type": "CreativeWork", "name": "GNU General Public License v3.0"},
+    {"@id": "#author", "@type": "Organization", "name": "GRyCAP - Universitat Politècnica de València", "url": "https://www.grycap.upv.es/"},
+    {"@id": "https://github.com/BgeeDB/BgeeDB_R", "@type": "SoftwareApplication", "name": "BgeeDB", "version": "2.34.0", "url": "https://bioconductor.org/packages/BgeeDB"},
+    {"@id": "#cli", "@type": "SoftwareApplication", "name": "OSCAR CLI", "version": "v2.1.0", "url": "https://github.com/grycap/oscar-cli"},
+    {"@id": "#tool-cli", "@type": "HowToTool", "name": "OSCAR CLI", "item": {"@id": "#cli"}},
+    {"@id": "#sample-input", "@type": "HowToSupply", "name": "Example gene list", "item": {"@id": "input.tsv"}},
+    {"@id": "#expected-pectoral-fin", "@type": "PropertyValue", "name": "Expected anatomical term", "value": "pectoral fin"},
+    {
+      "@id": "#acceptance-async", "@type": "HowTo",
+      "name": "Asynchronous zebrafish TopAnat acceptance test",
+      "description": "Upload the example gene list, wait for completion, and verify that the generated TSV contains the pectoral-fin anatomical term.",
+      "tool": [{"@id": "#tool-cli"}],
+      "supply": [{"@id": "#sample-input"}],
+      "step": [{"@id": "#step-put"}, {"@id": "#step-wait"}, {"@id": "#step-get"}]
+    },
+    {"@id": "#step-put", "@type": "HowToStep", "position": 1, "text": "Upload the gene list to the MinIO input path.", "potentialAction": {"@id": "#action-put"}},
+    {"@id": "#step-wait", "@type": "HowToStep", "position": 2, "text": "Allow for image pulling, downloading Bgee reference data, and the enrichment computation.", "timeRequired": "PT240S"},
+    {"@id": "#step-get", "@type": "HowToStep", "position": 3, "text": "Download the latest output TSV and check for pectoral fin.", "potentialAction": {"@id": "#action-get"}},
+    {
+      "@id": "#action-put", "@type": "TransferAction", "name": "service put-file",
+      "object": {"@id": "input.tsv"}, "target": {"@id": "#entry-put"},
+      "additionalProperty": [{"@id": "#template-put"}]
+    },
+    {"@id": "#entry-put", "@type": "EntryPoint", "actionApplication": {"@id": "#cli"}},
+    {"@id": "#template-put", "@type": "PropertyValue", "propertyID": "commandTemplate", "value": "oscar-cli service put-file bgee-topanat {source}"},
+    {
+      "@id": "#action-get", "@type": "TransferAction", "name": "service get-file",
+      "target": {"@id": "#entry-get"}, "result": {"@id": "#expected-pectoral-fin"},
+      "additionalProperty": [{"@id": "#template-get"}]
+    },
+    {"@id": "#entry-get", "@type": "EntryPoint", "actionApplication": {"@id": "#cli"}},
+    {"@id": "#template-get", "@type": "PropertyValue", "propertyID": "commandTemplate", "value": "oscar-cli service get-file bgee-topanat --download-latest-into {destination}"}
+  ]
+}

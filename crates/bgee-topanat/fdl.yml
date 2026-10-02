@@ -1,0 +1,15 @@
+functions:
+  oscar:
+  - oscar-cluster:
+      name: bgee-topanat
+      memory: 1536Mi
+      cpu: '1.0'
+      image: bgeedb/bgee_r@sha256:64c961e5953ec47194e9cec25e90091deb4091e15e66683e6d2f47063c6f2cca
+      script: script.sh
+      log_level: CRITICAL
+      input:
+      - storage_provider: minio.default
+        path: bgee-topanat/input
+      output:
+      - storage_provider: minio.default
+        path: bgee-topanat/output
