@@ -1,20 +1,22 @@
 # PoseNet TF on OSCAR
 
-This crate deploys the `ai4oshub/posenet-tf` container as an OSCAR exposed service and forwards the DEEPaaS API through the OSCAR ingress.
+This crate deploys the `ai4oshub/posenet-tf` container as an OSCAR exposed service and forwards the DEEPaaS API through the OSCAR gateway.
 
 ## Runtime behavior
 
 - The container listens on port `5000`.
 - OSCAR runs the image default command (`deepaas-run`) because `expose.default_command` is enabled.
-- The proxied DEEPaaS health endpoint is `/system/services/posenet-tf/exposed/v2`.
-- The FDL specifies `/v2` as the health path; probe routing depends on OSCAR's default mode.
-- The proxied OpenAPI UI is `/system/services/posenet-tf/exposed/api`.
+- With subdomain routing, the DEEPaaS health endpoint is `https://posenet-tf.<cluster-host>/v2`.
+- The FDL specifies `/v2` as the health path.
+- The OpenAPI UI is at `https://posenet-tf.<cluster-host>/api`.
 
 ## Accessing the API
 
 After deploying the service, open:
 
-`https://<oscar-endpoint>/system/services/posenet-tf/exposed/api`
+`https://posenet-tf.<cluster-host>/api`
+
+For example, with the OSCAR API at `https://localhost.direct`, the UI is at `https://posenet-tf.localhost.direct/api`. The acceptance test sends the sample image to `/v2/models/posenetclas/predict/` on that same service host. On older clusters using path-based routing, use `https://<cluster-host>/system/services/posenet-tf/exposed/api` instead.
 
 This service enables `set_auth: true`, so use the service name as the username and the OSCAR service token as the password when prompted.
 
