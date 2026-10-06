@@ -30,11 +30,11 @@
       "version": "0.1.0",
       "applicationCategory": "OSCAR-KServe Service",
       "memoryRequirements": [
-        "256 MiB",
+        "0 GiB",
         "6 kserve-GiB"
       ],
       "processorRequirements": [
-        "0.2 vCPU",
+        "0 vCPU",
         "2 kserve-vCPU"
       ],
       "serviceType": [
