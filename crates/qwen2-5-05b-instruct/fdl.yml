@@ -13,6 +13,8 @@ functions:
         args:
           - --dtype=auto
           - --enforce-eager
+          - --enable-auto-tool-choice
+          - --tool-call-parser=hermes
         env:
           VLLM_CPU_KVCACHE_SPACE: "1"
       log_level: CRITICAL
