@@ -1,0 +1,29 @@
+functions:
+  oscar:
+  - oscar-cluster:
+      name: open-webui
+      image: ghcr.io/open-webui/open-webui:v0.12.2-slim
+      script: script.sh
+      cpu: '1.0'
+      memory: 2Gi
+      log_level: INFO
+      environment:
+        variables:
+          WEBUI_AUTH: 'True'
+          ENABLE_SIGNUP: 'False'
+          ENABLE_OLLAMA_API: 'False'
+          WEBUI_SECRET_KEY_FILE: /app/backend/data/.webui_secret_key
+      volume:
+        size: 1Gi
+        mount_path: /app/backend/data
+        lifecycle_policy: retain
+      expose:
+        min_scale: 1
+        max_scale: 1
+        api_port: [8080]
+        cpu_threshold: 90
+        rewrite_target: true
+        default_command: true
+        set_auth: false
+        health_path: /health
+        probe_mode: direct
