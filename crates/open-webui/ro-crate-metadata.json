@@ -1,0 +1,76 @@
+{
+  "@context": ["https://w3id.org/ro/crate/1.2/context"],
+  "@graph": [
+    {
+      "@id": "ro-crate-metadata.json",
+      "@type": "CreativeWork",
+      "conformsTo": {"@id": "https://w3id.org/ro/crate/1.2"},
+      "about": {"@id": "./"}
+    },
+    {
+      "@id": "./",
+      "@type": ["Dataset", "Service", "SoftwareApplication"],
+      "name": "Open WebUI",
+      "description": "Persistent OSCAR-exposed Open WebUI frontend for externally hosted or OSCAR-hosted OpenAI-compatible language models. Connect a model through Open WebUI's administrator settings; the crate does not deploy one.",
+      "url": "https://github.com/grycap/oscar-hub/tree/main/crates/open-webui",
+      "datePublished": "2026-10-15",
+      "version": "1.0.0",
+      "license": {"@id": "https://www.apache.org/licenses/LICENSE-2.0"},
+      "applicationCategory": "OSCAR Service",
+      "serviceType": "exposed",
+      "memoryRequirements": "2 GiB",
+      "processorRequirements": ["1 vCPU", "0 GPU"],
+      "keywords": ["Open WebUI", "chat", "OpenAI-compatible", "LLM"],
+      "logo": {"@id": "icon.png"},
+      "isBasedOn": {"@id": "https://github.com/open-webui/open-webui"},
+      "author": {"@id": "#author"},
+      "hasPart": [{"@id": "fdl.yml"}, {"@id": "script.sh"}, {"@id": "README.md"}, {"@id": "icon.png"}]
+    },
+    {
+      "@id": "fdl.yml",
+      "@type": ["File", "SoftwareSourceCode"],
+      "name": "OSCAR service definition",
+      "encodingFormat": "text/yaml"
+    },
+    {
+      "@id": "script.sh",
+      "@type": ["File", "SoftwareSourceCode"],
+      "name": "OSCAR script placeholder (container default command)",
+      "encodingFormat": "text/x-shellscript"
+    },
+    {
+      "@id": "README.md",
+      "@type": ["File", "TextDigitalDocument"],
+      "name": "Deployment and model connection guide",
+      "encodingFormat": "text/markdown"
+    },
+    {
+      "@id": "icon.png",
+      "@type": ["File", "ImageObject"],
+      "name": "Open WebUI service icon",
+      "description": "Official Open WebUI icon, used unmodified to identify the upstream application.",
+      "encodingFormat": "image/png"
+    },
+    {
+      "@id": "#author",
+      "@type": "Organization",
+      "name": "GRyCAP-UPV",
+      "url": "https://www.grycap.upv.es/"
+    },
+    {
+      "@id": "https://www.apache.org/licenses/LICENSE-2.0",
+      "@type": "CreativeWork",
+      "name": "Apache License 2.0",
+      "identifier": "SPDX:Apache-2.0"
+    },
+    {
+      "@id": "https://github.com/open-webui/open-webui",
+      "@type": "SoftwareApplication",
+      "name": "Open WebUI",
+      "description": "Open-source web interface for AI models.",
+      "version": "v0.12.2",
+      "url": "https://github.com/open-webui/open-webui",
+      "license": {"@id": "https://github.com/open-webui/open-webui/blob/main/LICENSE"}
+    }
+  ]
+}
