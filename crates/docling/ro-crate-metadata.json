@@ -23,11 +23,11 @@
       "datePublished": "2026-09-09",
       "url": "https://github.com/grycap/oscar-hub/tree/main/crates/docling",
       "name": "Docling Markdown Service",
-      "description": "OSCAR service that converts documents to Markdown with Docling's standard local pipeline. It supports synchronous invocations and asynchronous MinIO-backed processing.",
+      "description": "OSCAR service that converts documents to Markdown with Docling's standard local pipeline. It supports synchronous and asynchronous processing of documents or ZIP archives. Synchronous ZIP results are returned as a ZIP of Markdown files; asynchronous ZIP results are stored as individual Markdown files under an output folder named after the input archive without its extension.",
       "license": {
         "@id": "https://opensource.org/license/mit"
       },
-      "version": "0.1.0",
+      "version": "0.2.0",
       "applicationCategory": "OSCAR Service",
       "memoryRequirements": "4 GiB",
       "processorRequirements": [
