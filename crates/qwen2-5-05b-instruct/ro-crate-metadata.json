@@ -28,14 +28,12 @@
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
       "version": "0.1.0",
-      "applicationCategory": "OSCAR-KServe Service",
+      "applicationCategory": "OSCAR-ModelSrving Service",
       "memoryRequirements": [
-        "0 GiB",
-        "6 kserve-GiB"
+        "6 GiB"
       ],
       "processorRequirements": [
-        "0 vCPU",
-        "2 kserve-vCPU"
+        "2 vCPU"
       ],
       "serviceType": [
         "exposed",
