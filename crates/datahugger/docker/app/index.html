@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>DataHugger · OSCAR</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+      <a class="brand" href="https://github.com/grycap/datahugger" target="_blank" rel="noopener noreferrer" aria-label="DataHugger on GitHub (opens in a new tab)">
+        <img src="icon.png" alt="DataHugger logo" width="96" height="96">
+        <span><strong>DataHugger</strong><small>on OSCAR</small></span>
+        <span class="external" aria-hidden="true">↗</span>
+      </a>
+    </header>
+
+    <main>
+      <section class="intro" aria-labelledby="page-title">
+        <div class="intro-copy">
+          <span class="eyebrow">DATASET IMPORT</span>
+          <h1 id="page-title">From DOI to your workspace.</h1>
+        </div>
+      </section>
+
+      <section class="card import-card" aria-labelledby="import-title">
+        <div class="section-head"><div><span class="section-number">01 / IMPORT</span><h2 id="import-title">Download a dataset</h2></div><span class="section-hint">One download at a time</span></div>
+        <form method="post" action="download">
+          <label for="doi">Dataset DOI</label>
+          <div class="form-row">
+            <input id="doi" name="doi" type="text" required maxlength="255" placeholder="10.5061/dryad.mj8m0" autocomplete="off" spellcheck="false" aria-describedby="doi-help">
+            <button type="submit">Start download <span aria-hidden="true">→</span></button>
+          </div>
+          <input type="hidden" name="csrf" value="__CSRF_TOKEN__">
+          <p class="field-help" id="doi-help">Paste a DOI or a https://doi.org/ link. Files are saved to a new folder.</p>
+        </form>
+      </section>
+
+      <section class="card downloads-card" aria-labelledby="downloads-title">
+        <div class="section-head"><div><span class="section-number">02 / ACTIVITY</span><h2 id="downloads-title">Recent downloads</h2></div><span class="refresh-hint">Refreshes automatically</span></div>
+        <span class="scroll-hint">Swipe sideways to see all columns →</span>
+        <div class="table-scroll" role="region" aria-label="Recent downloads table" tabindex="0">
+          <table>
+            <thead><tr><th scope="col">DOI</th><th scope="col">Status</th><th scope="col">Files</th><th scope="col">Size</th><th scope="col">Destination folder</th></tr></thead>
+            <tbody id="downloads"><tr><td colspan="5" class="empty">Loading downloads…</td></tr></tbody>
+          </table>
+        </div>
+        <p id="activity-note" class="activity-note" role="status" aria-live="polite">Only completed downloads have a <code>.datahugger-complete.json</code> marker. Incomplete files are not removed automatically.</p>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
