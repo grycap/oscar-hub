@@ -1,0 +1,28 @@
+functions:
+  oscar:
+  - oscar-cluster:
+      name: datahugger
+      image: ghcr.io/grycap/oscar-datahugger:0.1.0
+      script: script.sh
+      cpu: '1.0'
+      memory: 1Gi
+      environment:
+        variables:
+          DATAHUGGER_DATA_DIR: /mnt/datahugger
+          DATAHUGGER_MAX_FILES: '100'
+          DATAHUGGER_MAX_BYTES: '2147483648'
+          DATAHUGGER_MAX_FILE_BYTES: '1073741824'
+          DATAHUGGER_TIMEOUT_SECONDS: '3600'
+      # The bucket must already exist; OSCAR mounts it at /mnt/<bucket>.
+      mount:
+        storage_provider: minio.default
+        path: datahugger
+      expose:
+        min_scale: 1
+        max_scale: 1
+        api_port: [8080]
+        cpu_threshold: 90
+        default_command: true
+        set_auth: true
+        auth_type: forward
+        health_path: /health
