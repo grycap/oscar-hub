@@ -2,7 +2,7 @@ functions:
   oscar:
   - oscar-cluster:
       name: datahugger
-      image: ghcr.io/grycap/oscar-datahugger:0.1.0
+      image: ghcr.io/grycap/oscar-datahugger:0.2.0
       script: script.sh
       cpu: '1.0'
       memory: 1Gi
