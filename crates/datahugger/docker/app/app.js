@@ -73,3 +73,103 @@ async function refresh() {
 
 refresh();
 setInterval(refresh, 3000);
+
+const doiInput = document.getElementById('doi');
+const filterInput = document.getElementById('filter');
+const csrfInput = document.querySelector('input[name="csrf"]');
+const browse = document.getElementById('browse');
+const picker = document.getElementById('file-picker');
+const fileList = document.getElementById('file-list');
+const selectAll = document.getElementById('select-all');
+const summary = document.getElementById('picker-summary');
+const pickerError = document.getElementById('picker-error');
+
+const escapeRegex = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+const checkboxes = () => [...fileList.querySelectorAll('input[type="checkbox"]')];
+
+function showPickerError(message) {
+  pickerError.textContent = message;
+  pickerError.hidden = !message;
+}
+
+// The worker matches names with re.match, so anchor each selected path exactly.
+function syncFilter() {
+  const boxes = checkboxes();
+  const selected = boxes.filter((box) => box.checked).map((box) => box.value);
+  selectAll.checked = boxes.length > 0 && selected.length === boxes.length;
+  selectAll.indeterminate = selected.length > 0 && selected.length < boxes.length;
+  summary.textContent = `${selected.length} of ${boxes.length} selected`;
+  showPickerError('');
+  if (selected.length === boxes.length) {
+    filterInput.value = '';
+  } else if (!selected.length) {
+    filterInput.value = '^$';
+  } else {
+    const pattern = `^(?:${selected.map(escapeRegex).join('|')})$`;
+    if (pattern.length > filterInput.maxLength) {
+      showPickerError('Too many files selected for the filter. Select fewer files.');
+      return;
+    }
+    filterInput.value = pattern;
+  }
+}
+
+function renderFiles(data) {
+  const fragment = document.createDocumentFragment();
+  for (const file of data.files) {
+    const item = document.createElement('li');
+    const label = document.createElement('label');
+    const box = document.createElement('input');
+    box.type = 'checkbox';
+    box.value = file.name;
+    box.checked = true;
+    const name = document.createElement('span');
+    name.className = 'file-name';
+    name.textContent = file.name;
+    const size = document.createElement('span');
+    size.className = 'file-size';
+    size.textContent = sizeLabel(file.size);
+    label.append(box, name, size);
+    item.append(label);
+    fragment.append(item);
+  }
+  fileList.replaceChildren(fragment);
+  picker.hidden = false;
+  syncFilter();
+  if (data.truncated) showPickerError('Only the first files are shown. Use the filter field for the rest.');
+}
+
+browse.addEventListener('click', async () => {
+  if (!doiInput.value.trim()) {
+    doiInput.focus();
+    showPickerError('Enter a DOI first.');
+    return;
+  }
+  browse.disabled = true;
+  browse.textContent = 'Loading…';
+  showPickerError('');
+  try {
+    const response = await fetch('files', {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      body: new URLSearchParams({doi: doiInput.value, csrf: csrfInput.value}),
+    });
+    if (!response.ok) throw new Error((await response.text()) || 'Unable to list files');
+    const data = await response.json();
+    if (!Array.isArray(data.files) || !data.files.length) throw new Error('The dataset has no files.');
+    renderFiles(data);
+  } catch (error) {
+    picker.hidden = true;
+    showPickerError(error.message || 'Unable to list files');
+  } finally {
+    browse.disabled = false;
+    browse.textContent = 'Browse files';
+  }
+});
+
+fileList.addEventListener('change', syncFilter);
+selectAll.addEventListener('change', () => {
+  checkboxes().forEach((box) => { box.checked = selectAll.checked; });
+  syncFilter();
+});

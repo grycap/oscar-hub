@@ -20,7 +20,10 @@ DATA_DIR = os.environ.get("DATAHUGGER_DATA_DIR", "/mnt/datahugger-datasets")
 MAX_FILES = int(os.environ.get("DATAHUGGER_MAX_FILES", "100"))
 MAX_BYTES = int(os.environ.get("DATAHUGGER_MAX_BYTES", str(2 * 1024**3)))
 MAX_FILE_BYTES = int(os.environ.get("DATAHUGGER_MAX_FILE_BYTES", str(1024**3)))
+LIST_TIMEOUT = int(os.environ.get("DATAHUGGER_LIST_TIMEOUT_SECONDS", "120"))
+LIST_LOCK = threading.Lock()
 TIMEOUT = int(os.environ.get("DATAHUGGER_TIMEOUT_SECONDS", "3600"))
+MAX_FORM_BYTES = 16384
 PORT = int(os.environ.get("PORT", "8080"))
 STATIC_DIR = Path(__file__).parent
 CONTENT_SECURITY_POLICY = "default-src 'none'; img-src 'self'; style-src 'self'; script-src 'self'; connect-src 'self'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'"
@@ -55,6 +58,17 @@ def run_download(doi, filter, job_id):
             if entry["job"] == job_id:
                 entry.update(result)
                 break
+
+
+def run_listing(doi):
+    proc = subprocess.run(
+        [sys.executable, str(Path(__file__).with_name("worker.py")), "list", doi],
+        capture_output=True, text=True, timeout=LIST_TIMEOUT, check=False,
+    )
+    payload = json.loads(proc.stdout)
+    if proc.returncode:
+        raise ValueError(payload.get("error", "Unable to list files"))
+    return payload
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -109,22 +123,19 @@ class Handler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(raw)
 
-    def do_POST(self):
-        global STATUS
-        if urlsplit(self.path).path != "/download":
-            self.respond(404, "Not found", "text/plain")
-            return
+    def read_form(self):
+        """Return validated form fields, or None after sending an error response."""
         try:
             length = int(self.headers.get("Content-Length", "0"))
         except ValueError:
             length = 0
-        if not 0 < length <= 4096 or self.headers.get("Content-Type", "").split(";")[0] != "application/x-www-form-urlencoded":
+        if not 0 < length <= MAX_FORM_BYTES or self.headers.get("Content-Type", "").split(";")[0] != "application/x-www-form-urlencoded":
             self.respond(400, "Invalid form", "text/plain")
-            return
+            return None
         origin = self.headers.get("Origin")
         if origin and urlsplit(origin).netloc != self.headers.get("Host"):
             self.respond(403, "Invalid origin", "text/plain")
-            return
+            return None
         cookie = cookies.SimpleCookie()
         try:
             cookie.load(self.headers.get("Cookie", ""))
@@ -133,10 +144,40 @@ class Handler(BaseHTTPRequestHandler):
             stored = cookie["dh_csrf"].value if "dh_csrf" in cookie else ""
             if not (hmac.compare_digest(CSRF, supplied) and hmac.compare_digest(CSRF, stored)):
                 raise ValueError("Invalid form token")
-            doi = validate_doi(fields.get("doi", [""])[0])
-            filter = validate_filter(fields.get("filter", [""])[0])
         except (KeyError, UnicodeError, ValueError) as exc:
             self.respond(400, str(exc), "text/plain; charset=utf-8")
+            return None
+        return fields
+
+    def do_POST(self):
+        global STATUS
+        path = urlsplit(self.path).path
+        if path not in ("/download", "/files"):
+            self.respond(404, "Not found", "text/plain")
+            return
+        fields = self.read_form()
+        if fields is None:
+            return
+        try:
+            doi = validate_doi(fields.get("doi", [""])[0])
+            filter = validate_filter(fields.get("filter", [""])[0]) if path == "/download" else ""
+        except ValueError as exc:
+            self.respond(400, str(exc), "text/plain; charset=utf-8")
+            return
+        if path == "/files":
+            if not LIST_LOCK.acquire(blocking=False):
+                self.respond(409, "Another file listing is in progress", "text/plain")
+                return
+            try:
+                self.respond(200, json.dumps(run_listing(doi)), "application/json")
+            except subprocess.TimeoutExpired:
+                self.respond(504, "Listing the dataset timed out", "text/plain")
+            except ValueError as exc:
+                self.respond(502, str(exc), "text/plain; charset=utf-8")
+            except OSError:
+                self.respond(502, "Listing process failed", "text/plain")
+            finally:
+                LIST_LOCK.release()
             return
         with LOCK:
             if STATUS.get("state") == "running":

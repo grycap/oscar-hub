@@ -46,7 +46,7 @@ class WorkerTests(unittest.TestCase):
     def test_download_and_marker(self):
         fake = type("FakeModule", (), {"info": lambda *args, **kwargs: FakeDataset()})()
         with tempfile.TemporaryDirectory() as folder, patch.dict(sys.modules, {"datahugger": fake}), patch.object(worker.resource, "setrlimit"), patch.object(worker, "is_mounted_directory", return_value=True):
-            result = worker.download("10.5061/dryad.mj8m0", folder, 10, 100, 50)
+            result = worker.download("10.5061/dryad.mj8m0", "", folder, 10, 100, 50)
             target = Path(folder) / result["directory"]
             self.assertEqual((target / "data.txt").read_text(), "hello")
             self.assertEqual(json.loads((target / worker.MARKER).read_text()), {"doi": "10.5061/dryad.mj8m0", "files": 1, "bytes": 5})
@@ -61,20 +61,31 @@ class WorkerTests(unittest.TestCase):
         fake = type("FakeModule", (), {"info": lambda *args, **kwargs: Partial()})()
         with tempfile.TemporaryDirectory() as folder, patch.dict(sys.modules, {"datahugger": fake}), patch.object(worker.resource, "setrlimit"), patch.object(worker, "is_mounted_directory", return_value=True):
             with self.assertRaises(RuntimeError):
-                worker.download("10.5061/dryad.mj8m0", folder, 10, 100, 50)
+                worker.download("10.5061/dryad.mj8m0", "", folder, 10, 100, 50)
             [target] = Path(folder).iterdir()
             self.assertEqual((target / "data.txt").read_text(), "partial")
             self.assertFalse((target / worker.MARKER).exists())
+
+    def test_filter_validation_and_listing(self):
+        self.assertEqual(worker.validate_filter(r"^(?:a\.txt|b/c\.csv)$"), r"^(?:a\.txt|b/c\.csv)$")
+        for value in ("(", "a" * (worker.MAX_FILTER_LENGTH + 1)):
+            with self.subTest(value=value[:5]), self.assertRaises(ValueError):
+                worker.validate_filter(value)
+        files = [{"name": "ok.txt", "size": 3}, {"name": "../bad", "size": 1}, {"name": "d/x.csv", "size": None}]
+        fake = type("FakeModule", (), {"info": lambda *args, **kwargs: type("D", (), {"files": files})()})()
+        with patch.dict(sys.modules, {"datahugger": fake}):
+            result = worker.list_files("10.5061/dryad.mj8m0")
+        self.assertEqual(result, {"files": [{"name": "ok.txt", "size": 3}, {"name": "d/x.csv", "size": None}], "truncated": False})
 
     def test_missing_mount_does_not_create_directory(self):
         with tempfile.TemporaryDirectory() as folder:
             target = Path(folder) / "missing"
             with self.assertRaises(ValueError):
-                worker.download("10.5061/dryad.mj8m0", target, 10, 100, 50)
+                worker.download("10.5061/dryad.mj8m0", "", target, 10, 100, 50)
             self.assertFalse(target.exists())
             self.assertFalse(worker.is_mounted_directory(folder))
             with self.assertRaisesRegex(ValueError, "active mount"):
-                worker.download("10.5061/dryad.mj8m0", folder, 10, 100, 50)
+                worker.download("10.5061/dryad.mj8m0", "", folder, 10, 100, 50)
             self.assertEqual(list(Path(folder).iterdir()), [])
 
 
@@ -186,7 +197,7 @@ class WebTests(unittest.TestCase):
                        {"state": "failed", "job": "older", "doi": "10.1234/old", "error": "Unavailable"}]
         result = types.SimpleNamespace(returncode=0, stdout=json.dumps({"directory": "doi-test", "files": 2, "bytes": 2048}))
         with patch.object(app.subprocess, "run", return_value=result):
-            app.run_download("10.5061/dryad.mj8m0", "new")
+            app.run_download("10.5061/dryad.mj8m0", "", "new")
         snapshot = json.loads(self.request("GET", "/status")[2])
         self.assertEqual(snapshot["state"], "completed")
         self.assertEqual(snapshot["downloads"][0]["directory"], "doi-test")
@@ -203,6 +214,19 @@ class WebTests(unittest.TestCase):
         snapshot = json.loads(self.request("GET", "/status")[2])
         self.assertEqual(len(snapshot["downloads"]), app.MAX_HISTORY)
         self.assertEqual(snapshot["downloads"][0]["job"], snapshot["job"])
+
+    def test_files_endpoint_requires_csrf_and_lists(self):
+        _, headers, _ = self.request("GET", "/")
+        basic = {"Content-Type": "application/x-www-form-urlencoded", "Cookie": headers["Set-Cookie"].split(";", 1)[0]}
+        form = urlencode({"doi": "10.5061/dryad.mj8m0", "csrf": app.CSRF})
+        listing = {"files": [{"name": "a.txt", "size": 3}], "truncated": False}
+        self.assertEqual(self.request("POST", "/files", form, {"Content-Type": basic["Content-Type"]})[0], 400)
+        self.assertEqual(self.request("POST", "/files", urlencode({"doi": "bad", "csrf": app.CSRF}), basic)[0], 400)
+        with patch.object(app, "run_listing", return_value=listing):
+            status, _, body = self.request("POST", "/files", form, basic)
+        self.assertEqual((status, json.loads(body)), (200, listing))
+        with patch.object(app, "run_listing", side_effect=ValueError("boom")):
+            self.assertEqual(self.request("POST", "/files", form, basic)[0], 502)
 
     def test_health_requires_destination(self):
         with patch.object(app, "is_mounted_directory", return_value=True):

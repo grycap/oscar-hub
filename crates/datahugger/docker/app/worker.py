@@ -11,6 +11,8 @@ from pathlib import Path, PurePosixPath
 DOI_RE = re.compile(r"^10\.\d{4,9}/[-._;()/:A-Z0-9]+$", re.IGNORECASE)
 DOI_URL_RE = re.compile(r"^https://doi\.org/(.+)$", re.IGNORECASE)
 MARKER = ".datahugger-complete.json"
+MAX_FILTER_LENGTH = 2000
+MAX_LISTED_FILES = 1000
 
 
 def is_mounted_directory(root):
@@ -27,6 +29,8 @@ def is_mounted_directory(root):
 
 
 def validate_filter(value):
+    if len(value) > MAX_FILTER_LENGTH:
+        raise ValueError("The file filter is too long")
     try:
         re.compile(value)
     except re.error as exc:
@@ -111,13 +115,33 @@ def download(doi, filter, root, max_files, max_bytes, max_file_bytes):
     return {"directory": name, "files": count, "bytes": total}
 
 
+def list_files(doi):
+    doi = validate_doi(doi)
+    import datahugger
+
+    dataset = datahugger.info(doi, unzip=False, progress=False)
+    files = []
+    for item in dataset.files:
+        name, size = item.get("name"), item.get("size")
+        if not isinstance(name, str) or not name or "\\" in name or "\x00" in name or name.startswith(".datahugger-"):
+            continue
+        if any(p in ("", ".", "..") for p in name.split("/")) or name.startswith("/"):
+            continue
+        files.append({"name": name, "size": size if isinstance(size, int) and not isinstance(size, bool) and size >= 0 else None})
+    return {"files": files[:MAX_LISTED_FILES], "truncated": len(files) > MAX_LISTED_FILES}
+
+
 def main():
-    doi, filter, root, max_files, max_bytes, max_file_bytes = sys.argv[1:]
+    args = sys.argv[1:]
     stdout = sys.stdout
     try:
         with open(os.devnull, "w") as sink:
             sys.stdout = sink  # DataHugger may print remote filenames/URLs.
-            result = download(doi, filter, root, int(max_files), int(max_bytes), int(max_file_bytes))
+            if args[:1] == ["list"]:
+                result = list_files(args[1])
+            else:
+                doi, filter, root, max_files, max_bytes, max_file_bytes = args
+                result = download(doi, filter, root, int(max_files), int(max_bytes), int(max_file_bytes))
     except Exception as exc:
         sys.stdout = stdout
         print(json.dumps({"error": str(exc) if isinstance(exc, ValueError) else type(exc).__name__}))

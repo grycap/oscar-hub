@@ -36,10 +36,19 @@
             </div>
             <div class="form-field">
               <label for="filter">Filter</label>
-              <input id="filter" name="filter" type="text" maxlength="255" placeholder=".*" autocomplete="off" spellcheck="false" aria-describedby="filter-help">
+              <input id="filter" name="filter" type="text" maxlength="2000" placeholder=".*" autocomplete="off" spellcheck="false" aria-describedby="filter-help">
             </div>
+            <button type="button" class="secondary" id="browse">Browse files</button>
             <button type="submit">Start download <span aria-hidden="true">→</span></button>
           </div>
+          <div id="file-picker" class="file-picker" hidden>
+            <div class="picker-head">
+              <label class="picker-all"><input type="checkbox" id="select-all"> Select all</label>
+              <span id="picker-summary" class="picker-summary" role="status" aria-live="polite"></span>
+            </div>
+            <ul id="file-list" class="file-list"></ul>
+          </div>
+          <p id="picker-error" class="error-note" role="alert" hidden></p>
           <input type="hidden" name="csrf" value="__CSRF_TOKEN__">
           <p class="field-help" id="doi-help">Paste a DOI or a https://doi.org/ link. Files are saved to a new folder.</p>
           <p class="field-help" id="filter-help">Enter a regular expression to filter the files to download.</p>

@@ -40,6 +40,19 @@ input[type="text"]:focus { border-color: var(--green); box-shadow: 0 0 0 3px #b9
 button { min-height: 50px; padding: 0 22px; border: 1px solid var(--green-dark); border-radius: 10px; background: var(--green-dark); color: #fff; font-weight: 650; cursor: pointer; white-space: nowrap; }
 button span { margin-left: 12px; }
 button:hover { background: #305434; }
+button.secondary { background: #fff; color: var(--green-dark); }
+button.secondary:hover { background: #edf2eb; }
+button:disabled { opacity: .6; cursor: progress; }
+.file-picker { margin-top: 18px; border: 1px solid var(--line); border-radius: 10px; }
+.picker-head { display: flex; justify-content: space-between; gap: 12px; padding: 10px 14px; border-bottom: 1px solid var(--line); background: #f7f8f5; border-radius: 10px 10px 0 0; }
+.picker-head label, .file-list label { display: flex; align-items: center; gap: 10px; margin: 0; font-weight: 500; }
+.picker-all { font-weight: 650; }
+.picker-summary { color: var(--muted); font-size: .8rem; }
+.file-list { margin: 0; padding: 4px 0; max-height: 280px; overflow-y: auto; list-style: none; }
+.file-list li { padding: 6px 14px; }
+.file-list li:hover { background: #f7f8f5; }
+.file-name { flex: 1; overflow-wrap: anywhere; font-size: .86rem; }
+.file-size { color: var(--muted); font-size: .78rem; white-space: nowrap; }
 :focus-visible { outline: 3px solid var(--lavender); outline-offset: 3px; }
 .field-help, .activity-note { margin: 12px 0 0; color: var(--muted); font-size: .83rem; }
 .table-scroll { overflow-x: auto; }
@@ -68,6 +81,7 @@ code { font: .85em ui-monospace, SFMono-Regular, Consolas, monospace; }
   .intro { padding: 26px; }
   .card { padding: 24px 20px; }
   .form-row { flex-direction: column; align-items: stretch; }
+  .form-row button { width: 100%; }
   button { width: 100%; }
   .section-head { align-items: flex-start; flex-direction: column; gap: 6px; }
   .scroll-hint { display: block; margin: -10px 0 14px; color: var(--muted); font-size: .78rem; }
