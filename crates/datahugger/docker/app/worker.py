@@ -26,6 +26,14 @@ def is_mounted_directory(root):
         return os.path.ismount(root)  # Development outside Linux.
 
 
+def validate_filter(value):
+    try:
+        re.compile(value)
+    except re.error as exc:
+        raise ValueError(f"Invalid regular expression: {exc}") from exc
+    return value
+
+
 def validate_doi(value):
     raw = value.strip()
     url_match = DOI_URL_RE.fullmatch(raw)
@@ -80,8 +88,9 @@ def inspect_download(root, max_files, max_bytes, max_file_bytes):
     return count, total
 
 
-def download(doi, root, max_files, max_bytes, max_file_bytes):
+def download(doi, filter, root, max_files, max_bytes, max_file_bytes):
     doi = validate_doi(doi)
+    filter = validate_filter(filter)
     root = Path(root)
     if not is_mounted_directory(root):
         raise ValueError("The configured destination is not an active mount")
@@ -89,7 +98,7 @@ def download(doi, root, max_files, max_bytes, max_file_bytes):
 
     # Guard individual writes even if a repository lies about Content-Length.
     resource.setrlimit(resource.RLIMIT_FSIZE, (max_file_bytes, max_file_bytes))
-    dataset = datahugger.info(doi, unzip=False, progress=True)
+    dataset = datahugger.info(doi, filter_files=filter, unzip=False, progress=True)
     validate_files(dataset.files, max_files, max_bytes, max_file_bytes)
     name = "doi-" + re.sub(r"[^a-z0-9]+", "-", doi.lower()).strip("-")[:55] + "-" + uuid.uuid4().hex[:10]
     target = root / name
@@ -103,12 +112,12 @@ def download(doi, root, max_files, max_bytes, max_file_bytes):
 
 
 def main():
-    doi, root, max_files, max_bytes, max_file_bytes = sys.argv[1:]
+    doi, filter, root, max_files, max_bytes, max_file_bytes = sys.argv[1:]
     stdout = sys.stdout
     try:
         with open(os.devnull, "w") as sink:
             sys.stdout = sink  # DataHugger may print remote filenames/URLs.
-            result = download(doi, root, int(max_files), int(max_bytes), int(max_file_bytes))
+            result = download(doi, filter, root, int(max_files), int(max_bytes), int(max_file_bytes))
     except Exception as exc:
         sys.stdout = stdout
         print(json.dumps({"error": str(exc) if isinstance(exc, ValueError) else type(exc).__name__}))

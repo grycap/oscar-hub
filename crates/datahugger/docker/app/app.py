@@ -14,7 +14,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, urlsplit
 
-from worker import is_mounted_directory, validate_doi
+from worker import is_mounted_directory, validate_doi, validate_filter
 
 DATA_DIR = os.environ.get("DATAHUGGER_DATA_DIR", "/mnt/datahugger-datasets")
 MAX_FILES = int(os.environ.get("DATAHUGGER_MAX_FILES", "100"))
@@ -31,12 +31,13 @@ HISTORY: list[dict[str, object]] = []
 MAX_HISTORY = 20
 
 
-def run_download(doi, job_id):
+
+def run_download(doi, filter, job_id):
     global STATUS
     try:
         proc = subprocess.run(
-            [sys.executable, str(Path(__file__).with_name("worker.py")), doi, DATA_DIR,
-             str(MAX_FILES), str(MAX_BYTES), str(MAX_FILE_BYTES)],
+            [sys.executable, str(Path(__file__).with_name("worker.py")), doi, filter,
+             DATA_DIR, str(MAX_FILES), str(MAX_BYTES), str(MAX_FILE_BYTES)],
             capture_output=True, text=True, timeout=TIMEOUT, check=False,
         )
         payload = json.loads(proc.stdout)
@@ -133,6 +134,7 @@ class Handler(BaseHTTPRequestHandler):
             if not (hmac.compare_digest(CSRF, supplied) and hmac.compare_digest(CSRF, stored)):
                 raise ValueError("Invalid form token")
             doi = validate_doi(fields.get("doi", [""])[0])
+            filter = validate_filter(fields.get("filter", [""])[0])
         except (KeyError, UnicodeError, ValueError) as exc:
             self.respond(400, str(exc), "text/plain; charset=utf-8")
             return
@@ -141,10 +143,10 @@ class Handler(BaseHTTPRequestHandler):
                 self.respond(409, "A download is already running", "text/plain")
                 return
             job_id = uuid.uuid4().hex[:12]
-            STATUS = {"state": "running", "job": job_id, "doi": doi}
+            STATUS = {"state": "running", "job": job_id, "doi": doi, "filter": filter}
             HISTORY.insert(0, dict(STATUS))
             del HISTORY[MAX_HISTORY:]
-        threading.Thread(target=run_download, args=(doi, job_id), daemon=True).start()
+        threading.Thread(target=run_download, args=(doi, filter, job_id), daemon=True).start()
         self.send_response(303)
         self.send_header("Location", "./")
         self.send_header("Content-Length", "0")
