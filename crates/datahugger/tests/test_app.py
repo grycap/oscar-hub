@@ -52,6 +52,16 @@ class WorkerTests(unittest.TestCase):
             self.assertEqual(json.loads((target / worker.MARKER).read_text()), {"doi": "10.5061/dryad.mj8m0", "files": 1, "bytes": 5})
             self.assertTrue(result["directory"].startswith("doi-10-5061-dryad-mj8m0-"))
 
+    def test_filter_limits_validation_to_selected_files(self):
+        class Big(FakeDataset):
+            files = [{"name": "data.txt", "size": 5}, {"name": "huge.bin", "size": 500}]
+
+        fake = type("FakeModule", (), {"info": lambda *args, **kwargs: Big()})()
+        with tempfile.TemporaryDirectory() as folder, patch.dict(sys.modules, {"datahugger": fake}), patch.object(worker.resource, "setrlimit"), patch.object(worker, "is_mounted_directory", return_value=True):
+            self.assertEqual(worker.download("10.5061/dryad.mj8m0", r"^(?:data\.txt)$", folder, 10, 100, 50)["files"], 1)
+            with self.assertRaises(ValueError):
+                worker.download("10.5061/dryad.mj8m0", "", folder, 10, 100, 50)
+
     def test_incomplete_data_is_not_deleted_or_marked(self):
         class Partial(FakeDataset):
             def download(self, target):

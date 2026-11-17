@@ -102,8 +102,10 @@ def download(doi, filter, root, max_files, max_bytes, max_file_bytes):
 
     # Guard individual writes even if a repository lies about Content-Length.
     resource.setrlimit(resource.RLIMIT_FSIZE, (max_file_bytes, max_file_bytes))
-    dataset = datahugger.info(doi, filter_files=filter, unzip=False, progress=True)
-    validate_files(dataset.files, max_files, max_bytes, max_file_bytes)
+    dataset = datahugger.info(doi, filter_files=filter, progress=True)
+    # DataHugger only applies the filter while downloading, so dataset.files is the full listing.
+    selected = [f for f in dataset.files if not filter or re.match(filter, str(f.get("name")))]
+    validate_files(selected, max_files, max_bytes, max_file_bytes)
     name = "doi-" + re.sub(r"[^a-z0-9]+", "-", doi.lower()).strip("-")[:55] + "-" + uuid.uuid4().hex[:10]
     target = root / name
     target.mkdir(mode=0o750)  # No overwrite, including after an incomplete attempt.
@@ -119,7 +121,7 @@ def list_files(doi):
     doi = validate_doi(doi)
     import datahugger
 
-    dataset = datahugger.info(doi, unzip=False, progress=False)
+    dataset = datahugger.info(doi, filter_files=".*", progress=False)
     files = []
     for item in dataset.files:
         name, size = item.get("name"), item.get("size")
@@ -144,7 +146,7 @@ def main():
                 result = download(doi, filter, root, int(max_files), int(max_bytes), int(max_file_bytes))
     except Exception as exc:
         sys.stdout = stdout
-        print(json.dumps({"error": str(exc) if isinstance(exc, ValueError) else type(exc).__name__}))
+        print(json.dumps({"error": str(exc)}))
         return 1
     sys.stdout = stdout
     print(json.dumps(result))
