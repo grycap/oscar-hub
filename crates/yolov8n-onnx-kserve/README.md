@@ -1,57 +1,46 @@
-# KServe YOLOv8n ONNX Object Detection Example
+# Model Serving YOLOv8n ONNX Object Detection Example
 
-This example demonstrates how to deploy a YOLOv8n object detection model (exported to ONNX) as a KServe InferenceService and integrate it with OSCAR. When an image is uploaded to the configured MinIO bucket, OSCAR triggers `script.sh`, which preprocesses the image, calls the KServe v2 inference endpoint, applies confidence filtering and non-maximum suppression (NMS), and writes the results back to MinIO.
+This example demonstrates how to deploy a YOLOv8n object detection model (exported to ONNX) with OSCAR Model Serving and integrate it with an OSCAR workflow. Model Serving uses KServe underneath, which must be enabled in the cluster to deploy and use this example. When an image is uploaded to the configured MinIO bucket, OSCAR triggers `script.sh`, which preprocesses the image, calls the Model Serving v2 inference endpoint, applies confidence filtering and non-maximum suppression (NMS), and writes the results back to MinIO.
 
 ## Architecture
 
 ```
-MinIO (input) → OSCAR service → script.sh → KServe (Triton + YOLOv8n ONNX) → MinIO (output)
+MinIO (input) → OSCAR service → script.sh → Model Serving (KServe underneath; Triton + YOLOv8n ONNX) → MinIO (output)
 ```
 
 **Output files per inference:**
-- `*_predictions_raw.json` – Raw KServe v2 response
+- `*_predictions_raw.json` – Raw Model Serving v2 response
 - `*_predictions_filtered.json` – Detections after confidence + NMS filtering
 - `*_predictions_summary.txt` – Human-readable detection summary
 - `*_annotated.jpg` – Input image with bounding boxes drawn
 
 ## Prerequisites
 
-- OSCAR cluster with KServe installed
+- OSCAR cluster with KServe enabled (required by Model Serving)
 - `oscar-cli` configured to point to the cluster or `https://dashboard.oscar.grycap.net`
-
-### Enable KServe locally with kind
-
-For a local OSCAR development cluster, create it with KServe enabled:
-
-```bash
-cd /path/to/oscar
-./deploy/kind-deploy.sh --devel --kserve
-```
-
-The `--kserve` option installs the KServe `InferenceService` and
-`LLMInferenceService` controllers. It requires Traefik, which is the default
-Gateway API provider used by the script.
 
 ## Files
 
 | File | Description |
 |------|-------------|
-| `fdl.yml` | OSCAR FDL definition with embedded KServe configuration |
-| `script.sh` | Inference script run by OSCAR (preprocessing → KServe call → postprocessing) |
-| `docker/Dockerfile` | Builds the model storage image (`busybox` + ONNX model file) |
-| `docker/Dockerfile.script` | Builds the script runner image (`python:3.11-slim` + `numpy`, `pillow`, `curl`) |
-| `docker/onnx/8/yolov8n.onnx` | YOLOv8n model in ONNX format |
-| `input.png` | Sample input image for the acceptance test |
+| `oscar-svc-yolo8n.yaml` | OSCAR FDL definition with embedded workflow with model serving configuration |
+| `script.sh` | Inference script run by OSCAR (preprocessing → model serving call → postprocessing) |
+| `Dockerfile` | Builds the model storage image (`busybox` + ONNX model file) |
+| `Dockerfile.script` | Builds the script runner image (`python:3.11-slim` + `numpy`, `pillow`, `curl`) |
+| `onnx/8/yolov8n.onnx` | YOLOv8n model in ONNX format |
+| `image01.png`, `image02.jpeg` | Sample test images |
 
 ## Deployment Steps
 
 ### 1. Deploy via OSCAR
 
-Deploy the OSCAR service, which also provisions the KServe InferenceService automatically:
+Deploy the OSCAR service, which also provisions the model-serving deployment using KServe:
 
 ```bash
-oscar-cli apply fdl.yml
+oscar-cli apply oscar-svc-yolo8n.yaml
 ```
+
+> Note: direct apply works only with OSCAR's admin user. If you use OIDC, update `MODEL_SERVING_ENDPOINT` to replace `oscar-svc` with `oscar-svc-{first eight characters of the OIDC ID}`. For example: `http://yolo8n-onnx-model-predictor.oscar-svc-666d7ac0.svc.cluster.local`.
 
 Verify the service was created:
 
@@ -64,27 +53,20 @@ oscar-cli service list
 Upload a test image to the OSCAR service input bucket to trigger processing:
 
 ```bash
-oscar-cli service put-file yolov8n-onnx-kserve minio input.png
+oscar-cli service put-file yolo8n-onnx-input-output minio image01.png yolo8n-onnx-input-output/input/image01.png
 ```
-> Note: it can take several minutes to deploy the KServe InferenceService and download the model, especially if it's the first time.
+> Note: it can take several minutes to deploy the model and download it, especially if it's the first time.
 
 ### 3. Retrieve the Output
 
 Wait a few seconds for the job to complete, then list and download the output files:
 
 ```bash
-oscar-cli service list-files yolov8n-onnx-kserve minio kserve-isvc-yolo8n-onnx/output
-oscar-cli service get-file yolov8n-onnx-kserve minio kserve-isvc-yolo8n-onnx/output/<filename> .
+oscar-cli service list-files yolo8n-onnx-input-output minio yolo8n-onnx-input-output/output
+oscar-cli service get-file yolo8n-onnx-input-output minio yolo8n-onnx-input-output/output/<filename>
 ```
 
-Verify that the output contains a non-empty `*_predictions_summary.txt` file
-and an `*_annotated.jpg` image. You can also browse results through the
-Dashboard.
-
-The Hub acceptance test downloads only the latest annotated JPEG. It does not
-check the summary: use `service list-files` and `service get-file` above to
-inspect the summary separately. `--download-latest-into` retrieves a single
-object, even when several output files are generated.
+You can also browse results through the Dashboard.
 
 ## Building the Images
 
