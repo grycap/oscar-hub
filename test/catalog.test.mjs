@@ -10,8 +10,8 @@ function element(properties = {}) {
 function catalog(url) {
   const rows = [
     element({ dataset: { search: 'Document converter full description tailterm Example Software', types: '["synchronous","asynchronous"]' } }),
-    element({ dataset: { search: 'Image detector', types: '["asynchronous","kserve"]' } }),
-    element({ dataset: { search: 'Language model', types: '["exposed","kserve"]' } })
+    element({ dataset: { search: 'Image detector', types: '["asynchronous","model-serving"]' } }),
+    element({ dataset: { search: 'Language model', types: '["exposed","model-serving"]' } })
   ];
   const cards = rows.map(row => element({ dataset: { ...row.dataset } }));
   const viewButtons = ['table', 'cards'].map(view => element({ dataset: { view } }));
@@ -20,7 +20,7 @@ function catalog(url) {
     '#serviceCards': element({ querySelectorAll() { return cards; } }),
     '#viewSwitcher': element({ hidden: true, querySelectorAll() { return viewButtons; } }),
     '#search': element(),
-    '#serviceTypeFilter': element({ options: ['', 'synchronous', 'asynchronous', 'exposed', 'kserve'].map(value => ({ value })) }),
+    '#serviceTypeFilter': element({ options: ['', 'synchronous', 'asynchronous', 'exposed', 'model-serving'].map(value => ({ value })) }),
     '#serviceRows': element({ querySelectorAll() { return rows; } }),
     '#emptyState': element(), '#resultCount': element(), '#clearFilters': element(), '#resetSearch': element(), '.catalog-controls': element()
   };
@@ -32,7 +32,7 @@ function catalog(url) {
 }
 
 test('a shared filter URL includes services supporting multiple execution types', () => {
-  const { rows, elements } = catalog('https://hub.example/?type=kserve');
+  const { rows, elements } = catalog('https://hub.example/?type=model-serving');
   assert.deepEqual(rows.map(row => row.hidden), [true, false, false]);
   assert.equal(elements['#resultCount'].textContent, '2 services of 3');
   assert.equal(elements['#clearFilters'].hidden, false);
@@ -57,7 +57,7 @@ test('search combines with type, finds full metadata, and clear restores all ser
 test('an obsolete filter does not hide every service, and browser navigation restores the URL state', () => {
   const { rows, elements, window } = catalog('https://hub.example/?type=removed-type');
   assert.deepEqual(rows.map(row => row.hidden), [false, false, false]);
-  window.location = new URL('https://hub.example/?q=detector&type=kserve');
+  window.location = new URL('https://hub.example/?q=detector&type=model-serving');
   window.listeners.popstate();
   assert.deepEqual(rows.map(row => row.hidden), [true, false, true]);
   assert.equal(elements['#search'].value, 'detector');
@@ -116,7 +116,7 @@ test('preview toggles load only opened content and allow retry after a loader fa
 
 
 test('switching to cards preserves active filters, counts and shareable URL state', () => {
-  const { elements, rows, cards, viewButtons, window } = catalog('https://hub.example/?type=kserve&q=detector');
+  const { elements, rows, cards, viewButtons, window } = catalog('https://hub.example/?type=model-serving&q=detector');
   assert.equal(elements['#serviceTable'].hidden, false);
   assert.equal(elements['#serviceCards'].hidden, true);
   assert.equal(elements['#viewSwitcher'].hidden, false);
@@ -127,7 +127,7 @@ test('switching to cards preserves active filters, counts and shareable URL stat
   assert.equal(elements['#resultCount'].textContent, '1 service of 3');
   assert.equal(window.location.searchParams.get('view'), 'cards');
   assert.equal(window.location.searchParams.get('q'), 'detector');
-  assert.equal(window.location.searchParams.get('type'), 'kserve');
+  assert.equal(window.location.searchParams.get('type'), 'model-serving');
   assert.equal(viewButtons[1].attributes['aria-pressed'], 'true');
   assert.equal(viewButtons[0].attributes['aria-pressed'], 'false');
   viewButtons[0].listeners.click();
@@ -138,7 +138,7 @@ test('switching to cards preserves active filters, counts and shareable URL stat
 });
 
 test('a cards URL restores the selected view and clearing filters keeps it selected', () => {
-  const { elements, cards, viewButtons, window } = catalog('https://hub.example/?view=cards&type=kserve');
+  const { elements, cards, viewButtons, window } = catalog('https://hub.example/?view=cards&type=model-serving');
   assert.equal(elements['#serviceTable'].hidden, true);
   assert.equal(elements['#serviceCards'].hidden, false);
   assert.deepEqual(cards.map(card => card.hidden), [true, false, false]);

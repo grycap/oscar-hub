@@ -61,7 +61,7 @@ test('adding a crate automatically generates its row, filter, detail, files and 
     name: 'New <service> & example',
     description: `${'Full description. '.repeat(30)}SEARCHABLE_TAIL`,
     serviceType: ['synchronous', 'new-execution-mode'],
-    memoryRequirements: ['1 GiB', '6 kserve-GiB'],
+    memoryRequirements: ['1 GiB', '6 GiB'],
     processorRequirements: '2 vCPU',
     url: 'https://example.org/service',
     author: [{ '@id': '#author' }, { name: 'Second author' }],
@@ -82,7 +82,7 @@ test('adding a crate automatically generates its row, filter, detail, files and 
   assert.match(catalog, /SEARCHABLE_TAIL/);
   assert.match(catalog, /newkeyword/);
   assert.ok(unescape(detail).includes(newCrate['@graph'][0].description));
-  for (const content of ['Example Author', 'Second author', 'Example Software', '2.0.0', '1.2.3', '1 GiB', '6 kserve-GiB', 'https://example.org/service', '/blob/main/crates/new-crate/fdl.yml']) assert.ok(detail.includes(content), content);
+  for (const content of ['Example Author', 'Second author', 'Example Software', '2.0.0', '1.2.3', '1 GiB', '6 GiB', 'https://example.org/service', '/blob/main/crates/new-crate/fdl.yml']) assert.ok(detail.includes(content), content);
   assert.match(detail, /https:\/\/github.com\/grycap\/oscar-hub\/blob\/main\/crates\/new-crate\/ro-crate-metadata.json/);
   assert.doesNotMatch(detail, /Download RO-Crate JSON| download[ >]/);
   assert.match(detail, /class="json-viewer"/);
@@ -131,7 +131,8 @@ test('all repository crates retain full descriptions, original metadata and reso
   const catalog = await fs.readFile(path.join(destination, 'index.html'), 'utf8');
   assert.equal((catalog.match(/class="service-row"/g) ?? []).length, expectedCount);
   assert.equal((catalog.match(/class="service-card"/g) ?? []).length, expectedCount);
-  assert.match(catalog, /option value="kserve"/);
+  assert.match(catalog, /option value="model-serving">Model Serving/);
+  assert.doesNotMatch(catalog, /option value="kserve"/);
 });
 
 test('missing optional fields and malformed crates do not block a new valid service', async t => {

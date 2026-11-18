@@ -1,7 +1,7 @@
 const REPOSITORY = 'https://github.com/grycap/oscar-hub';
 const array = value => value == null ? [] : Array.isArray(value) ? value : [value];
 const escape = value => String(value ?? '').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]);
-const capitalize = value => value === 'kserve' ? 'KServe' : String(value).charAt(0).toUpperCase() + String(value).slice(1);
+const formatServiceType = value => value === 'model-serving' ? 'Model Serving' : String(value).charAt(0).toUpperCase() + String(value).slice(1);
 const encodePath = value => String(value).split('/').map(encodeURIComponent).join('/');
 const detailPath = service => `services/${encodeURIComponent(service.slug)}/`;
 const repositoryPath = service => `${REPOSITORY}/tree/main/${encodePath(service.repoPath)}`;
@@ -22,13 +22,13 @@ function icon(service, prefix = '') {
 }
 
 function badges(service) {
-  return service.serviceType.map(type => `<span class="badge">${escape(capitalize(type))}</span>`).join('');
+  return service.serviceType.map(type => `<span class="badge">${escape(formatServiceType(type))}</span>`).join('');
 }
 
 function resources(value) {
   const values = array(value);
   if (!values.length) return '<span class="muted">Not specified</span>';
-  return values.map(item => `<span class="resource">${escape(item)}${String(item).includes('kserve-') ? '<small>KServe</small>' : values.some(v => String(v).includes('kserve-')) ? '<small>OSCAR</small>' : ''}</span>`).join('');
+  return values.map(item => `<span class="resource">${escape(item)}</span>`).join('');
 }
 
 function formatDate(value) {
@@ -87,7 +87,7 @@ export function renderCatalog(services) {
       </div></div>
       <form class="catalog-controls" role="search">
         <div class="search-field"><label for="search">Search services</label><input id="search" type="search" placeholder="Name, description, or software…" autocomplete="off"><span class="search-hint" aria-hidden="true">/</span></div>
-        <div class="type-field"><label class="sr-only" for="serviceTypeFilter">Service type</label><select id="serviceTypeFilter"><option value="">All types</option>${types.map(type => `<option value="${escape(type)}">${escape(capitalize(type))}</option>`).join('')}</select></div>
+        <div class="type-field"><label class="sr-only" for="serviceTypeFilter">Service type</label><select id="serviceTypeFilter"><option value="">All types</option>${types.map(type => `<option value="${escape(type)}">${escape(formatServiceType(type))}</option>`).join('')}</select></div>
         <button id="clearFilters" class="button button--quiet" type="button" hidden>Clear filters</button>
       </form>
       <div class="result-bar"><p id="resultCount" role="status" aria-live="polite">${services.length} ${services.length === 1 ? 'service' : 'services'}</p></div>
