@@ -1,0 +1,42 @@
+{
+  "@context": ["https://w3id.org/ro/crate/1.2/context"],
+  "@graph": [
+    {
+      "@id": "ro-crate-metadata.json",
+      "@type": "CreativeWork",
+      "conformsTo": {"@id": "https://w3id.org/ro/crate/1.2"},
+      "about": {"@id": "./"}
+    },
+    {
+      "@id": "./",
+      "@type": ["Dataset", "Service", "SoftwareApplication"],
+      "name": "DataHugger DOI Downloader",
+      "description": "ForwardAuth-protected OSCAR web form that downloads an open scientific dataset by DOI into a bucket or volume already mounted in the service; another OSCAR service can mount the same storage.",
+      "url": "https://github.com/grycap/oscar-hub/tree/main/crates/datahugger",
+      "datePublished": "2026-11-06",
+      "version": "0.1.0",
+      "license": {"@id": "https://www.apache.org/licenses/LICENSE-2.0"},
+      "applicationCategory": "OSCAR Service",
+      "serviceType": "exposed",
+      "memoryRequirements": "1 GiB",
+      "processorRequirements": ["1 vCPU", "0 GPU"],
+      "keywords": ["DataHugger", "DOI", "open data", "dataset", "bucket", "volume"],
+      "logo": {"@id": "icon.png"},
+      "isBasedOn": {"@id": "https://github.com/grycap/datahugger"},
+      "author": {"@id": "#author"},
+      "hasPart": [
+        {"@id": "fdl.yml"},
+        {"@id": "script.sh"},
+        {"@id": "README.md"},
+        {"@id": "icon.png"}
+      ]
+    },
+    {"@id": "fdl.yml", "@type": ["File", "SoftwareSourceCode"], "name": "OSCAR service definition", "encodingFormat": "text/yaml"},
+    {"@id": "script.sh", "@type": ["File", "SoftwareSourceCode"], "name": "OSCAR script placeholder", "encodingFormat": "text/x-shellscript"},
+    {"@id": "README.md", "@type": ["File", "TextDigitalDocument"], "name": "Deployment and use guide", "encodingFormat": "text/markdown"},
+    {"@id": "icon.png", "@type": ["File", "ImageObject"], "name": "DataHugger icon", "description": "PNG rendered from the DataHugger logo, shared by the catalog and application.", "encodingFormat": "image/png"},
+    {"@id": "#author", "@type": "Organization", "name": "GRyCAP-UPV", "url": "https://www.grycap.upv.es/"},
+    {"@id": "https://www.apache.org/licenses/LICENSE-2.0", "@type": "CreativeWork", "name": "Apache License 2.0", "identifier": "SPDX:Apache-2.0"},
+    {"@id": "https://github.com/grycap/datahugger", "@type": "SoftwareApplication", "name": "GRyCAP DataHugger fork", "url": "https://github.com/grycap/datahugger", "version": "07f7f4c8d43f3dab9cbb7d8309211d3cc04508e3", "license": {"@id": "https://github.com/grycap/datahugger/blob/main/LICENSE"}}
+  ]
+}
