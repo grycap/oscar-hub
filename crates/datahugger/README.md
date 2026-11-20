@@ -13,9 +13,9 @@ oscar-cli hub deploy datahugger --cluster <cluster> --local-path /path/to/oscar-
 oscar-cli service deployment status datahugger --cluster <cluster>
 ```
 
-When deploying under a custom service name, copy `fdl.yml` and `script.sh` to a private temporary directory, edit only the copy's `name` (and image if needed), and run `oscar-cli apply` on that copy without `-n`. Keep `mount.path: datahugger` and `DATAHUGGER_DATA_DIR: /mnt/datahugger` together.
+When deploying under a custom service name, copy `fdl.yml` and `script.sh` to a private temporary directory, edit only the copy's `name` (and image if needed), and run `oscar-cli apply` on that copy without `-n`. Keep `mount.path: datahugger` and `DATAHUGGER_DATA_DIR: /mnt/datahugger` together. `DATAHUGGER_DATA_FOLDER` optionally selects a relative subdirectory inside that mount; the example uses `input`, so downloads are stored under `/mnt/datahugger/input/`.
 
-The default `mount` uses a private MinIO bucket named `datahugger` (as the name of the service), mounted at `/mnt/datahugger`. Create/authorize the bucket through OSCAR separately, or change `mount.path` to your own bucket and set `DATAHUGGER_DATA_DIR` to `/mnt/<bucket>`. The Notebook must mount **that same bucket**; no `input` or `output` bucket is needed in this FDL. For a managed volume instead, replace the `mount` block with the following (the volume must already exist in the same user namespace), and set `DATAHUGGER_DATA_DIR: /datasets`:
+The default `mount` uses a private MinIO bucket named `datahugger` (as the name of the service), mounted at `/mnt/datahugger`. Create/authorize the bucket through OSCAR separately, or change `mount.path` to your own bucket and set `DATAHUGGER_DATA_DIR` to `/mnt/<bucket>`. Set `DATAHUGGER_DATA_FOLDER` to a relative path such as `datasets` or `project-a/raw`; it is created under the mount as needed. Leave it empty or omit it to store download directories at the mount root. The Notebook must mount **that same bucket**; no `input` or `output` bucket is needed in this FDL. For a managed volume instead, replace the `mount` block with the following (the volume must already exist in the same user namespace), and set `DATAHUGGER_DATA_DIR: /datasets`:
 
 ```yaml
 volume:
@@ -42,6 +42,7 @@ docker build -f docker/Dockerfile -t datahugger-preview .
 docker run --rm -p 127.0.0.1:18080:8080 \
   --mount type=volume,source=datahugger-preview-data,target=/home/app \
   -e DATAHUGGER_DATA_DIR=/home/app \
+  -e DATAHUGGER_DATA_FOLDER=datasets \
   datahugger-preview
 ```
 

@@ -92,12 +92,18 @@ def inspect_download(root, max_files, max_bytes, max_file_bytes):
     return count, total
 
 
-def download(doi, filter, root, max_files, max_bytes, max_file_bytes):
+def download(doi, filter, root, folder, max_files, max_bytes, max_file_bytes):
     doi = validate_doi(doi)
     filter = validate_filter(filter)
     root = Path(root)
     if not is_mounted_directory(root):
         raise ValueError("The configured destination is not an active mount")
+    folder = validate_folder(folder)
+    if folder:
+        root = root / folder
+        root.mkdir(mode=0o750, parents=True, exist_ok=True)
+        if root.is_symlink() or not root.is_dir():
+            raise ValueError("The configured data folder is not a directory")
     import datahugger
 
     # Guard individual writes even if a repository lies about Content-Length.
@@ -115,6 +121,18 @@ def download(doi, filter, root, max_files, max_bytes, max_file_bytes):
     count, total = inspect_download(target, max_files, max_bytes, max_file_bytes)
     (target / MARKER).write_text(json.dumps({"doi": doi, "files": count, "bytes": total}) + "\n")
     return {"directory": name, "files": count, "bytes": total}
+
+
+def validate_folder(folder):
+    """Allow an optional relative subdirectory beneath the mounted storage."""
+    if not folder:
+        return Path()
+    if not isinstance(folder, str) or "\\" in folder or "\x00" in folder:
+        raise ValueError("The configured data folder must be a relative path")
+    path = Path(folder)
+    if path.is_absolute() or any(part in ("", ".", "..") for part in folder.split("/")):
+        raise ValueError("The configured data folder must be a safe relative path")
+    return path
 
 
 def list_files(doi):
@@ -142,8 +160,8 @@ def main():
             if args[:1] == ["list"]:
                 result = list_files(args[1])
             else:
-                doi, filter, root, max_files, max_bytes, max_file_bytes = args
-                result = download(doi, filter, root, int(max_files), int(max_bytes), int(max_file_bytes))
+                doi, filter, root, folder, max_files, max_bytes, max_file_bytes = args
+                result = download(doi, filter, root, folder, int(max_files), int(max_bytes), int(max_file_bytes))
     except Exception as exc:
         sys.stdout = stdout
         print(json.dumps({"error": str(exc)}))
