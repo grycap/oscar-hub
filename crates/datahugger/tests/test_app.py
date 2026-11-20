@@ -46,11 +46,22 @@ class WorkerTests(unittest.TestCase):
     def test_download_and_marker(self):
         fake = type("FakeModule", (), {"info": lambda *args, **kwargs: FakeDataset()})()
         with tempfile.TemporaryDirectory() as folder, patch.dict(sys.modules, {"datahugger": fake}), patch.object(worker.resource, "setrlimit"), patch.object(worker, "is_mounted_directory", return_value=True):
-            result = worker.download("10.5061/dryad.mj8m0", "", folder, 10, 100, 50)
+            result = worker.download("10.5061/dryad.mj8m0", "", folder, "", 10, 100, 50)
             target = Path(folder) / result["directory"]
             self.assertEqual((target / "data.txt").read_text(), "hello")
             self.assertEqual(json.loads((target / worker.MARKER).read_text()), {"doi": "10.5061/dryad.mj8m0", "files": 1, "bytes": 5})
             self.assertTrue(result["directory"].startswith("doi-10-5061-dryad-mj8m0-"))
+
+    def test_download_into_configured_subfolder(self):
+        fake = type("FakeModule", (), {"info": lambda *args, **kwargs: FakeDataset()})()
+        with tempfile.TemporaryDirectory() as folder, patch.dict(sys.modules, {"datahugger": fake}), patch.object(worker.resource, "setrlimit"), patch.object(worker, "is_mounted_directory", return_value=True):
+            result = worker.download("10.5061/dryad.mj8m0", "", folder, "notebook/datasets", 10, 100, 50)
+            self.assertTrue((Path(folder) / "notebook" / "datasets" / result["directory"] / "data.txt").is_file())
+
+    def test_reject_unsafe_data_subfolder(self):
+        for value in ("/outside", "../outside", "a/../outside", "a\\outside", "a//b"):
+            with self.subTest(value=value), self.assertRaises(ValueError):
+                worker.validate_folder(value)
 
     def test_filter_limits_validation_to_selected_files(self):
         class Big(FakeDataset):
@@ -58,9 +69,9 @@ class WorkerTests(unittest.TestCase):
 
         fake = type("FakeModule", (), {"info": lambda *args, **kwargs: Big()})()
         with tempfile.TemporaryDirectory() as folder, patch.dict(sys.modules, {"datahugger": fake}), patch.object(worker.resource, "setrlimit"), patch.object(worker, "is_mounted_directory", return_value=True):
-            self.assertEqual(worker.download("10.5061/dryad.mj8m0", r"^(?:data\.txt)$", folder, 10, 100, 50)["files"], 1)
+            self.assertEqual(worker.download("10.5061/dryad.mj8m0", r"^(?:data\.txt)$", folder, "", 10, 100, 50)["files"], 1)
             with self.assertRaises(ValueError):
-                worker.download("10.5061/dryad.mj8m0", "", folder, 10, 100, 50)
+                worker.download("10.5061/dryad.mj8m0", "", folder, "", 10, 100, 50)
 
     def test_incomplete_data_is_not_deleted_or_marked(self):
         class Partial(FakeDataset):
@@ -71,7 +82,7 @@ class WorkerTests(unittest.TestCase):
         fake = type("FakeModule", (), {"info": lambda *args, **kwargs: Partial()})()
         with tempfile.TemporaryDirectory() as folder, patch.dict(sys.modules, {"datahugger": fake}), patch.object(worker.resource, "setrlimit"), patch.object(worker, "is_mounted_directory", return_value=True):
             with self.assertRaises(RuntimeError):
-                worker.download("10.5061/dryad.mj8m0", "", folder, 10, 100, 50)
+                worker.download("10.5061/dryad.mj8m0", "", folder, "", 10, 100, 50)
             [target] = Path(folder).iterdir()
             self.assertEqual((target / "data.txt").read_text(), "partial")
             self.assertFalse((target / worker.MARKER).exists())
@@ -91,11 +102,11 @@ class WorkerTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as folder:
             target = Path(folder) / "missing"
             with self.assertRaises(ValueError):
-                worker.download("10.5061/dryad.mj8m0", "", target, 10, 100, 50)
+                worker.download("10.5061/dryad.mj8m0", "", target, "", 10, 100, 50)
             self.assertFalse(target.exists())
             self.assertFalse(worker.is_mounted_directory(folder))
             with self.assertRaisesRegex(ValueError, "active mount"):
-                worker.download("10.5061/dryad.mj8m0", "", folder, 10, 100, 50)
+                worker.download("10.5061/dryad.mj8m0", "", folder, "", 10, 100, 50)
             self.assertEqual(list(Path(folder).iterdir()), [])
 
 

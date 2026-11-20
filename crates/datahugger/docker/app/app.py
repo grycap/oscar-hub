@@ -17,6 +17,7 @@ from urllib.parse import parse_qs, urlsplit
 from worker import is_mounted_directory, validate_doi, validate_filter
 
 DATA_DIR = os.environ.get("DATAHUGGER_DATA_DIR", "/mnt/datahugger-datasets")
+DATA_FOLDER = os.environ.get("DATAHUGGER_DATA_FOLDER", "")
 MAX_FILES = int(os.environ.get("DATAHUGGER_MAX_FILES", "100"))
 MAX_BYTES = int(os.environ.get("DATAHUGGER_MAX_BYTES", str(2 * 1024**3)))
 MAX_FILE_BYTES = int(os.environ.get("DATAHUGGER_MAX_FILE_BYTES", str(1024**3)))
@@ -40,7 +41,7 @@ def run_download(doi, filter, job_id):
     try:
         proc = subprocess.run(
             [sys.executable, str(Path(__file__).with_name("worker.py")), doi, filter,
-             DATA_DIR, str(MAX_FILES), str(MAX_BYTES), str(MAX_FILE_BYTES)],
+             DATA_DIR, DATA_FOLDER, str(MAX_FILES), str(MAX_BYTES), str(MAX_FILE_BYTES)],
             capture_output=True, text=True, timeout=TIMEOUT, check=False,
         )
         payload = json.loads(proc.stdout)
