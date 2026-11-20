@@ -28,7 +28,7 @@
 
       <section class="card import-card" aria-labelledby="import-title">
         <div class="section-head"><div><span class="section-number">01 / IMPORT</span><h2 id="import-title">Download a dataset</h2></div><span class="section-hint">One download at a time</span></div>
-        <form method="post" action="download">
+        <form id="download-form" method="post" action="download">
           <div class="form-row">
             <div class="form-field">
               <label for="doi">Dataset DOI</label>
@@ -39,7 +39,7 @@
               <input id="filter" name="filter" type="text" maxlength="2000" placeholder=".*" autocomplete="off" spellcheck="false" aria-describedby="filter-help">
             </div>
             <button type="button" class="secondary" id="browse">Browse files</button>
-            <button type="submit">Start download <span aria-hidden="true">→</span></button>
+            <button type="submit" id="start-download">Start download <span aria-hidden="true">→</span></button>
           </div>
           <div id="file-picker" class="file-picker" hidden>
             <div class="picker-head">

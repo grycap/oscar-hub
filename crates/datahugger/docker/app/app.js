@@ -77,12 +77,41 @@ setInterval(refresh, 3000);
 const doiInput = document.getElementById('doi');
 const filterInput = document.getElementById('filter');
 const csrfInput = document.querySelector('input[name="csrf"]');
+const downloadForm = document.getElementById('download-form');
+const startDownload = document.getElementById('start-download');
 const browse = document.getElementById('browse');
 const picker = document.getElementById('file-picker');
 const fileList = document.getElementById('file-list');
 const selectAll = document.getElementById('select-all');
 const summary = document.getElementById('picker-summary');
 const pickerError = document.getElementById('picker-error');
+
+downloadForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  if (!downloadForm.reportValidity()) return;
+  startDownload.disabled = true;
+  startDownload.textContent = 'Downloading ...';
+  showPickerError('');
+  try {
+    const response = await fetch(downloadForm.action, {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      body: new URLSearchParams(new FormData(downloadForm)),
+    });
+    if (!response.ok) throw new Error((await response.text()) || 'Unable to start download');
+    await refresh();
+  } catch (error) {
+    showPickerError(error.message || 'Unable to start download');
+  } finally {
+    startDownload.disabled = false;
+    startDownload.replaceChildren(document.createTextNode('Start download '));
+    const arrow = document.createElement('span');
+    arrow.setAttribute('aria-hidden', 'true');
+    arrow.textContent = '→';
+    startDownload.append(arrow);
+  }
+});
 
 const escapeRegex = (text) => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 const checkboxes = () => [...fileList.querySelectorAll('input[type="checkbox"]')];
