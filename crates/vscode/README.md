@@ -15,6 +15,6 @@ Changing an existing deployment from another bucket does not migrate its objects
 
 ## Access and health check
 
-Open the HTTPS service endpoint assigned by OSCAR and authenticate through OSCAR ForwardAuth. The FDL enables `expose.set_auth: true` with `auth_type: forward` and leaves `PASSWORD` empty, so code-server does not present a second login. Do not set `PASSWORD` or `HASHED_PASSWORD` when deploying this configuration. ForwardAuth protects the external route, not direct in-cluster access to the application; restrict access to the pod and internal Service accordingly.
+Open the HTTPS service endpoint assigned by OSCAR and authenticate through OSCAR ForwardAuth. The FDL enables `expose.set_auth: true` with `auth_type: forward` and do not set `PASSWORD` or `HASHED_PASSWORD`, so code-server does not present a second login. ForwardAuth protects the external route, not direct in-cluster access to the application; restrict access to the pod and internal Service accordingly.
 
 The FDL exposes port `8443` and configures `/healthz` as the health-check path. The image's default startup command is used (`default_command: true`); `script.sh` remains listed in the FDL but is not the startup command.
