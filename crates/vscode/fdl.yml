@@ -2,7 +2,7 @@ functions:
   oscar:
   - oscar-cluster:
       name: vscode
-      image: linuxserver/code-server:latest
+      image: linuxserver/code-server:4.146.0
       script: script.sh
       cpu: '1.0'
       memory: 1Gi

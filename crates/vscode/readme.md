@@ -1,6 +1,6 @@
 # VS Code Server on OSCAR
 
-This crate deploys [code-server](https://github.com/coder/code-server), providing a browser-accessible VS Code environment with the LinuxServer `linuxserver/code-server:latest` image.
+This crate deploys [code-server](https://github.com/coder/code-server), providing a browser-accessible VS Code environment with the LinuxServer `linuxserver/code-server:4.146.0` image.
 
 ## Deploy
 

@@ -114,7 +114,8 @@
       "@id": "https://hub.docker.com/r/linuxserver/code-server",
       "@type": "SoftwareApplication",
       "name": "LinuxServer code-server",
-      "url": "https://hub.docker.com/r/linuxserver/code-server"
+      "url": "https://hub.docker.com/r/linuxserver/code-server",
+      "version": "4.146.0"
     }
   ]
 }
