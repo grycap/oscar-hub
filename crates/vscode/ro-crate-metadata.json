@@ -22,7 +22,7 @@
       ],
       "datePublished": "2026-11-24",
       "url": "https://github.com/grycap/oscar-hub/tree/main/crates/vscode",
-      "name": "VS Code in the browser",
+      "name": "VS Code Server",
       "description": "OSCAR service that deploys VSCode Server with a MinIO-backed workspace.",
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
