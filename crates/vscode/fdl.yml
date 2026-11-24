@@ -22,4 +22,4 @@ functions:
         max_scale: 1
         api_port: [8080]
         cpu_threshold: 90
-        default_command: true
+        health_path: /health
