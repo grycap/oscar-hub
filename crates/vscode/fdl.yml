@@ -8,12 +8,12 @@ functions:
       memory: 1Gi
       environment:
         variables:
-          DEFAULT_WORKSPACE: /mnt/workspace
-          PASSWORD: password
+          DEFAULT_WORKSPACE: /mnt/vscode-workspace
+          PASSWORD: ''
       # The bucket must already exist; OSCAR mounts it at /mnt/<bucket>.
       mount:
         storage_provider: minio.default
-        path: workspace
+        path: vscode-workspace
       volume:
         size: 1Gi
         mount_path: /config
@@ -24,4 +24,6 @@ functions:
         api_port: [8443]
         cpu_threshold: 90
         default_command: true
+        set_auth: true
+        auth_type: forward
         health_path: /healthz
