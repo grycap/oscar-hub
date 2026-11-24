@@ -4,15 +4,14 @@ This crate deploys [code-server](https://github.com/coder/code-server), providin
 
 ## Deploy
 
-Requires an OSCAR cluster with exposed services using HTTPRoute/Traefik ForwardAuth and managed volumes, and an `oscar-cli` profile with permission to create services and buckets. Create the private `vscode-workspace` bucket in the `minio.default` storage provider before deploying; OSCAR mounts it at `/mnt/vscode-workspace`, the configured default workspace. The service requests 1 CPU and 1 GiB of memory, runs one replica, and reserves a 1 GiB volume at `/config` with the `retain` lifecycle policy. The volume preserves code-server's configuration and user data when the service is recreated; it is retained when the service is deleted.
+Requires an OSCAR cluster with exposed services using HTTPRoute/Traefik ForwardAuth and managed volumes, and an `oscar-cli` profile with permission to create services. OSCAR creates the private `vscode-workspace` bucket in the `minio.default` storage provider during deployment if it does not exist, or reuses an existing private bucket; it mounts it at `/mnt/vscode-workspace`, the configured default workspace. The service requests 1 CPU and 1 GiB of memory, runs one replica, and reserves a 1 GiB volume at `/config` with the `retain` lifecycle policy. The volume preserves code-server's configuration and user data when the service is recreated; it is retained when the service is deleted.
 
 ```sh
-oscar-cli bucket create vscode-workspace --visibility private --cluster <cluster>
 oscar-cli hub deploy vscode --cluster <cluster> --local-path /path/to/oscar-hub/crates
 oscar-cli service deployment status vscode --cluster <cluster>
 ```
 
-The bucket is not created by the service. Changing an existing deployment from another bucket does not migrate its objects; preserve and transfer any data separately if needed.
+Changing an existing deployment from another bucket does not migrate its objects; preserve and transfer any data separately if needed.
 
 ## Access and health check
 

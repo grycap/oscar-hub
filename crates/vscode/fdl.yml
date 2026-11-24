@@ -10,7 +10,7 @@ functions:
         variables:
           DEFAULT_WORKSPACE: /mnt/vscode-workspace
           PASSWORD: ''
-      # The bucket must already exist; OSCAR mounts it at /mnt/<bucket>.
+      # OSCAR creates the private mount bucket if it does not exist.
       mount:
         storage_provider: minio.default
         path: vscode-workspace

@@ -49,7 +49,7 @@
           "@id": "script.sh"
         },
         {
-          "@id": "readme.md"
+          "@id": "README.md"
         },
         {
           "@id": "icon.png"
@@ -75,7 +75,7 @@
       "encodingFormat": "text/x-shellscript"
     },
     {
-      "@id": "readme.md",
+      "@id": "README.md",
       "@type": "File",
       "name": "Service documentation",
       "encodingFormat": "text/markdown"
