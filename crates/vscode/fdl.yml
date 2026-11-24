@@ -8,15 +8,16 @@ functions:
       memory: 1Gi
       environment:
         variables:
-          PUID: '1000'
-          PGID: '1000'
-          TZ: Etc/UTC
           DEFAULT_WORKSPACE: /mnt/workspace
           PASSWORD: password
       # The bucket must already exist; OSCAR mounts it at /mnt/<bucket>.
       mount:
         storage_provider: minio.default
         path: workspace
+      volume:
+        size: 1Gi
+        mount_path: /config
+        lifecycle_policy: retain
       expose:
         min_scale: 1
         max_scale: 1
