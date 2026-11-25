@@ -8,11 +8,11 @@ functions:
       memory: 1Gi
       environment:
         variables:
-          DEFAULT_WORKSPACE: /mnt/vscode-workspace
+          DEFAULT_WORKSPACE: /config/workspace
       # OSCAR creates the private mount bucket if it does not exist.
       mount:
         storage_provider: minio.default
-        path: vscode-workspace
+        path: vscode-data
       volume:
         size: 1Gi
         mount_path: /config
