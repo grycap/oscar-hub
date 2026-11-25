@@ -1,0 +1,28 @@
+functions:
+  oscar:
+  - oscar-cluster:
+      name: vscode
+      image: linuxserver/code-server:4.146.0
+      script: script.sh
+      cpu: '1.0'
+      memory: 1Gi
+      environment:
+        variables:
+          DEFAULT_WORKSPACE: /config/workspace
+      # OSCAR creates the private mount bucket if it does not exist.
+      mount:
+        storage_provider: minio.default
+        path: vscode-data
+      volume:
+        size: 1Gi
+        mount_path: /config
+        lifecycle_policy: retain
+      expose:
+        min_scale: 1
+        max_scale: 1
+        api_port: [8443]
+        cpu_threshold: 90
+        default_command: true
+        set_auth: true
+        auth_type: forward
+        health_path: /healthz
